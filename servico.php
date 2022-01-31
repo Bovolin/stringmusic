@@ -290,7 +290,7 @@ unset($_SESSION['servicorecusado']);
             <p class="footer-links">
                 <a href="index.php">Início</a>
                 |
-                <a href="contato.php">Contato</a>
+                <a href="contato.php">Contatos</a>
                 |
                 <a href="login.php">Login</a>
             </p>

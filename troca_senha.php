@@ -33,9 +33,9 @@ if(isset($_POST['enviar'])){
                     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'stringmsc@gmail.com';
-                    $mail->Password = 'DPBeVmr4DqKPT8Q';
+                    $mail->SMTPAuth = false; // Alterar para true
+                    $mail->Username = '#'; //Substituir pelo email
+                    $mail->Password = '#'; //Substituir pela senha do email
                     $mail->Port = 587;
                 
                     $mail->setFrom('stringmsc@gmail.com');
