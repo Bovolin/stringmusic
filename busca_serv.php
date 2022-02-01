@@ -2,6 +2,13 @@
 session_start();
 include ("conexao.php");
 
+if(!isset($_GET['nome'])){
+    header("Location: loja.php");
+    exit;
+}
+
+$nome_pesquisa = "%" . trim($_GET['nome']) . "%";
+
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
 
@@ -247,36 +254,36 @@ unset($_SESSION['servicorecusado']);
   <br>
   <?php
   if(isset($_SESSION['usuario']))
-    echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5>Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
-    echo '<form action="busca_serv.php" method="get">
-        <input type="text" name="nome" placeholder="Insira o nome do serviço">
-        <button><i class="fas fa-search"></i></button>
-      </form>
-    <br>';
-  ?>
+  echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5>Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
+  echo '<form action="busca_serv.php" method="get">
+      <input type="text" name="nome" placeholder="Insira o nome do serviço">
+      <button><i class="fas fa-search"></i></button>
+    </form>
+  <br>';
+?>
   <main class="grid">
 
     <?php 
 
-    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem";
+    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_servico = '$nome_pesquisa'";
     $query = $mysqli->query($sql);
-      
 
-    while ($dados = $query->fetch_array()){
-      
-      echo '<article>
-      <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-      <div class="text">
-        <h3>';  echo $dados['nm_servico']; echo '</h3>
-        <p>'; echo $dados['ds_servico']; echo '</p>
-        <p> R$'; echo $dados['vl_servico']; echo '</p>
-        <form method="get" action="prodserv.php">
-          <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
-          <input type="submit" class="btnpart" value="Comprar">
-        </form>
-      </div>
-    </article>';
-
+    if(empty($dados)) echo '<h3>Não há serviços relacionados à sua pesquisa.</h3>';
+    else{
+        while ($dados = $query->fetch_array()){  
+            echo '<article>
+            <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
+            <div class="text">
+                <h3>';  echo $dados['nm_servico']; echo '</h3>
+                <p>'; echo $dados['ds_servico']; echo '</p>
+                <p> R$'; echo $dados['vl_servico']; echo '</p>
+                <form method="get" action="prodserv.php">
+                <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
+                <input type="submit" class="btnpart" value="Comprar">
+                </form>
+            </div>
+            </article>';
+        }
     }
 
       

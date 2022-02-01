@@ -2,6 +2,13 @@
 session_start();
 include ("conexao.php");
 
+if(!isset($_GET['nome'])){
+    header("Location: loja.php");
+    exit;
+}
+
+$nome_pesquisa = "%" . trim($_GET['nome']) . "%";
+
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
 
@@ -48,27 +55,9 @@ if(isset($_SESSION['usuario'])){
     <script src="swal.js"></script>
 
 </head>
-
-<?php
-if(isset($_SESSION['servicorecusado'])):
-?>
-<script>
-  function recusado(){
-    Swal.fire({
-      icon: 'error',
-      title: 'Houve um erro ao enviar seu serviço! Tente novamente mais tarde.'
-    })
-  }
-</script>
-<?php
-endif;
-unset($_SESSION['servicorecusado']);
-?>
-
-<body onload="recusado()">
-
-<!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
-<style>
+<body onload="produtorecusado()">
+  <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
+  <style>
         /* foto perfil */
         .action .profile{
           position: relative;
@@ -183,7 +172,23 @@ unset($_SESSION['servicorecusado']);
         .action .menu .un .sair:hover a{
           color: red;
         }
-</style>
+  </style>
+
+  <?php
+    if(isset($_SESSION['produtorecusado'])):
+    ?>
+    <script>
+    function produtorecusado(){
+      Swal.fire({
+        icon: 'error',
+        title: 'Houve um erro ao enviar seu produto! Tente novamente mais tarde.'
+      })
+    }
+    </script>
+    <?php
+    endif;
+    unset($_SESSION['produtorecusado']);
+  ?>
   <header>
     <nav style="background: #2d2a30;">
       <ul class="ul-nav">
@@ -220,14 +225,8 @@ unset($_SESSION['servicorecusado']);
       </ul>
     </nav>
 
-     <!-- NÃO TOCA AQUI PELO AMOR DE DEUS \/-->  
+     <!-- NÃO TOCA AQUI PELO AMOR DE DEUS-->  
      <script>
-        /*  $(document).ready(function(){
-          $('.btn').click(function(){
-            $('.items').toggleClass("show");
-            $('ul li').toggleClass("hide");
-          });
-        }); */
         const btn = document.getElementsByClassName('btn')[0];
           btn.addEventListener('click', function() {
           let items = document.getElementsByClassName('items');
@@ -240,53 +239,50 @@ unset($_SESSION['servicorecusado']);
           }
         });
      </script> 
-</header>
+  </header>
 
-<div class="container">
-  <h2>Serviços</h2>
-  <br>
-  <?php
-  if(isset($_SESSION['usuario']))
-    echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5>Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
-    echo '<form action="busca_serv.php" method="get">
-        <input type="text" name="nome" placeholder="Insira o nome do serviço">
+  <div class="container">
+    <h2>Produtos</h2>
+    <br>
+    <?php
+      if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5>Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
+      echo '<form action="busca.php" method="get">
+        <input type="text" name="nome" placeholder="Insira o nome do produto">
         <button><i class="fas fa-search"></i></button>
       </form>
-    <br>';
-  ?>
-  <main class="grid">
-
-    <?php 
-
-    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem";
-    $query = $mysqli->query($sql);
-      
-
-    while ($dados = $query->fetch_array()){
-      
-      echo '<article>
-      <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-      <div class="text">
-        <h3>';  echo $dados['nm_servico']; echo '</h3>
-        <p>'; echo $dados['ds_servico']; echo '</p>
-        <p> R$'; echo $dados['vl_servico']; echo '</p>
-        <form method="get" action="prodserv.php">
-          <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
-          <input type="submit" class="btnpart" value="Comprar">
-        </form>
-      </div>
-    </article>';
-
-    }
-
-      
-
+      <br>';
     ?>
+    <main class="grid">
+        <?php
 
-  </main>
+        $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_interpretacao LIKE '$nome_pesquisa'";
+        $query = $mysqli->query($sql);
 
-</div>
+        if(empty($dados)) echo '<h3>Não há produtos relacionados à sua pesquisa.</h3>';
+        else{
+            while($dados = $query->fetch_array()){
+                echo 
+                '<article>
+                    <img src="'; echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
+                    <div class="text">
+                            <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
+                            <p>'; echo $dados['ds_interpretacao']; echo '</p>
+                            <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
+                            <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
+                            <form method="get" action="produto.php">
+                                <input type="text" name="p" style="display: none;" value="'; echo $dados['cd_interpretacao']; echo '">
+                                <input type="submit" class="btnpart" value="Comprar">
+                            </form>
+                    </div> 
+                </article>';
+            }
+        }
 
+      ?>
+        
+    </main>
+  </div>  
+  
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
@@ -297,8 +293,8 @@ unset($_SESSION['servicorecusado']);
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
-
-  
+   
+  <!-- Botão menu mobile -->
   <script>
     let arrow = document.querySelectorAll(".arrow");
     for (var i = 0; i < arrow.length; i++) {
@@ -321,7 +317,6 @@ unset($_SESSION['servicorecusado']);
               const trocaMenu = document.querySelector('.menu');
               trocaMenu.classList.toggle('active');
             }
-  </script>
-  
+  </script>      
 </body>
 </html>
