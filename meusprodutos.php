@@ -46,9 +46,29 @@ if(isset($_SESSION['usuario'])){
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
-
+    <!--SWAL-->
+    <script src="swal.js"></script>
 </head>
-<body>
+<?php
+if(isset($_SESSION['alterado'])) $onload = "alterado";
+elseif(isset($_SESSION['removido'])) $onload = "removido";
+
+if(isset($_SESSION['alterado'])):
+?>
+<script>
+    function alterado(){
+        Swal.fire({
+            icon: 'success',
+            text: 'Produto alterado com sucesso!'
+        })
+    }
+</script>
+<?php
+endif;
+unset($_SESSION['alterado']);
+?>
+
+<body onload="<?php echo $onload ?>()">
     <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
     <style>
             /* foto perfil */
@@ -247,7 +267,7 @@ if(isset($_SESSION['usuario'])){
 
             <?php
 
-                $meusprods = "SELECT s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario'";
+                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario'";
                 $query = $mysqli->query($meusprods);
 
                 while($dados = $query->fetch_array()){
@@ -259,7 +279,10 @@ if(isset($_SESSION['usuario'])){
                             <p>'; echo $dados['ds_interpretacao']; echo '</p>
                             <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
                             <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
-                            <button class="btnpart">Visualizar</button>
+                            <form action="view_prod.php" method="get">
+                              <input type="text" style="display: none;" name="p" value="'; echo $dados['cd_interpretacao']; echo '">
+                              <button class="btnpart">Visualizar</button>
+                            </form>
                         </div>
                     </article>';
                 }
