@@ -66,6 +66,20 @@ if(isset($_SESSION['alterado'])):
 <?php
 endif;
 unset($_SESSION['alterado']);
+
+if(isset($_SESSION['removido'])):
+?>
+<script>
+  function removido(){
+    Swal.fire({
+      icon: 'success',
+      text: 'Produto excluído com sucesso!'
+    })
+  }
+</script>
+<?php
+endif;
+unset($_SESSION['removido']);
 ?>
 
 <body onload="<?php echo $onload ?>()">
@@ -246,12 +260,12 @@ unset($_SESSION['alterado']);
 
     <div class="container">
         <?php
-        $busca_prod = "SELECT COUNT(s.cd_interpretacao) AS codigo FROM tb_interpretacao AS s JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario'";
+        $busca_prod = "SELECT COUNT(s.cd_interpretacao) AS codigo FROM tb_interpretacao AS s JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
         $busca_prod = $mysqli->query($busca_prod);
         $busca_prod = $busca_prod->fetch_assoc();
         $confirma_prod = $busca_prod['codigo'];
         if($confirma_prod == 0){
-            echo '<h2>Você não possui produtos! Deseja publicar algum produto?</h2>';
+            echo '<h2>Você não possui produtos! Publique o seu primeiro produto.</h2>';
             echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5>Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
         }
         else{
@@ -267,7 +281,7 @@ unset($_SESSION['alterado']);
 
             <?php
 
-                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario'";
+                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
                 $query = $mysqli->query($meusprods);
 
                 while($dados = $query->fetch_array()){
@@ -292,12 +306,12 @@ unset($_SESSION['alterado']);
             </main>
         </div>
         <?php }
-        $busca_serv = "SELECT COUNT(s.cd_servico) AS codigoserv FROM tb_servico AS s JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario'";
+        $busca_serv = "SELECT COUNT(s.cd_servico) AS codigoserv FROM tb_servico AS s JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
         $busca_serv = $mysqli->query($busca_serv);
         $busca_serv = $busca_serv->fetch_assoc();
         $confirma_serv = $busca_serv['codigoserv'];
         if($confirma_serv == 0){
-            echo '<h2>Você não possui serviços! Deseja publicar algum serviço?</h2>';
+            echo '<h2>Você não possui serviços! Publique seu primeiro serviço.</h2>';
             echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5>Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
         }
         else{
@@ -311,7 +325,7 @@ unset($_SESSION['alterado']);
             <main class="grid">
                 <?php
 
-                    $meusserv = "SELECT s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario as u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario'";
+                    $meusserv = "SELECT s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario as u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
                     $queryserv = $mysqli->query($meusserv);
 
                     while($dados = $queryserv->fetch_array()){
@@ -333,224 +347,7 @@ unset($_SESSION['alterado']);
         <?php } ?>
     </div>
 
-    <footer class="footer-distributed">
-
-        <div class="footer-left">
-            <h3>String<span>Music</span></h3>
-
-            <p class="footer-links">
-                <a href="index.php">Início</a>
-                |
-                <a href="contato.php">Contatos</a>
-                |
-                <a href="login.php">Login</a>
-            </p>
-
-            <p class="footer-company-name">Copyright © 2021 <strong>StringMusic</strong>
-            <p style="color: white;">Todos os direitos reservados</p>
-        </div>
-
-        <div class="footer-center">
-            <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>ETEC Dra Ruth Cardoso</span>
-                    São Vicente / SP</p>
-            </div>
-
-            <div>
-                <i class="fa fa-phone"></i>
-                <p>+55 (13) 5555-5555</p>
-            </div>
-            <div>
-                <i class="fa fa-envelope"></i>
-                <p><a href="#">stringmsc@email.com</a></p>
-            </div>
-        </div>
-        <div class="footer-right">
-            <p class="footer-company-about">
-                <span>Sobre nós</span>
-                <strong>StringMusic</strong>
-            </p>
-            <div class="footer-icons">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <style>
-      /* footer */
-      footer {
-        position: fixed;
-        bottom: 0;
-      }
-
-      @media (max-height:800px) {
-        footer {
-            position: static;
-        }
-      }
-
-      .footer-distributed {
-        background-color: #2d2a30;
-        box-sizing: border-box;
-        width: 100%;
-        text-align: left;
-        font: bold 16px sans-serif;
-        padding: 50px 50px 60px 50px;
-        margin-top: 80px;
-      }
-
-      .footer-distributed .footer-left, .footer-distributed .footer-center, .footer-distributed .footer-right {
-        display: inline-block;
-        vertical-align: top;
-      }
-
-      /* Footer left */
-
-      .footer-distributed .footer-left {
-        width: 30%;
-      }
-
-      .footer-distributed h3 {
-        color: #ffffff;
-        font: normal 36px 'Cookie', cursive;
-        margin: 0;
-      }
-
-
-      .footer-distributed h3 span {
-        color: #3F71EA;
-      }
-
-      /* Footer links */
-
-      .footer-distributed .footer-links {
-        color: #ffffff;
-        margin: 20px 0 12px;
-      }
-
-      .footer-distributed .footer-links a {
-        display: inline-block;
-        line-height: 1.8;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .footer-distributed .footer-company-name {
-        color: #8f9296;
-        font-size: 14px;
-        font-weight: normal;
-        margin: 0;
-      }
-
-
-      /* Footer Center */
-
-      .footer-distributed .footer-center {
-        width: 35%;
-      }
-
-      .footer-distributed .footer-center i {
-        background-color: #33383b;
-        color: #ffffff;
-        font-size: 25px;
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 42px;
-        margin: 10px 15px;
-        vertical-align: middle;
-      }
-
-      .footer-distributed .footer-center i.fa-envelope {
-        font-size: 17px;
-        line-height: 38px;
-      }
-
-      .footer-distributed .footer-center p {
-        display: inline-block;
-        color: #ffffff;
-        vertical-align: middle;
-        margin: 0;
-      }
-
-      .footer-distributed .footer-center p span {
-        display: block;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 2;
-      }
-
-      .footer-distributed .footer-center p a {
-        color: #3F71EA;
-        text-decoration: none;
-        ;
-      }
-
-      /* Footer Right */
-
-      .footer-distributed .footer-right {
-        width: 30%;
-      }
-
-      .footer-distributed .footer-company-about {
-        line-height: 20px;
-        color: #92999f;
-        font-size: 13px;
-        font-weight: normal;
-        margin: 0;
-      }
-
-      .footer-distributed .footer-company-about span {
-        display: block;
-        color: #ffffff;
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 20px;
-      }
-
-      .footer-distributed .footer-icons {
-        margin-top: 25px;
-      }
-
-      .footer-distributed .footer-icons a {
-        display: inline-block;
-        width: 35px;
-        height: 35px;
-        cursor: pointer;
-        background-color: #33383b;
-        border-radius: 2px;
-        font-size: 20px;
-        color: #ffffff;
-        text-align: center;
-        line-height: 35px;
-        margin-right: 3px;
-        margin-bottom: 5px;
-      }
-
-      .footer-distributed .footer-icons a:hover {
-        background-color: #3F71EA;
-      }
-
-      .footer-links a:hover {
-        color: #3F71EA;
-      }
-
-      @media (max-width: 880px) {
-        .footer-distributed .footer-left, .footer-distributed .footer-center, .footer-distributed .footer-right {
-            display: block;
-            width: 100%;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .footer-distributed .footer-center i {
-            margin-left: 0;
-        }
-      }     
-    </style>
+    
     <style>
         .prod{
             margin-bottom: 20px;

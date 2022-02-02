@@ -70,7 +70,7 @@
       $result_prod = $sql_select_prod['i'] + 1;
 
       //insere o produto no banco
-      $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, qt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vqtd', '$vprc', '$result', '$codigousuario')";
+      $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, qt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vqtd', '$vprc', '$result', '$codigousuario', 0)";
       $query = $mysqli->query($sql_prod);
 
       //cria sessão só para confirmar se foi postado

@@ -69,7 +69,7 @@
       $result_serv = $sql_select_serv['s'] + 1;
 
       //insere o serviço no banco
-      $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario')";
+      $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0)";
       $query = $mysqli->query($sql_prod);
 
       //cria sessão só para confirmar se foi postado

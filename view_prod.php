@@ -300,8 +300,7 @@
                         <br>
                         <button type="submit" name="remover" value="r" class="btnpart" style="width: 200px;">
                             Remover <i class="fas fa-trash"></i>
-                        </button>
-                    
+                        </button> 
                 </div>
             </div>      
         </div>   
