@@ -66,7 +66,8 @@ else{
     }
 }
 
-
+$a = @$_POST['cor'];
+$b = "white";
 
 ?>
 <!DOCTYPE html>
@@ -102,6 +103,16 @@ else{
     <body onload="<?php echo $onload ?>">
     <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
     <style>
+      /* Fundo */
+      body{
+        background-color: <?php 
+          switch($a){ 
+            case "": echo $b; 
+            break; 
+            default: echo $a; 
+            break;
+          }?>;
+      }
       /* foto perfil */
       .action .profile{
         position: relative;
@@ -319,55 +330,59 @@ else{
                     <a href="editarperfil.php" class="boton-redes instagram fas fa-user-edit" style="background: linear-gradient(45deg, #336BB8, #37B82A);"><i class="icon-facebook"></i></a>
                     <a href="" class="boton-redes facebook fab fa-facebook-f"><i class="icon-facebook"></i></a>
                     <a href="" class="boton-redes instagram fab fa-instagram"><i class="icon-instagram"></i></a>
+                    <form action="painel.php" method="post" style="margin-top: .5rem;">
+                      <input type="button" style="display: none;" value="black" name="cor">
+                      <button type="submit" style="cursor: pointer;" class="boton-redes sun"><i class="fas fa-sun"></i></button>
+                    </form>
                 </div>
             </div>
         </section>
 
         <footer class="footer-distributed">
 
-        <div class="footer-left">
-            <h3>String<span>Music</span></h3>
+          <div class="footer-left">
+              <h3>String<span>Music</span></h3>
 
-            <p class="footer-links">
-                <a href="index.php">Início</a>
-                |
-                <a href="contato.php">Contatos</a>
-                |
-                <a href="login.php">Login</a>
-            </p>
+              <p class="footer-links">
+                  <a href="index.php">Início</a>
+                  |
+                  <a href="contato.php">Contatos</a>
+                  |
+                  <a href="login.php">Login</a>
+              </p>
 
-            <p class="footer-company-name">Copyright © 2021 <strong>StringMusic</strong>
-            <p style="color: white;">Todos os direitos reservados</p>
-        </div>
+              <p class="footer-company-name">Copyright © 2021 <strong>StringMusic</strong>
+              <p style="color: white;">Todos os direitos reservados</p>
+          </div>
 
-        <div class="footer-center">
-            <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>ETEC Dra Ruth Cardoso</span>
-                    São Vicente / SP</p>
-            </div>
+          <div class="footer-center">
+              <div>
+                  <i class="fa fa-map-marker"></i>
+                  <p><span>ETEC Dra Ruth Cardoso</span>
+                      São Vicente / SP</p>
+              </div>
 
-            <div>
-                <i class="fa fa-phone"></i>
-                <p>+55 (13) 5555-5555</p>
-            </div>
-            <div>
-                <i class="fa fa-envelope"></i>
-                <p><a href="#">stringmsc@email.com</a></p>
-            </div>
-        </div>
-        <div class="footer-right">
-            <p class="footer-company-about">
-                <span>Sobre nós</span>
-                <strong>StringMusic</strong>
-            </p>
-            <div class="footer-icons">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
+              <div>
+                  <i class="fa fa-phone"></i>
+                  <p>+55 (13) 5555-5555</p>
+              </div>
+              <div>
+                  <i class="fa fa-envelope"></i>
+                  <p><a href="#">stringmsc@email.com</a></p>
+              </div>
+          </div>
+          <div class="footer-right">
+              <p class="footer-company-about">
+                  <span>Sobre nós</span>
+                  <strong>StringMusic</strong>
+              </p>
+              <div class="footer-icons">
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-instagram"></i></a>
+                  <a href="#"><i class="fa fa-youtube"></i></a>
+              </div>
+          </div>
+        </footer>
 
     <style>
       /* footer */
