@@ -61,6 +61,12 @@
       $vnome = $_POST["nome"];
       $vdesc = $_POST["desc"];
       $vprc = $_POST["prc"];
+      $genero_musical = $_POST['genero_musical'];
+      if($genero_musical == ""){
+        $_SESSION['selecione_genero'];
+        header("Location: adicionarprod.php");
+        exit;
+      }
 
       //contator de serviços
       $sql_select_serv = "SELECT COUNT(cd_servico) as s FROM tb_servico";
@@ -69,7 +75,7 @@
       $result_serv = $sql_select_serv['s'] + 1;
 
       //insere o serviço no banco
-      $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0)";
+      $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
       $query = $mysqli->query($sql_prod);
 
       //cria sessão só para confirmar se foi postado

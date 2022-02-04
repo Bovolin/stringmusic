@@ -51,7 +51,6 @@ if(isset($_SESSION['usuario'])){
 <!-- fiquei com preguiça de criar um .css e coloquei aqui xD-->
 <style>
   .box{
-    width: 40%;
     margin: 0 auto;
     background: rgba(255,255,255,0.2);
     padding: 35px;
@@ -409,6 +408,21 @@ if(isset($_SESSION['usuario'])){
         .action .menu .un .sair:hover a{
           color: red;
         }
+
+        .box select{
+          background: #4d84e2;
+          color: #fff;
+          padding: 10px;
+          width: 150px;
+          height: 50px;
+          border: none;
+          border-radius: 10px;
+          font-size: 20px;
+          box-shadow: 0 5px 25px;
+          -webkit-appearance: button;
+          outline: none;
+          border-left: 10px;
+        }
 </style>
   <header>
     <nav style="background: #2d2a30;">
@@ -510,6 +524,31 @@ if(isset($_SESSION['usuario'])){
                     <label>Preço:</label>
                     <input type="text" name="prc" onkeypress="return Only(event)" placeholder="Digite o preço do serviço" class="field" id="valor" placeholder="R$" onkeyup="formatarMoeda()" required> 
                     <br>
+                    <label>Gênero Musical:</label>
+                    <div class="box">
+                      <select name="genero_musical" id="genero_musical">
+                        <option value="">Selecione</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="mpb">MPB</option>
+                        <option value="hm">Heavy Metal</option>
+                        <option value="rap">Rap</option>
+                        <option value="hh">Hip Hop</option>
+                        <option value="rock">Rock</option>
+                        <option value="pop">Pop</option>
+                        <option value="blues">Blues</option>
+                        <option value="funk">Funk</option>
+                        <option value="elect">Eletrônica</option>
+                        <option value="gosp">Gospel</option>
+                        <option value="pag">Pagode</option>
+                        <option value="samb">Samba</option>
+                        <option value="folc">Folclórica</option>
+                        <option value="erud">Erudita</option>
+                        <option value="clas">Clássica</option>
+                        <option value="sert">Sertanejo</option>
+                        <option value="forr">Forró</option>
+                        <option value="coun">Country</option>
+                      </select>
+                    </div>
                     <input type="submit" value="Enviar" class="btnpart">
                 </div>
                 
