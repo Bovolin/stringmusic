@@ -1,70 +1,69 @@
 <?php
-include ("conexao.php");
-include ("verifica_login.php");
-include ("background.php");
-$session = $_SESSION['usuario'];
+  include ("conexao.php");
+  include ("verifica_login.php");
+  $session = $_SESSION['usuario'];
 
-foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-  $semfoto = $conferefoto['confere'];
-}
-
-if(empty($semfoto)){
-  foreach($mysqli->query(
-  "SELECT us.nm_usuario AS nome, 
-  us.nm_email AS email, 
-  us.sg_especialidade AS especialidade,
-  us.ds_usuario AS descricao, 
-  DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-  u.sg_uf AS uf,
-  cm.nm_cidade AS cidade
-    FROM tb_usuario AS us JOIN tb_uf AS u
-      ON u.cd_uf = us.cd_uf
-        JOIN tb_cidade AS cm
-          ON cm.cd_cidade = us.cd_cidade
-            WHERE us.cd_usuario = '$session'") as $usuarios){
-  $nomeusuario = $usuarios['nome'];
-  $descricaousuario = $usuarios['descricao'];
-  $emailusuario = $usuarios['email'];
-  $nascimentousuario = $usuarios['nascimento'];
-  $ufusuario = $usuarios['uf'];
-  $cidadeusuario = $usuarios['cidade'];
-  $imgusuario = "imgs/user.png";
-
-  if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-  elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-  elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+  foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
+    $semfoto = $conferefoto['confere'];
   }
-}
-else{
-  foreach($mysqli->query(
+
+  if(empty($semfoto)){
+    foreach($mysqli->query(
     "SELECT us.nm_usuario AS nome, 
     us.nm_email AS email, 
-    us.sg_especialidade AS especialidade, 
+    us.sg_especialidade AS especialidade,
     us.ds_usuario AS descricao, 
     DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
     u.sg_uf AS uf,
-    cm.nm_cidade AS cidade,
-    i.path AS path
+    cm.nm_cidade AS cidade
       FROM tb_usuario AS us JOIN tb_uf AS u
         ON u.cd_uf = us.cd_uf
-          JOIN tb_imagem AS i
-            ON i.cd_imagem = us.cd_imagem
-              JOIN tb_cidade AS cm
-                ON cm.cd_cidade = us.cd_cidade
-                  WHERE us.cd_usuario = '$session'") as $usuarios){
+          JOIN tb_cidade AS cm
+            ON cm.cd_cidade = us.cd_cidade
+              WHERE us.cd_usuario = '$session'") as $usuarios){
     $nomeusuario = $usuarios['nome'];
     $descricaousuario = $usuarios['descricao'];
     $emailusuario = $usuarios['email'];
     $nascimentousuario = $usuarios['nascimento'];
-    $ufusuario = $usuarios['uf']; 
+    $ufusuario = $usuarios['uf'];
     $cidadeusuario = $usuarios['cidade'];
-    $imgusuario = $usuarios['path'];
-  
+    $imgusuario = "imgs/user.png";
+
     if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
     elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
     elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
     }
-}
+  }
+  else{
+    foreach($mysqli->query(
+      "SELECT us.nm_usuario AS nome, 
+      us.nm_email AS email, 
+      us.sg_especialidade AS especialidade, 
+      us.ds_usuario AS descricao, 
+      DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
+      u.sg_uf AS uf,
+      cm.nm_cidade AS cidade,
+      i.path AS path
+        FROM tb_usuario AS us JOIN tb_uf AS u
+          ON u.cd_uf = us.cd_uf
+            JOIN tb_imagem AS i
+              ON i.cd_imagem = us.cd_imagem
+                JOIN tb_cidade AS cm
+                  ON cm.cd_cidade = us.cd_cidade
+                    WHERE us.cd_usuario = '$session'") as $usuarios){
+      $nomeusuario = $usuarios['nome'];
+      $descricaousuario = $usuarios['descricao'];
+      $emailusuario = $usuarios['email'];
+      $nascimentousuario = $usuarios['nascimento'];
+      $ufusuario = $usuarios['uf']; 
+      $cidadeusuario = $usuarios['cidade'];
+      $imgusuario = $usuarios['path'];
+    
+      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+      }
+  }
 
 ?>
 <!DOCTYPE html>
@@ -100,20 +99,6 @@ else{
     <body onload="<?php echo $onload ?>">
     <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
     <style>
-      /* Fundo */
-      body{
-        background-color: <?php 
-          switch($_SESSION['default']){ 
-            case "": 
-              echo $_SESSION['cor'];
-              $_SESSION['bg_default'] = true;
-            break; 
-            default: 
-              echo $_SESSION['default'];
-              unset($_SESSION['bg_default']);
-            break;
-        }?>;
-      }
       /* foto perfil */
       .action .profile{
         position: relative;
@@ -263,12 +248,6 @@ else{
 
       <!-- NÃO TOCA AQUI PELO AMOR DE DEUS \/-->  
       <script>
-          /*  $(document).ready(function(){
-            $('.btn').click(function(){
-              $('.items').toggleClass("show");
-              $('ul li').toggleClass("hide");
-            });
-          }); */
           const btn = document.getElementsByClassName('btn')[0];
             btn.addEventListener('click', function() {
             let items = document.getElementsByClassName('items');
@@ -283,82 +262,65 @@ else{
       </script> 
     </header> 
         <section class="section-perfil-usuario">
-            <div class="perfil-usuario-fundo">
-                <div class="perfil-usuario-portal">
-                    <div class="perfil-usuario-avatar">
-                        <img src="<?php echo $imgusuario ?>" alt="">
-                        <button type="button" class="button-avatar" id="loadFileXml" onclick="document.getElementById('file').click();">
-                          <i class="fas fa-camera"></i>
-                          <?php
-                          if(isset($_SESSION['fotoinserida'])):
-                          ?>
-                          <script>
-                            function fotoenviada(){
-                              Swal.fire({
-                                icon: 'success',
-                                title: 'Foto enviada com sucesso!'
-                              })
-                            }
-                          </script>
-                          <?php
-                          endif;
-                          unset($_SESSION['fotoinserida']);
-                          ?>
-                          <form action="mudarfoto.php" method="post" id="form" onsubmit="fotoenviada()" enctype="multipart/form-data">
-                            <input type="file" style="display:none;" id="file" name="file" accept="image/png, image/jpg, image/jpeg">
-                          </form>
-                        </button>
-                    </div>
-                    <button type="button" class="button-fundo">
-                        <i class="fas fa-images"></i>Mudar fundo
-                    </button>
-                </div>
+          <div class="perfil-usuario-fundo">
+            <div class="perfil-usuario-portal">
+              <div class="perfil-usuario-avatar">
+                <img src="<?php echo $imgusuario ?>" alt="">
+                <button type="button" class="button-avatar" id="loadFileXml" onclick="document.getElementById('file').click();">
+                  <i class="fas fa-camera"></i>
+                  <?php
+                    if(isset($_SESSION['fotoinserida'])):
+                  ?>
+                  <script>
+                    function fotoenviada(){
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Foto enviada com sucesso!'
+                      })
+                    }
+                  </script>
+                  <?php
+                    endif;
+                    unset($_SESSION['fotoinserida']);
+                  ?>
+                  <form action="mudarfoto.php" method="post" id="form" onsubmit="fotoenviada()" enctype="multipart/form-data">
+                    <input type="file" style="display:none;" id="file" name="file" accept="image/png, image/jpg, image/jpeg">
+                  </form>
+                </button>
+              </div>
+              <button type="button" class="button-fundo">
+                <i class="fas fa-images"></i>Mudar fundo
+              </button>
             </div>
-            <div class="perfil-usuario-body">
-                <div class="perfil-usuario-descricao">
-                    <h3 class="titulo"><?php echo $nomeusuario?></h3>
-                    <p class="texto"><?php echo $descricaousuario?></p> 
-                </div>
-                <div class="perfil-usuario-footer">
-                    <ul class="dados">
-                        <li><i class="icono fas fa-map-marked-alt" aria-hidden="true"> Localização: </i></li><?php echo $cidadeusuario . ', ' . $ufusuario?>
-                        <li><i class="icono fas fa-envelope"> Email para contato: </i></li><?php echo $emailusuario?>
-                        <li><i class="icono fa fa-calendar" aria-hidden="true"> Ano de nascimento: </i></li><?php echo $nascimentousuario?>
-                        <li><i class="icono fas fa-music"> Tipo de usuário: </i></li><?php echo $especialidadeusuario?>
-                    </ul>
-                </div>
-                <div class="redes-sociais">
-                    <a href="editarperfil.php" class="boton-redes instagram fas fa-user-edit" style="background: linear-gradient(45deg, #336BB8, #37B82A);"><i class="icon-facebook"></i></a>
-                    <a href="" class="boton-redes facebook fab fa-facebook-f"><i class="icon-facebook"></i></a>
-                    <a href="" class="boton-redes instagram fab fa-instagram"><i class="icon-instagram"></i></a>
-                    <form action="painel.php" method="post" style="margin-top: .5rem;">
-                      <?php
-                        if(isset($_SESSION['bg_default'])){
-                      ?>
-                      <input type="text" style="display: none;" value="#272727" name="default">
-                      <?php
-                        }
-                        else{
-                      ?>
-                      <input type="text" style="display: none;" value="white" name="cor">
-                      <?php
-                        }
-
-                        if(isset($_SESSION['bg_default'])){
-                      ?>
-                      <button type="submit" style="cursor: pointer;" class="boton-redes sun"><i class="fas fa-sun"></i></button>
-                      <?php
-                        } 
-                        else{
-                      ?>
-                      <button type="submit" style="cursor: pointer;" class="boton-redes moon"><i class="fas fa-moon"></i></button>
-                      <?php
-                        }
-                      ?>
-                    </form>
-                </div>
+          </div>
+          <div class="perfil-usuario-body">
+            <div class="perfil-usuario-descricao">
+              <h3 class="titulo"><?php echo $nomeusuario?></h3>
+              <p class="texto"><?php echo $descricaousuario?></p> 
             </div>
+            <div class="perfil-usuario-footer">
+              <ul class="dados">
+                <li><i class="icono fas fa-map-marked-alt" aria-hidden="true"> Localização: </i></li>
+                <h4><?php echo $cidadeusuario . ', ' . $ufusuario?></h4>
+                <li><i class="icono fas fa-envelope"> Email para contato: </i></li>
+                <h4><?php echo $emailusuario?></h4>
+                <li><i class="icono fa fa-calendar" aria-hidden="true"> Ano de nascimento: </i></li>
+                <h4><?php echo $nascimentousuario?></h4>
+                <li><i class="icono fas fa-music"> Tipo de usuário: </i></li>
+                <h4><?php echo $especialidadeusuario?></h4>
+              </ul>
+            </div>
+            <div class="redes-sociais">
+              <a href="editarperfil.php" class="boton-redes instagram fas fa-user-edit" style="background: linear-gradient(45deg, #336BB8, #37B82A);"><i class="icon-facebook"></i></a>
+              <a href="" class="boton-redes facebook fab fa-facebook-f"><i class="icon-facebook"></i></a>
+              <a href="" class="boton-redes instagram fab fa-instagram"><i class="icon-instagram"></i></a>
+              <input type="checkbox" name="switch-theme" id="switch">
+              <label for="switch">Toggle</label>
+            </div>
+          </div>
         </section>
+
+        <script src="script_dark.js"></script>
 
         <footer class="footer-distributed">
 

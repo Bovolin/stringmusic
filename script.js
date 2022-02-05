@@ -152,7 +152,3 @@ function formatarMoeda() {
   elemento.value = valor;
   if(valor == 'NaN') elemento.value = '';
 }
-
-function enviado(){
-  alert("Produto publicado");
-}
