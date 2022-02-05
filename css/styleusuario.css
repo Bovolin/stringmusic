@@ -181,9 +181,29 @@ body{
 
 .section-perfil-usuario .boton-redes.sun {
   background: white;
+  transition: background 1s, color 1s;
 }
 .section-perfil-usuario .boton-redes.sun i{
-  color: black;
+  color: #272727;
+}
+.section-perfil-usuario .boton-redes.sun:hover {
+  background: #272727;
+}
+.section-perfil-usuario .boton-redes.sun:hover i{
+  color: white;
+}
+.section-perfil-usuario .boton-redes.moon {
+  background: #1a1a1a;
+  transition: background 1s, color 1s;
+}
+.section-perfil-usuario .boton-redes.moon i{
+  color: white;
+}
+.section-perfil-usuario .boton-redes.moon:hover {
+  background: white;
+}
+.section-perfil-usuario .boton-redes.moon:hover i{
+  color: #1a1a1a;
 }
 
 /* Adaoptação aos dispositivos */

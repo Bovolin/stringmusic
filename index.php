@@ -1,6 +1,7 @@
 <?php
 session_start();
 include ("conexao.php");
+include ("background.php");
 
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
@@ -51,6 +52,18 @@ if(isset($_SESSION['usuario'])){
 
 <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
 <style>
+      /* Fundo */
+      body{
+        background-color: <?php 
+          switch($_SESSION['default']){ 
+            case "": 
+              echo $_SESSION['cor'];
+            break; 
+            default: 
+              echo $_SESSION['default'];
+            break;
+        }?>;
+      }
       /* foto perfil */
       .action .profile{
         position: relative;

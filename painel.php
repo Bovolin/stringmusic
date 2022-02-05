@@ -1,7 +1,7 @@
 <?php
 include ("conexao.php");
 include ("verifica_login.php");
-
+include ("background.php");
 $session = $_SESSION['usuario'];
 
 foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
@@ -66,9 +66,6 @@ else{
     }
 }
 
-$a = @$_POST['cor'];
-$b = "white";
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -106,12 +103,16 @@ $b = "white";
       /* Fundo */
       body{
         background-color: <?php 
-          switch($a){ 
-            case "": echo $b; 
+          switch($_SESSION['default']){ 
+            case "": 
+              echo $_SESSION['cor'];
+              $_SESSION['bg_default'] = true;
             break; 
-            default: echo $a; 
+            default: 
+              echo $_SESSION['default'];
+              unset($_SESSION['bg_default']);
             break;
-          }?>;
+        }?>;
       }
       /* foto perfil */
       .action .profile{
@@ -331,8 +332,29 @@ $b = "white";
                     <a href="" class="boton-redes facebook fab fa-facebook-f"><i class="icon-facebook"></i></a>
                     <a href="" class="boton-redes instagram fab fa-instagram"><i class="icon-instagram"></i></a>
                     <form action="painel.php" method="post" style="margin-top: .5rem;">
-                      <input type="button" style="display: none;" value="black" name="cor">
+                      <?php
+                        if(isset($_SESSION['bg_default'])){
+                      ?>
+                      <input type="text" style="display: none;" value="#272727" name="default">
+                      <?php
+                        }
+                        else{
+                      ?>
+                      <input type="text" style="display: none;" value="white" name="cor">
+                      <?php
+                        }
+
+                        if(isset($_SESSION['bg_default'])){
+                      ?>
                       <button type="submit" style="cursor: pointer;" class="boton-redes sun"><i class="fas fa-sun"></i></button>
+                      <?php
+                        } 
+                        else{
+                      ?>
+                      <button type="submit" style="cursor: pointer;" class="boton-redes moon"><i class="fas fa-moon"></i></button>
+                      <?php
+                        }
+                      ?>
                     </form>
                 </div>
             </div>
