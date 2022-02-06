@@ -1,6 +1,6 @@
 <?php
-  session_start();
   include ("conexao.php");
+  include ("verifica_login.php");
 
   if(isset($_SESSION['usuario'])){
     $session = $_SESSION['usuario'];
@@ -81,7 +81,7 @@
 
       //cria sessão só para confirmar se foi postado
       $_SESSION['produtoenviado'] = true;
-
+      
       //redireciona o cliente para a página de produtos
       header("Location: adicionarprod.php");
       die();

@@ -104,7 +104,7 @@ else{
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="css/styleusuario.css" />
+        <link rel="stylesheet" href="css/styleusuarios.css" />
         <script src="swal.js"></script>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
@@ -112,119 +112,7 @@ else{
     </head>
 
     <body>
-    <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
-    <style>
-      /* foto perfil */
-      .action .profile{
-        position: relative;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        overflow: hidden;
-        cursor: pointer;
-      }
 
-      .action .profile img{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .action .menu{
-        position: absolute;
-        top: 120px;
-        right: -28%;
-        padding: 10px 20px;
-        background-color: rgb(228, 228, 228);
-        width: 200px;
-        box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-        border-radius: 15px;
-        transition: 0.5s;
-        visibility: hidden;
-        opacity: 0;
-        z-index: 1;
-      }
-
-      .action .menu.active{
-        top: 115%;
-        visibility: visible;
-        opacity: 1;
-      }
-
-      .action .menu::before{
-        content: '';
-        position: absolute;
-        top: -5px;
-        right: 28px;
-        width: 20px;
-        height: 20px;
-        background-color: rgb(197, 197, 197);
-        transform: rotate(45deg);
-      }
-
-      .action .menu h3{
-        width: 100%;
-        text-align: center;
-        font-size: 18px;
-        padding: 20px 0;
-        font-weight: 500;
-        color: #555;
-        line-height: 1.2em;
-      }
-
-      .action .menu h3 span{
-        font-size: 14px;
-        color: #555;
-        font-weight: 400;
-      }
-
-      .action .menu ul li{
-        list-style: none;
-        padding: 10px 8px;
-        border-top :1px solid rgba (0,0,0,0.05);
-        display: flex;
-        align-items: center;
-      }
-
-      .action .menu ul li img{
-        max-width: 20px;
-        margin-right: 10px;
-        opacity: 0.5;
-        transition: 0.5s;
-      }
-
-      .action .menu ul li:hover img{
-        opacity: 1;
-      }
-
-      .action .menu ul li i{
-        opacity: 0.5;
-        transition: 0.5s;
-      }
-
-      .action .menu ul li:hover i{
-        opacity: 1;
-      }
-
-      .action .menu ul li a{
-        display: inline-block;
-        text-decoration: none;
-        color: #555;
-        font-weight: 500;
-        transition: 0.5s;
-      }
-
-      .action .menu ul .info:hover a{
-        color: blue;
-      }
-
-      .action .menu ul .sair:hover a{
-        color: red;
-      }
-    </style>
     <header>
       <nav style="background: #2d2a30;">
         <ul class="ul-nav">
@@ -248,6 +136,9 @@ else{
                       <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                       <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                       <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                      <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                      <label for="switch" class="toggle">Toggle</label>
+                      <script src="script_dark.js"></script></li>
                     </ul>
                 </div>
               </div>
@@ -298,10 +189,14 @@ else{
                 </div>
                 <div class="perfil-usuario-footer">
                     <ul class="dados">
-                        <li><i class="icono fas fa-map-marked-alt" aria-hidden="true"> Localização: </i></li><?php echo $cidadeusuario . ', ' . $ufusuario?>
-                        <li><i class="icono fas fa-envelope"> Email para contato: </i></li><?php echo $emailusuario?>
-                        <li><i class="icono fa fa-calendar" aria-hidden="true"> No site desde: </i></li><?php echo $tempousuario?>
-                        <li><i class="icono fas fa-music"> Tipo de usuário: </i></li><?php echo $especialidadeusuario?>
+                        <li><i class="icono fas fa-map-marked-alt" aria-hidden="true"> Localização: </i></li>
+                        <h4><?php echo $cidadeusuario . ', ' . $ufusuario?></h4>
+                        <li><i class="icono fas fa-envelope"> Email para contato: </i></li>
+                        <h4><?php echo $emailusuario?></h4>
+                        <li><i class="icono fa fa-calendar" aria-hidden="true"> No site desde: </i></li>
+                        <h4><?php echo $tempousuario?></h4>
+                        <li><i class="icono fas fa-music"> Tipo de usuário: </i></li>
+                        <h4><?php echo $especialidadeusuario?></h4>
                     </ul>
                 </div>
                 <div class="redes-sociais">
@@ -320,12 +215,12 @@ else{
         $busca_prod = $busca_prod->fetch_assoc();
         $confirma_prod = $busca_prod['codigo'];
         if($confirma_prod == 0){
-            echo '<h2>O usuário não possui produtos!</h2>';
+            echo '<h2 style="color: var(--color-headings)>O usuário não possui produtos!</h2>';
         }
         else{
         ?>
         <div class="prod">
-            <h2>Produtos</h2>
+            <h2 style="color: var(--color-headings)">Produtos</h2>
             <main class="grid">
 
             <?php
@@ -360,12 +255,12 @@ else{
         $busca_serv = $busca_serv->fetch_assoc();
         $confirma_serv = $busca_serv['codigoserv'];
         if($confirma_serv == 0){
-            echo '<h2>O usuário não possui serviços!</h2>';
+            echo '<h2 style="color: var(--color-headings)">O usuário não possui serviços!</h2>';
         }
         else{
         ?>
         <div class="serv">
-            <h2>Serviços</h2>
+            <h2 style="color: var(--color-headings)">Serviços</h2>
             <main class="grid">
                 <?php
 
@@ -642,7 +537,7 @@ else{
 
         .grid > article{
         border: none;
-        background-color: white;
+        background-color: var(--bg-panel);
         box-shadow: 10px 8px 15px 4px rgba(0,0,0,0.3);
         text-align: center;
         width: 260px;
@@ -657,16 +552,16 @@ else{
 
         .grid > article img{
         width: 50%;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
         }
 
         .text{
         padding: 0 20px 20px;
+        color: var(--color-text);
         }
 
         .text h3{
         text-transform: uppercase;
+        color: var(--color-headings);
         }
 
         .btnpart{
@@ -683,7 +578,7 @@ else{
         outline: none;
         font-size: 16px;
         padding-left: 15px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--bg-panel);
         border-bottom-width: 2px;
         transition: all 0.3s ease;
         }

@@ -264,11 +264,6 @@ textarea{
   animation: colors 10s ease infinite;
 }
 
-.field:focus{
-    border: 2px solid rgb(12, 87, 185);
-    background-color: #fff;
-}
-
 @media screen and (max-width: 880px){
 	.contact-box{
 		grid-template-columns: 1fr;

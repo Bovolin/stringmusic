@@ -44,7 +44,7 @@ if(isset($_SESSION['usuario'])){
     <meta charset="UTF-8">
     <title>StringMusic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="script.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -214,6 +214,9 @@ unset($_SESSION['servicorecusado']);
                       <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                       <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                       <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                      <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                      <label for="switch" class="toggle">Toggle</label>
+                      <script src="script_dark.js"></script></li>
                     </ul>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 <?php
-session_start();
 include ("conexao.php");
+include ("verifica_login.php");
 
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
@@ -146,12 +146,6 @@ if(isset($_SESSION['usuario'])){
 
      <!-- NÃO TOCA AQUI PELO AMOR DE DEUS \/-->  
      <script>
-        /*  $(document).ready(function(){
-          $('.btn').click(function(){
-            $('.items').toggleClass("show");
-            $('ul li').toggleClass("hide");
-          });
-        }); */
         const btn = document.getElementsByClassName('btn')[0];
           btn.addEventListener('click', function() {
           let items = document.getElementsByClassName('items');

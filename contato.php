@@ -37,7 +37,7 @@ if(isset($_SESSION['usuario'])){
     <meta charset="UTF-8">
     <title>StringMusic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/stylecontatos.css">
+    <link rel="stylesheet" href="css/stylecontato.css">
     <script src="script.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">

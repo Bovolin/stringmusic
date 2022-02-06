@@ -126,7 +126,7 @@ if(isset($_SESSION['usuario'])){
     <?php
       if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5>Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
       echo '<form action="busca.php" method="get">
-        <input type="text" name="nome" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
+        <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
         <button class="btnpart" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
       </form>
       <br>';
@@ -157,17 +157,6 @@ if(isset($_SESSION['usuario'])){
         
     </main>
   </div>  
-  
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
    
   <!-- Botão menu mobile -->
   <script>
