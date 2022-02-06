@@ -477,7 +477,7 @@ animation: colors 10s ease infinite;
 	width: 100%;
 	border: 2px solid #ccc;
 	outline: none;
-	background-color: rgba(230, 230, 230, 0.6);
+	background-color: var(--bg-panel);
 	padding: 0.5rem 1rem;
 	font-size: 1.1rem;
 	margin-bottom: 22px;
@@ -485,5 +485,5 @@ animation: colors 10s ease infinite;
 }
 
 .field:hover{
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: var(--color-text);
 }

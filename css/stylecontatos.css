@@ -7,8 +7,58 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html{
+    --bg: #FCFCFC;
+    --bg-panel: #EBEBEB;
+    --color-headings: black;
+    --color-text: #333333;
+}
+
 body{
-  align-items: center;
+    background-color: var(--bg) !important;
+    align-items: center;
+}
+
+input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+  
+label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 52px;
+    height: 27px;
+    background: grey;
+    float: right;
+    border-radius: 100px;
+    position: relative;
+}
+  
+label::after{
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+  
+input:checked + label {
+    background-color: #358cfd;
+}
+  
+input:checked + label::after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+}
+  
+label:active:after {
+    width: 45px;
 }
 
 nav{
@@ -126,7 +176,7 @@ nav ul li.btn.hide i:before{
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	background-color: #fff;
+	background-color: var(--bg-panel);
 	box-shadow: 0px 0px 19px 5px rgba(0,0,0,0.19);
 }
 
@@ -142,16 +192,19 @@ nav ul li.btn.hide i:before{
 
 .right input{
   border-radius: 5px;
+  color: var(--color-text);
 }
 
 .right textarea{
   border-radius: 5px;
+  color: var(--color-text);
 }
 
 h2{
 	position: relative;
 	padding: 0 0 10px;
 	margin-bottom: 10px;
+  color: var(--color-headings);
 }
 
 h2:after{
@@ -170,7 +223,7 @@ h2:after{
 	width: 100%;
 	border: 2px solid #ccc;
 	outline: none;
-	background-color: rgba(230, 230, 230, 0.6);
+	background-color: var(--bg-panel);
 	padding: 0.5rem 1rem;
 	font-size: 1.1rem;
 	margin-bottom: 22px;
@@ -178,7 +231,7 @@ h2:after{
 }
 
 .field:hover{
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: var(--bg);
 }
 
 textarea{
@@ -191,19 +244,19 @@ textarea{
 	width: 100% !important;
 	padding: 0.5rem 1rem !important;
 	background-color: #358CFD !important;
-  color: #fff !important;
-  font-size: 1.1rem !important;
-  border: none !important;
-	outline: none !important;
-	cursor: pointer v;
-  transition: .3s !important;
-  border-radius: 25px !important;
-  outline: none !important;
-  font-size: 16px !important;
-  padding-left: 15px !important;
-  border: 1px solid #ccc !important;
-  border-bottom-width: 2px !important;
-  transition: all 0.3s ease !important;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    border: none !important;
+    outline: none !important;
+    cursor: pointer;
+    transition: .3s !important;
+    border-radius: 25px !important;
+    outline: none !important;
+    font-size: 16px !important;
+    padding-left: 15px !important;
+    border: 1px solid var(--bg-panel) !important;
+    border-bottom-width: 2px !important;
+    transition: all 0.3s ease !important;
 }
 
 .btn2:hover{
@@ -243,4 +296,119 @@ textarea{
   .home-section .home-content .bx-menu{
     display: none;
   }
+}
+
+/* foto perfil */
+.action .profile{
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.action .profile img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.action .menu{
+  position: absolute;
+  top: 120px;
+  right: -28%;
+  padding: 10px 20px;
+  background-color: rgb(228, 228, 228);
+  width: 200px;
+  box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  transition: 0.5s;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+}
+
+.action .menu.active{
+  top: 115%;
+  visibility: visible;
+  opacity: 1;
+}
+
+.action .menu::before{
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 28px;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(197, 197, 197);
+  transform: rotate(45deg);
+}
+
+.action .menu h3{
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px 0;
+  font-weight: 500;
+  color: #555;
+  line-height: 1.2em;
+}
+
+.action .menu h3 span{
+  font-size: 14px;
+  color: #555;
+  font-weight: 400;
+}
+
+.action .menu .un{
+  padding-left: 0;
+}
+
+.action .menu .un li{
+  list-style: none;
+  padding: 10px 8px;
+  border-top :1px solid rgba (0,0,0,0.05);
+  display: flex;
+  align-items: center;
+}
+
+.action .menu .un li img{
+  max-width: 20px;
+  margin-right: 10px;
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+.action .menu .un li:hover img{
+  opacity: 1;
+}
+
+.action .menu .un li i{
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+.action .menu .un li:hover i{
+  opacity: 1;
+}
+
+.action .menu .un li a{
+  display: inline-block;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: 0.5s;
+}
+
+.action .menu .un .info:hover a{
+  color: blue;
+}
+
+.action .menu .un .sair:hover a{
+  color: red;
 }

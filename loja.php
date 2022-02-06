@@ -37,7 +37,7 @@ if(isset($_SESSION['usuario'])){
     <meta charset="UTF-8">
     <title>StringMusic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="script.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -49,123 +49,6 @@ if(isset($_SESSION['usuario'])){
 
 </head>
 <body onload="produtorecusado()">
-  <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
-  <style>
-        /* foto perfil */
-        .action .profile{
-          position: relative;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          overflow: hidden;
-          cursor: pointer;
-        }
-
-        .action .profile img{
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .action .menu{
-          position: absolute;
-          top: 120px;
-          right: -28%;
-          padding: 10px 20px;
-          background-color: rgb(228, 228, 228);
-          width: 200px;
-          box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-          border-radius: 15px;
-          transition: 0.5s;
-          visibility: hidden;
-          opacity: 0;
-          z-index: 1;
-        }
-
-        .action .menu.active{
-          top: 115%;
-          visibility: visible;
-          opacity: 1;
-        }
-
-        .action .menu::before{
-          content: '';
-          position: absolute;
-          top: -5px;
-          right: 28px;
-          width: 20px;
-          height: 20px;
-          background-color: rgb(197, 197, 197);
-          transform: rotate(45deg);
-        }
-
-        .action .menu h3{
-          width: 100%;
-          text-align: center;
-          font-size: 18px;
-          padding: 20px 0;
-          font-weight: 500;
-          color: #555;
-          line-height: 1.2em;
-        }
-
-        .action .menu h3 span{
-          font-size: 14px;
-          color: #555;
-          font-weight: 400;
-        }
-
-        .action .menu .un{
-          padding-left: 0;
-        }
-
-        .action .menu .un li{
-          list-style: none;
-          padding: 10px 8px;
-          border-top :1px solid rgba (0,0,0,0.05);
-          display: flex;
-          align-items: center;
-        }
-
-        .action .menu .un li img{
-          max-width: 20px;
-          margin-right: 10px;
-          opacity: 0.5;
-          transition: 0.5s;
-        }
-
-        .action .menu .un li:hover img{
-          opacity: 1;
-        }
-
-        .action .menu .un li i{
-          opacity: 0.5;
-          transition: 0.5s;
-        }
-
-        .action .menu .un li:hover i{
-          opacity: 1;
-        }
-
-        .action .menu .un li a{
-          display: inline-block;
-          text-decoration: none;
-          color: #555;
-          font-weight: 500;
-          transition: 0.5s;
-        }
-
-        .action .menu .un .info:hover a{
-          color: blue;
-        }
-
-        .action .menu .un .sair:hover a{
-          color: red;
-        }
-  </style>
 
   <?php
     if(isset($_SESSION['produtorecusado'])):
@@ -205,6 +88,9 @@ if(isset($_SESSION['usuario'])){
                       <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                       <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                       <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                      <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                      <label for="switch">Toggle</label>
+                      <script src="script_dark.js"></script></li>
                     </ul>
                 </div>
               </div>
@@ -240,8 +126,8 @@ if(isset($_SESSION['usuario'])){
     <?php
       if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5>Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
       echo '<form action="busca.php" method="get">
-        <input type="text" name="nome" placeholder="Insira o nome do produto">
-        <button><i class="fas fa-search"></i></button>
+        <input type="text" name="nome" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
+        <button class="btnpart" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
       </form>
       <br>';
     ?>
