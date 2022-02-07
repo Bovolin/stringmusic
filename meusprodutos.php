@@ -225,7 +225,7 @@ unset($_SESSION['removido']);
                                 <p>R$'; echo $dados['vl_servico']; echo '</p>
                                 <form method="get" action="view_serv.php">
                                     <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
-                                    <input type="submit" class="btnpart" value="Comprar">
+                                    <button class="btnpart">Visualizar</button>
                                 </form>
                             </div>
                         </article>';
