@@ -290,7 +290,7 @@ textarea{
 
 .grid > article{
   border: none;
-  background-color: white;
+  background-color: var(--bg-panel);
   box-shadow: 10px 8px 15px 4px rgba(0,0,0,0.3);
   text-align: center;
   width: 260px;
@@ -305,16 +305,16 @@ textarea{
 
 .grid > article img{
   width: 50%;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
 }
 
 .text{
   padding: 0 20px 20px;
+  color: var(--color-text);
 }
 
 .text h3{
   text-transform: uppercase;
+  color: var(--color-headings);
 }
 
 @media (max-width: 768px){
@@ -435,7 +435,7 @@ textarea{
 
   .comments-heading span{
       font-size: 1.3rem;
-      color: #252525;
+      color: var(--color-headings);
       margin-bottom: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -452,7 +452,7 @@ textarea{
   .comments-box{
       width: 500px;
       box-shadow: 2px 2px 30px rgba(0,0,0,0.5);
-      background-color: #fff;
+      background-color: var(--bg-panel);
       padding: 20px;
       margin: 15px;
       cursor: pointer;
@@ -484,13 +484,13 @@ textarea{
   }
 
   .name-user strong{
-      color: #3d3d3d;
+      color: var(--color-headings);
       font-size: 1.1rem;
       letter-spacing: 0.5px;
   }
 
   .name-user span{
-      color: #979797;
+      color: var(--color-text);
       font-size: 0.8rem;
   }
 
@@ -507,7 +507,7 @@ textarea{
 
   .user-comment p{
       font-size: 0.9rem;
-      color: #4b4b4b;
+      color: var(--color-text);
   }
 
   /* foto perfil */

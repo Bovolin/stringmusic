@@ -7,7 +7,7 @@ if(!isset($_GET['n'])){
     exit;
 }
 
-$nome_pesquisa = "%" . trim($_GET['n']) . "%";
+$nome_pesquisa = $_GET['n'];
 
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
@@ -132,7 +132,7 @@ if(isset($_SESSION['usuario'])){
     <br>
     <?php
       if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5>Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
-      echo '<form action="busca.php" method="get">
+      echo '<form action="" method="get">
         <input type="text" name="nome" placeholder="Insira o nome do produto" class="field" style="width: 300px;">
         <button class="btnpart" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
       </form>
@@ -140,11 +140,9 @@ if(isset($_SESSION['usuario'])){
     ?>
     <main class="grid">
         <?php
+        $query = $mysqli->query("SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_interpretacao LIKE '%$nome_pesquisa%' AND s.nm_inativo = 0");
 
-        $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_interpretacao LIKE '$nome_pesquisa' AND s.nm_inativo = 0";
-        $query = $mysqli->query($sql);
-
-        if(empty($dados)) echo '<h3 style="color: var(--color-headings)">Não há produtos relacionados à sua pesquisa.</h3>';
+        if(empty($query)) echo '<h3 style="color: var(--color-headings)">Não há produtos relacionados à sua pesquisa.</h3>';
         else{
             while($dados = $query->fetch_array()){
                 echo 

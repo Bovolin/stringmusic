@@ -7,7 +7,7 @@ if(!isset($_GET['nome'])){
     exit;
 }
 
-$nome_pesquisa = "%" . trim($_GET['nome']) . "%";
+$nome_pesquisa = $_GET['n'];
 
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
@@ -74,123 +74,6 @@ unset($_SESSION['servicorecusado']);
 
 <body onload="recusado()">
 
-<!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
-<style>
-        /* foto perfil */
-        .action .profile{
-          position: relative;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          overflow: hidden;
-          cursor: pointer;
-        }
-
-        .action .profile img{
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .action .menu{
-          position: absolute;
-          top: 120px;
-          right: -28%;
-          padding: 10px 20px;
-          background-color: rgb(228, 228, 228);
-          width: 200px;
-          box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-          border-radius: 15px;
-          transition: 0.5s;
-          visibility: hidden;
-          opacity: 0;
-          z-index: 1;
-        }
-
-        .action .menu.active{
-          top: 115%;
-          visibility: visible;
-          opacity: 1;
-        }
-
-        .action .menu::before{
-          content: '';
-          position: absolute;
-          top: -5px;
-          right: 28px;
-          width: 20px;
-          height: 20px;
-          background-color: rgb(197, 197, 197);
-          transform: rotate(45deg);
-        }
-
-        .action .menu h3{
-          width: 100%;
-          text-align: center;
-          font-size: 18px;
-          padding: 20px 0;
-          font-weight: 500;
-          color: #555;
-          line-height: 1.2em;
-        }
-
-        .action .menu h3 span{
-          font-size: 14px;
-          color: #555;
-          font-weight: 400;
-        }
-
-        .action .menu .un{
-          padding-left: 0;
-        }
-
-        .action .menu .un li{
-          list-style: none;
-          padding: 10px 8px;
-          border-top :1px solid rgba (0,0,0,0.05);
-          display: flex;
-          align-items: center;
-        }
-
-        .action .menu .un li img{
-          max-width: 20px;
-          margin-right: 10px;
-          opacity: 0.5;
-          transition: 0.5s;
-        }
-
-        .action .menu .un li:hover img{
-          opacity: 1;
-        }
-
-        .action .menu .un li i{
-          opacity: 0.5;
-          transition: 0.5s;
-        }
-
-        .action .menu .un li:hover i{
-          opacity: 1;
-        }
-
-        .action .menu .un li a{
-          display: inline-block;
-          text-decoration: none;
-          color: #555;
-          font-weight: 500;
-          transition: 0.5s;
-        }
-
-        .action .menu .un .info:hover a{
-          color: blue;
-        }
-
-        .action .menu .un .sair:hover a{
-          color: red;
-        }
-</style>
   <header>
     <nav style="background: #2d2a30;">
       <ul class="ul-nav">
@@ -258,8 +141,8 @@ unset($_SESSION['servicorecusado']);
   <?php
   if(isset($_SESSION['usuario']))
   echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5>Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
-  echo '<form action="busca_serv.php" method="get">
-      <input type="text" name="nome" placeholder="Insira o nome do serviço">
+  echo '<form action="" method="get">
+      <input type="text" name="n" placeholder="Insira o nome do serviço">
       <button><i class="fas fa-search"></i></button>
     </form>
   <br>';
@@ -268,10 +151,10 @@ unset($_SESSION['servicorecusado']);
 
     <?php 
 
-    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_servico LIKE '$nome_pesquisa' AND s.nm_inativo = 0";
+    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_servico LIKE '%$nome_pesquisa%' AND s.nm_inativo = 0";
     $query = $mysqli->query($sql);
 
-    if(empty($dados)) echo '<h3>Não há serviços relacionados à sua pesquisa.</h3>';
+    if(empty($query)) echo '<h3>Não há serviços relacionados à sua pesquisa.</h3>';
     else{
         while ($dados = $query->fetch_array()){  
             echo '<article>

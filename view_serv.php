@@ -1,56 +1,57 @@
 <?php
-session_start();
-include ("conexao.php");
+    session_start();
+    include ("conexao.php");
 
-$c = $_GET['s'];
+    $c = $_GET['s'];
 
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_servico = '$c'") as $servico){
-  $nomeinterpretacao = $servico['servico'];
-  $descricaointerpretacao = $servico['descricao'];
-  $nomedono = $servico['nomeusuario'];
-  $descricaousuario = $servico['descricaousuario'];
-  $valorinterpretacao = $servico['valor'];
-  $path = $servico['pathh'];
-  $codigouser = $servico['codigousuario'];
-}
-foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
-  $dono_sem_foto = $confere_foto_dono['conferefoto'];
-}
-if(empty($dono_sem_foto)){
-  $imagemdono = "imgs/user.png";
-}
-else{
-  foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
-    $imagemdono = $pegaimagem['path'];
-  }
-}
-
-if(isset($_SESSION['usuario'])){
-  $session = $_SESSION['usuario'];
-
-  foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-    $semfoto = $conferefoto['confere'];
-  }
-
-  if(empty($semfoto)){
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.png";
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+    foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_servico = '$c'") as $servico){
+    $nome_servico = $servico['servico'];
+    $descricao_servico = $servico['descricao'];
+    $nomedono = $servico['nomeusuario'];
+    $descricaousuario = $servico['descricaousuario'];
+    $valor_servico = $servico['valor'];
+    $path = $servico['pathh'];
+    $codigouser = $servico['codigousuario'];
     }
-  }
-  else{
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = $usuarios['path'];
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+    foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
+    $dono_sem_foto = $confere_foto_dono['conferefoto'];
     }
-  }
-}
+    if(empty($dono_sem_foto)){
+    $imagemdono = "imgs/user.png";
+    }
+    else{
+    foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
+        $imagemdono = $pegaimagem['path'];
+    }
+    }
+
+
+    if(isset($_SESSION['usuario'])){
+    $session = $_SESSION['usuario'];
+
+    foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
+        $semfoto = $conferefoto['confere'];
+    }
+
+    if(empty($semfoto)){
+        foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
+        $nomeusuario = $usuarios['nome'];
+        $imagemusuario = "imgs/user.png";
+        if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+        elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+        elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+        }
+    }
+    else{
+        foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
+        $nomeusuario = $usuarios['nome'];
+        $imagemusuario = $usuarios['path'];
+        if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+        elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+        elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+        }
+    }
+    }
 
 ?>
 
@@ -71,8 +72,9 @@ if(isset($_SESSION['usuario'])){
     <script src="swal.js"></script>
 
 </head>
+
 <body>
-  
+
   <header>
     <nav style="background: #2d2a30;">
       <ul class="ul-nav">
@@ -134,103 +136,67 @@ if(isset($_SESSION['usuario'])){
      </script> 
   </header>
 
-    <div class="container">
-        <div class="contact-box">
-          <div class="left">
-            <div class="imagem-produto">
-              <img src="<?php echo $path ?>" style="width: 425px; height: 570px;">
-            </div>
-          </div>
-          <div class="right">
-            <div class="info-produto">
-              <div class="espec-produto">
-                <h1 style="color: var(--color-headings);"><?php echo $nomeinterpretacao?></h1>
-                <h3 style="color: rgb(34, 211, 211);">R$ <?php echo $valorinterpretacao ?></h3>
-                <h4>
-                  <a href="#popup1" style="color: var(--color-headings);">
-                    <?php echo $nomedono ?>
-                  </a>
-                </h4>
-                <div id="popup1" class="overlay">
-                  <div class="popup">
-                    <h3><?php echo $nomedono ?></h3>
-                    <a class="close" href="#">&times;</a>
-                    <div class="content">
-                      <img src="<?php echo $imagemdono ?>" alt="foto de usuário" style="width: 200px; height: 200px;border-radius: 190px;">
-                      <br>
-                      <br>
-                      <h4><?php echo $descricaousuario ?></h4>
-                      <form action="userpreview.php" method="get">
-                        <input type="text" style="display: none;" name="u" value="<?php echo $codigouser?>">
-                        <input type="submit" class="btnpart" value="Visualizar Perfil"></input>
-                      </form>
+    <form action="altera_serv.php" method="post">
+        <div class="container">
+            <div class="contact-box">
+                <div class="left">
+                    <div class="imagem-produto">
+                    <img src="<?php echo $path ?>" style="width: 425px; height: 570px;">
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="avalia-produto">
-                <!-- em breve: rate por estrela -->
-              </div>
-              <h4 style="color: var(--color-text);">Descrição:</h4>
-              <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
-              <a href="#">
-                <button type="button" class="btnpart" style="width: 200px;">
-                  <i class="fas fa-shopping-cart"></i> Comprar
-                </button>
-              </a>
+                <div class="right">
+                    <div class="info-produto">
+                    <div class="espec-produto">
+                        <h1 style="color: var(--color-headings)"><?php echo $nome_servico?></h1>
+                        
+                        <input type="text" value="<?php echo $valor_servico ?>" name="prc" onkeypress="return Only(event)" placeholder="Digite o preço do produto" class="field" id="valor" onkeyup="formatarMoeda()" required>
+                        <h4>
+                        <a href="#popup1" style="color: var(--color-headings)" style="color: black;">
+                            <?php echo $nomedono ?>
+                        </a>
+                        </h4>            
+                    </div>
+                    <div class="avalia-produto">
+                        <!-- em breve: rate por estrela -->
+                    </div>
+                    <h4 style="color: var(--color-text)">Descrição:</h4>
+                    <input type="text" name="desc" value="<?php echo $descricao_servico ?>" class="field" placeholder="Digite o que seu produto é" id="descricao" required>
+                        <input type="text" value="<?php echo $c ?>" name="codigo" style="display: none;">
+                        <button type="submit" name="alterar" value="a" class="btnpart" style="width: 200px;">
+                            Modificar <i class="fas fa-arrow-alt-circle-right"></i>
+                        </button>
+                        <br>
+                        <br>
+                        <button type="submit" name="remover" value="r" class="btnpart" style="width: 200px;">
+                            Remover <i class="fas fa-trash"></i>
+                        </button> 
+                </div>
+            </div>  
+          
+          </form>    
+          <div id="popup1" class="overlay">
+            <div class="popup" style="background-color: var(--bg-panel)">
+              <h3 style="color: var(--color-headings)"><?php echo $nomedono ?></h3>
+              <a class="close" href="#">&times;</a>
+                <div class="content">
+                  <img src="<?php echo $imagemdono ?>" alt="foto de usuário" style="width: 200px; height: 200px;border-radius: 190px;">
+                    <br>
+                    <br>
+                    <h4 style="color: var(--color-text)"><?php echo $descricaousuario ?></h4>
+                    <form action="userpreview.php" method="get">
+                      <input type="text" style="display: none;" name="u" value="<?php echo $codigouser?>">
+                      <input type="submit" class="btnpart" value="Visualizar Perfil"></input>
+                    </form>
+                </div>
             </div>
-          </div>
-            
-            
-        </div>   
-    </div>
-
-  <h3>Produtos do mesmo autor</h3>
-  <main class="grid">
-  <?php
-
-    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
-    $query = $mysqli->query($sql);
-
-    while($dados = $query->fetch_array()){
-      echo '<article>
-        <img src="'; echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-        <div class="text">
-            <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
-            <p>'; echo $dados['ds_interpretacao']; echo '</p>
-            <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-            <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
-            <form method="get" action="produto.php">
-            <input type="text" name="p" style="display: none;" value="'; echo $dados['cd_interpretacao']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-            </form>
+          </div>          
         </div>
-      </article>';
-    }
+        
+        </div>
+    
+    
 
-    $sql2 = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
-    $query2 = $mysqli->query($sql2);
-
-    while ($dados = $query2->fetch_array()){ 
-      echo '<article>
-      <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-      <div class="text">
-        <h3>';  echo $dados['nm_servico']; echo '</h3>
-        <p>'; echo $dados['ds_servico']; echo '</p>
-        <p> R$'; echo $dados['vl_servico']; echo '</p>
-        <form method="get" action="prodserv.php">
-            <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-        </form>
-      </div>
-    </article>';
-
-    }
-
-    ?>
-  </main>
-
-  <footer class="footer-distributed">
+    <footer class="footer-distributed">
 
         <div class="footer-left">
             <h3>String<span>Music</span></h3>
@@ -543,8 +509,111 @@ if(isset($_SESSION['usuario'])){
       }
     }
 
+    #comments{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .comments-heading{
+            letter-spacing: 1px;
+            margin: 30px 0px;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .comments-heading h1{
+            font-size: 2.2rem;
+            font-weight: 500;
+            background-color: #3770db;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .comments-heading span{
+            font-size: 1.3rem;
+            color: #252525;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .comments-box-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .comments-box{
+            width: 500px;
+            box-shadow: 2px 2px 30px rgba(0,0,0,0.5);
+            background-color: #fff;
+            padding: 20px;
+            margin: 15px;
+            cursor: pointer;
+        }
+
+        .profile-img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
+        .profile-img img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-fit: center;
+        }
+
+        .profile{
+            display: flex;
+            align-items: center;
+        }
+
+        .name-user{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name-user strong{
+            color: #3d3d3d;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .name-user span{
+            color: #979797;
+            font-size: 0.8rem;
+        }
+
+        .reviews{
+            color: #f9d71c;
+        }
+
+        .box-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-comment p{
+            font-size: 0.9rem;
+            color: #4b4b4b;
+        }
+
   </style>
-          
+            
   
 
 </body>

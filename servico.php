@@ -134,7 +134,7 @@ unset($_SESSION['servicorecusado']);
   if(isset($_SESSION['usuario']))
     echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5>Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
     echo '<form action="busca_serv.php" method="get">
-        <input type="text" class="field" style="width: 300px;" name="nome" placeholder="Insira o nome do serviço">
+        <input type="text" class="field" style="width: 300px;" name="n" placeholder="Insira o nome do serviço">
         <button class="btnpart" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
       </form>
     <br>';

@@ -212,7 +212,7 @@ unset($_SESSION['removido']);
             <main class="grid">
                 <?php
 
-                    $meusserv = "SELECT s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario as u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
+                    $meusserv = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario as u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
                     $queryserv = $mysqli->query($meusserv);
 
                     while($dados = $queryserv->fetch_array()){
@@ -223,7 +223,10 @@ unset($_SESSION['removido']);
                                 <h3>'; echo $dados['nm_servico']; echo '</h3>
                                 <p>'; echo $dados['ds_servico']; echo '</p>
                                 <p>R$'; echo $dados['vl_servico']; echo '</p>
-                                <button class="btnpart">Visualizar</button>
+                                <form method="get" action="view_serv.php">
+                                    <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
+                                    <input type="submit" class="btnpart" value="Comprar">
+                                </form>
                             </div>
                         </article>';
                     }

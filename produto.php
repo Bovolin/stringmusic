@@ -62,7 +62,7 @@ if(isset($_SESSION['usuario'])){
     <meta charset="UTF-8">
     <title>StringMusic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styleadicionar.css">
+    <link rel="stylesheet" href="css/styleadicionars.css">
     <script src="script.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -74,123 +74,7 @@ if(isset($_SESSION['usuario'])){
 
 </head>
 <body>
-  <!-- Ocorreu um erro ao colocar o css no Style original, por isso, criei um style interno -->
-  <style>
-        /* foto perfil */
-        .action .profile{
-          position: relative;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          overflow: hidden;
-          cursor: pointer;
-        }
-
-        .action .profile img{
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .action .menu{
-          position: absolute;
-          top: 120px;
-          right: -28%;
-          padding: 10px 20px;
-          background-color: rgb(228, 228, 228);
-          width: 200px;
-          box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-          border-radius: 15px;
-          transition: 0.5s;
-          visibility: hidden;
-          opacity: 0;
-          z-index: 1;
-        }
-
-        .action .menu.active{
-          top: 115%;
-          visibility: visible;
-          opacity: 1;
-        }
-
-        .action .menu::before{
-          content: '';
-          position: absolute;
-          top: -5px;
-          right: 28px;
-          width: 20px;
-          height: 20px;
-          background-color: rgb(197, 197, 197);
-          transform: rotate(45deg);
-        }
-
-        .action .menu h3{
-          width: 100%;
-          text-align: center;
-          font-size: 18px;
-          padding: 20px 0;
-          font-weight: 500;
-          color: #555;
-          line-height: 1.2em;
-        }
-
-        .action .menu h3 span{
-          font-size: 14px;
-          color: #555;
-          font-weight: 400;
-        }
-
-        .action .menu .un{
-          padding-left: 0;
-        }
-
-        .action .menu .un li{
-          list-style: none;
-          padding: 10px 8px;
-          border-top :1px solid rgba (0,0,0,0.05);
-          display: flex;
-          align-items: center;
-        }
-
-        .action .menu .un li img{
-          max-width: 20px;
-          margin-right: 10px;
-          opacity: 0.5;
-          transition: 0.5s;
-        }
-
-        .action .menu .un li:hover img{
-          opacity: 1;
-        }
-
-        .action .menu .un li i{
-          opacity: 0.5;
-          transition: 0.5s;
-        }
-
-        .action .menu .un li:hover i{
-          opacity: 1;
-        }
-
-        .action .menu .un li a{
-          display: inline-block;
-          text-decoration: none;
-          color: #555;
-          font-weight: 500;
-          transition: 0.5s;
-        }
-
-        .action .menu .un .info:hover a{
-          color: blue;
-        }
-
-        .action .menu .un .sair:hover a{
-          color: red;
-        }
-  </style>
+  
   <header>
     <nav style="background: #2d2a30;">
       <ul class="ul-nav">
@@ -214,6 +98,9 @@ if(isset($_SESSION['usuario'])){
                       <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                       <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                       <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                      <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                      <label for="switch" class="toggle">Toggle</label>
+                      <script src="script_dark.js"></script></li>
                     </ul>
                 </div>
               </div>
@@ -259,10 +146,10 @@ if(isset($_SESSION['usuario'])){
           <div class="right">
             <div class="info-produto">
               <div class="espec-produto">
-                <h1><?php echo $nomeinterpretacao?></h1>
+                <h1 style="color: var(--color-headings);"><?php echo $nomeinterpretacao?></h1>
                 <h3 style="color: rgb(34, 211, 211);">R$ <?php echo $valorinterpretacao ?></h3>
                 <h4>
-                  <a href="#popup1" style="color: black;">
+                  <a href="#popup1" style="color: var(--color-headings);">
                     <?php echo $nomedono ?>
                   </a>
                 </h4>
@@ -286,9 +173,9 @@ if(isset($_SESSION['usuario'])){
               <div class="avalia-produto">
                 <!-- em breve: rate por estrela -->
               </div>
-              <h4>Descrição:</h4>
-              <p><?php echo $descricaointerpretacao?></p>
-              <h5>Quantidade: <?php echo $quantidadeinterpretacao ?></h5>
+              <h4 style="color: var(--color-text);">Descrição:</h4>
+              <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
+              <h5 style="color: var(--color-text);">Quantidade: <?php echo $quantidadeinterpretacao ?></h5>
               <a href="#">
                 <button type="button" class="btnpart" style="width: 200px;">
                   <i class="fas fa-shopping-cart"></i> Comprar
@@ -639,200 +526,7 @@ if(isset($_SESSION['usuario'])){
               const trocaMenu = document.querySelector('.menu');
               trocaMenu.classList.toggle('active');
             }
-  </script>
-
-  <!-- fiquei com preguiça de criar um .css e coloquei aqui xD-->
-  <style>
-
-    .box{
-      width: 40%;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.2);
-      padding: 35px;
-      border: 2px solid #fff;
-      border-radius: 20px/50px;
-      background-clip: padding-box;
-      text-align: center;
-    }
-
-    .button{
-      font-size: 1em;
-      padding: 10px;
-      color: black;
-      border: 2px solid black;
-      border-radius: 20px/50px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease-out;
-    }
-    .button:hover{
-      background: #3770db;
-    }
-
-    .overlay{
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      transition: opacity 500ms;
-      visibility: hidden;
-      opacity: 0;
-    }
-    .overlay:target{
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .popup{
-      margin: 70px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 5px;
-      width: 30%;
-      position: relative;
-      transition: all 5s ease-in-out;
-    }
-
-    .popup h2{
-      margin-top: 0;
-      color: #333;
-      font-family: Tahoma, Arial, sans-serif;
-    }
-    .popup .close{
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      transition: all 200ms;
-      font-size: 30px;
-      font-weight: bold;
-      text-decoration: none;
-      color: #333;
-    }
-    .popup .close:hover{
-      color: #3770db;
-    }
-    .popup .content{
-      max-height: 30%;
-      overflow: auto;
-    }
-
-    @media screen and (max-width: 700px){
-      .box{
-        width: 70%;
-      }
-      .popup{
-        width: 70%;
-      }
-    }
-
-    #comments{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .comments-heading{
-            letter-spacing: 1px;
-            margin: 30px 0px;
-            padding: 10px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .comments-heading h1{
-            font-size: 2.2rem;
-            font-weight: 500;
-            background-color: #3770db;
-            color: #fff;
-            padding: 10px 20px;
-        }
-
-        .comments-heading span{
-            font-size: 1.3rem;
-            color: #252525;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .comments-box-container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .comments-box{
-            width: 500px;
-            box-shadow: 2px 2px 30px rgba(0,0,0,0.5);
-            background-color: #fff;
-            padding: 20px;
-            margin: 15px;
-            cursor: pointer;
-        }
-
-        .profile-img{
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-right: 10px;
-        }
-
-        .profile-img img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-fit: center;
-        }
-
-        .profile{
-            display: flex;
-            align-items: center;
-        }
-
-        .name-user{
-            display: flex;
-            flex-direction: column;
-        }
-
-        .name-user strong{
-            color: #3d3d3d;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .name-user span{
-            color: #979797;
-            font-size: 0.8rem;
-        }
-
-        .reviews{
-            color: #f9d71c;
-        }
-
-        .box-top{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .user-comment p{
-            font-size: 0.9rem;
-            color: #4b4b4b;
-        }
-
-  </style>
-            
-  
+  </script>  
 
 </body>
 </html>
