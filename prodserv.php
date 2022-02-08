@@ -152,7 +152,7 @@ if(isset($_SESSION['usuario'])){
                   </a>
                 </h4>
                 <div id="popup1" class="overlay">
-                  <div class="popup">
+                  <div class="popup" style="background: var(--bg-panel)">
                     <h3><?php echo $nomedono ?></h3>
                     <a class="close" href="#">&times;</a>
                     <div class="content">
