@@ -194,13 +194,13 @@ if(isset($_SESSION['usuario'])){
                 <div class="right">
                     <h2>Adicionar Serviço</h2>
                     <label>Nome:</label>
-                    <input type="text" name="nome" onkeypress="return Onlychars(event)" placeholder="Digite o nome do serviço" class="field" id="nome" required>
+                    <input type="text" name="nome" maxlength="100" placeholder="Digite o nome do serviço" class="field" id="nome" required>
                     <br>
                     <label>Descrição:</label>
                     <input type="text" name="desc" class="field" placeholder="Digite o que seu serviço é" id="descricao" required>
                     <br>
                     <label>Preço:</label>
-                    <input type="text" name="prc" onkeypress="return Only(event)" placeholder="Digite o preço do serviço" class="field" id="valor" placeholder="R$" onkeyup="formatarMoeda()" required> 
+                    <input type="text" name="prc" maxlength="12" onkeypress="return Only(event)" placeholder="Digite o preço do serviço" class="field" id="valor" placeholder="R$" onkeyup="formatarMoeda()" required> 
                     <br>
                     <label>Gênero Musical:</label>
                     <div class="box">
@@ -228,6 +228,7 @@ if(isset($_SESSION['usuario'])){
                       </select>
                     </div>
                     <input type="submit" value="Enviar" class="btnpart">
+                    <a href="servico.php"><input type="button" class="btnpart2" value="Cancelar"></a>
                 </div>
                 
             </div>

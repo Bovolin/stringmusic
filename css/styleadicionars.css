@@ -257,9 +257,32 @@ textarea{
   border-bottom-width: 2px;
   transition: all 0.3s ease;
 }
+.btnpart2{
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #fd3535;
+  color: #fff;
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: .3s;
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  padding-left: 15px;
+  border: 1px solid var(--bg-panel);
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
   
 .btnpart:hover{  
   background: linear-gradient(45deg,#221372, #1a18ad, #1f58a1, #3181e9);
+  background-size: 300% 300%;
+  animation: colors 10s ease infinite;
+}
+.btnpart2:hover{  
+  background: linear-gradient(45deg,#721313, #ad1818, #a11f1f, #e93131);
   background-size: 300% 300%;
   animation: colors 10s ease infinite;
 }
