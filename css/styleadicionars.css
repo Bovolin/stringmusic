@@ -226,7 +226,7 @@ h2:after{
 	font-size: 1.1rem;
 	margin-bottom: 22px;
 	transition: .3s;
-    color: var(--color-text);
+  color: var(--color-text);
 }
 
 .field:hover{

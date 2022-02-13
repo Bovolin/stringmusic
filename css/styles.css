@@ -465,17 +465,18 @@ animation: colors 10s ease infinite;
 
   /* text */
 
-.field{
-	width: 100%;
-	border: 2px solid #ccc;
-	outline: none;
-	background-color: var(--bg-panel);
-	padding: 0.5rem 1rem;
-	font-size: 1.1rem;
-	margin-bottom: 22px;
-	transition: .3s;
-}
-
-.field:hover{
-	background-color: var(--color-text);
-}
+  .field{
+    width: 100%;
+    border: 2px solid #ccc;
+    outline: none;
+    background-color: var(--bg-panel);
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    margin-bottom: 22px;
+    transition: .3s;
+    color: var(--color-text);
+  }
+  
+  .field:hover{
+    background-color: var(--bg);
+  }
