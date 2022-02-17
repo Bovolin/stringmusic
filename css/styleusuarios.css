@@ -467,6 +467,7 @@ nav{
     /* A mais */
     .field{
       width: 100%;
+      border-radius: 5px;
       border: 2px solid #ccc;
       outline: none;
       background-color: rgba(230, 230, 230, 0.6);
