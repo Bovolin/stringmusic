@@ -80,7 +80,7 @@ if(isset($_SESSION['usuario'])){
     function size_stamp(){
       Swal.fire({
         icon: 'info',
-        text: 'Sua imagem necessita ter no mínimo 1900px de largura por 2000px de altura e máximo de 1920px de largura por 2560px de altura!'
+        text: 'Sua imagem necessita 1920px de largura por 2560px de altura!'
       })
     }
   </script>
@@ -185,9 +185,7 @@ if(isset($_SESSION['usuario'])){
                     </div>
                   </div>
                   <input type="file" name="arquivo" id="arquivo" onchange="previewImagem()" accept="image/png, image/jpg, image/jpeg" class="field">
-                  <br>
-                  <br>
-                  <img class="preview" style="width: 310px; height: 310px;"><br><br>
+                  <img class="preview">
                 </div>
                 <div class="right">
                     <h2>Adicionar Produto</h2>
