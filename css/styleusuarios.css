@@ -1,0 +1,663 @@
+/* navbar */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html{
+  --bg: #FCFCFC;
+  --bg-panel: #EBEBEB;
+  --color-headings: black;
+  --color-text: #333333;
+}
+
+body{
+  background-color: var(--bg);
+  align-items: center;
+}
+
+.section-perfil-usuario .perfil-usuario-body,
+.section-perfil-usuario {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-perfil-usuario .perfil-usuario-fundo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(#B873FF, transparent);
+    margin-bottom: 1.25rem;
+}
+
+.section-perfil-usuario .perfil-usuario-fundo {
+    display: block;
+    position: relative;
+    width: 90%;
+    height: 17rem;
+    background: linear-gradient(45deg, #BC3CFF, #317FFF);
+    border-radius: 0 0 20px 20px;
+}
+
+.section-perfil-usuario .perfil-usuario-fundo .button-fundo {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 25px;
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    cursor: pointer;
+}
+
+.section-perfil-usuario .perfil-usuario-fundo .button-fundo i {
+    margin-right: 1rem;
+}
+
+.section-perfil-usuario .perfil-usuario-avatar {
+    display: flex;
+    width: 180px;
+    height: 180px;
+    align-items: center;
+    justify-content: center;
+    border: 7px solid var(--bg-panel);
+    background-color: var(--bg-panel);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+    position: absolute;
+    bottom: -40px;
+    left: calc(50% - 90px);
+    z-index: 1;
+}
+
+.section-perfil-usuario .perfil-usuario-avatar img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%;
+}
+
+.section-perfil-usuario .perfil-usuario-avatar .button-avatar {
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    border: 0;
+    background-color: var(--bg-panel);
+    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.section-perfil-usuario .perfil-usuario-avatar .button-avatar i{
+  color: var(--color-headings);
+}
+
+.section-perfil-usuario .perfil-usuario-body {
+    width: 70%;
+    position: relative;
+    max-width: 750px;
+}
+
+.section-perfil-usuario .perfil-usuario-body .titulo {
+    display: block;
+    width: 100%;
+    font-size: 1.75em;
+    margin-bottom: 0.5rem;
+    color: var(--color-headings);
+}
+
+.section-perfil-usuario .perfil-usuario-body .texto {
+    color: var(--color-text);
+    font-size: 0.95em;
+}
+
+.section-perfil-usuario .perfil-usuario-footer,
+.section-perfil-usuario .perfil-usuario-descricao,
+.section-perfil-usuario .sair {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+    background-color: var(--bg-panel);
+    border-radius: 15px;
+    width: 100%;
+}
+
+.section-perfil-usuario .perfil-usuario-descricao {
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.section-perfil-usuario .sair {
+    margin-top: 1.25rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.section-perfil-usuario .dados {
+    width: 50%;
+    list-style: none;
+}
+
+
+.section-perfil-usuario .dados li {
+    padding: 5px 0;
+    color: var(--color-headings);
+}
+
+.section-perfil-usuario .dados h4{
+    color: var(--color-text);
+}
+
+.section-perfil-usuario .dados li>.icono {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+.section-perfil-usuario .redes-sociais {
+    position: absolute;
+    right: calc(0px - 50px - 1rem);
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-perfil-usuario .redes-sociais .boton-redes {
+    border: 0;
+    background-color: #fff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+    font-size: 1.3rem;
+}
+
+.section-perfil-usuario .redes-sociais .boton-redes+.boton-redes {
+    margin-top: .5rem;
+}
+
+.section-perfil-usuario .boton-redes.facebook {
+    background-color: #5955FF;
+}
+
+.section-perfil-usuario .boton-redes.instagram {
+    background: linear-gradient(45deg, #FF2DFD, #40A7FF);
+}
+
+input[type=checkbox]{
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 52px;
+  height: 27px;
+  background: grey;
+  float: right;
+  border-radius: 100px;
+  position: relative;
+}
+
+label::after{
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input:checked + label {
+  background-color: #358cfd;
+}
+
+input:checked + label::after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+label:active:after {
+  width: 45px;
+}
+
+/* Adaoptação aos dispositivos */
+@media (max-width: 750px) {
+    .section-perfil-usuario .dados {
+        width: 100%;
+    }
+
+    .section-perfil-usuario .perfil-usuario-fundo,
+    .section-perfil-usuario .perfil-usuario-body {
+        width: 95%;
+    }
+
+    .section-perfil-usuario .redes-sociais {
+        position: relative;
+        flex-direction: row;
+        width: 100%;
+        left: 0;
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        align-items: center;
+        justify-content: center
+    }
+
+    .section-perfil-usuario .redes-sociais .boton-redes+.boton-redes {
+        margin-left: 1rem;
+        margin-top: 0;
+    }
+}
+
+nav{
+    background: #2d2a30;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  nav ul li{
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  nav ul li.items{
+    position: relative;
+    width: auto;
+    margin: 0 16px;
+    text-align: center;
+    order: 3;
+  }
+  nav ul li.items:after{
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 5px;
+    height: 2px;
+    width: 100%;
+    background: #3770db;
+    opacity: 0;
+    transition: all 0.2s linear;
+  }
+  nav ul li.items:hover:after{
+    opacity: 1;
+    bottom: 8px;
+  }
+  nav ul li.logo{
+    flex: 1;
+    color: white;
+    cursor: default;
+    user-select: none;
+  }
+  nav ul li a{
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    transition: .4s;
+  }
+  nav ul li:hover a{
+    color: #3770db;
+  }
+  nav ul li i{
+    font-size: 23px;
+  }
+  nav ul li.btn{
+    display: none;
+  }
+  nav ul li.btn.hide i:before{
+    content: '\f00d';
+  }
+  
+  @media all and (max-width: 900px){
+    nav{
+      padding: 5px 30px;
+    }
+    nav ul li.items{
+      width: 100%;
+      display: none;
+    }
+    nav ul li.items.show{
+      display: block;
+    }
+    nav ul li.btn{
+      display: block;
+    }
+    nav ul li.items:hover{
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px #3770db,
+                  inset 0 0 10px #3770db;
+    }
+    nav ul li.items:hover:after{
+      opacity: 0;
+    }
+  }
+    /* foto perfil */
+    .action .profile{
+      position: relative;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .action .profile img{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .action .menu{
+      position: absolute;
+      top: 120px;
+      right: -28%;
+      padding: 10px 20px;
+      background-color: rgb(228, 228, 228);
+      width: 200px;
+      box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      transition: 0.5s;
+      visibility: hidden;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .action .menu.active{
+      top: 115%;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .action .menu::before{
+      content: '';
+      position: absolute;
+      top: -5px;
+      right: 28px;
+      width: 20px;
+      height: 20px;
+      background-color: rgb(197, 197, 197);
+      transform: rotate(45deg);
+    }
+
+    .action .menu h3{
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      padding: 20px 0;
+      font-weight: 500;
+      color: #555;
+      line-height: 1.2em;
+    }
+
+    .action .menu h3 span{
+      font-size: 14px;
+      color: #555;
+      font-weight: 400;
+    }
+
+    .action .menu ul li{
+      list-style: none;
+      padding: 10px 8px;
+      border-top :1px solid rgba (0,0,0,0.05);
+      display: flex;
+      align-items: center;
+    }
+
+    .action .menu ul li img{
+      max-width: 20px;
+      margin-right: 10px;
+      opacity: 0.5;
+      transition: 0.5s;
+    }
+
+    .action .menu ul li:hover img{
+      opacity: 1;
+    }
+
+    .action .menu ul li i{
+      opacity: 0.5;
+      transition: 0.5s;
+    }
+
+    .action .menu ul li:hover i{
+      opacity: 1;
+    }
+
+    .action .menu ul li a{
+      display: inline-block;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: 0.5s;
+    }
+
+    .action .menu ul .info:hover a{
+      color: blue;
+    }
+
+    .action .menu ul .sair:hover a{
+      color: red;
+    }
+
+    /* A mais */
+    .field{
+      width: 100%;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      outline: none;
+      background-color: rgba(230, 230, 230, 0.6);
+      padding: 0.5rem 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 22px;
+      transition: .3s;
+  }
+      
+  .field:hover{
+      background-color: rgba(0, 0, 0, 0.1);
+  }
+      
+  .field:focus{
+      border: 2px solid rgb(12, 87, 185);
+      background-color: #fff;
+  }
+
+  .btnpart{
+      width: 100%;
+      padding: 0.5rem 1rem;
+      background-color: #358CFD;
+      color: #fff;
+      font-size: 1.1rem;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: .3s;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px;
+      padding-left: 15px;
+      border: 1px solid var(--bg-panel);
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+  }
+      
+  .btnpart:hover{  
+      background: linear-gradient(45deg, #221372, #1a18ad, #1f58a1, #3181e9);
+      background-size: 300% 300%;
+      animation: colors 10s ease infinite;
+  }
+
+  .btnpart2{
+      width: 100%;
+      padding: 0.5rem 1rem;
+      background-color: #FF3C25;
+      color: #fff;
+      font-size: 1.1rem;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: .3s;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px;
+      padding-left: 15px;
+      border: 1px solid var(--bg-panel);
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+  }
+      
+  .btnpart2:hover{  
+      background: linear-gradient(45deg, #75130E, #AD2417, #A3351A, #EB3D26);
+      background-size: 300% 300%;
+      animation: colors 10s ease infinite;
+  }
+
+  /* foto perfil */
+  .action .profile{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .action .profile img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .action .menu{
+    position: absolute;
+    top: 120px;
+    right: -28%;
+    padding: 10px 20px;
+    background-color: rgb(228, 228, 228);
+    width: 200px;
+    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  @media (max-width: 900px) {
+    .action .menu{
+      position: absolute;
+      top: 120px;
+      left: 1%;
+      z-index: 1;
+    }
+
+    .action .menu::before{
+      position: absolute;
+      top: -5px;
+      left: 10px;
+    }
+  }
+
+  .action .menu.active{
+    top: 115%;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .action .menu::before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(197, 197, 197);
+    transform: rotate(45deg);
+  }
+
+  .action .menu h3{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px 0;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.2em;
+  }
+
+  .action .menu h3 span{
+    font-size: 14px;
+    color: #555;
+    font-weight: 400;
+  }
+
+  .action .menu ul li{
+    list-style: none;
+    padding: 10px 8px;
+    border-top :1px solid rgba (0,0,0,0.05);
+    display: flex;
+    align-items: center;
+  }
+
+  .action .menu ul li img{
+    max-width: 20px;
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: 0.5s;
+  }
+
+  .action .menu ul li:hover img{
+    opacity: 1;
+  }
+
+  .action .menu ul li i{
+    opacity: 0.5;
+    transition: 0.5s;
+  }
+
+  .action .menu ul li:hover i{
+    opacity: 1;
+  }
+
+  .action .menu ul li a{
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.5s;
+  }
+
+  .action .menu ul .info:hover a{
+    color: blue;
+  }
+
+  .action .menu ul .sair:hover a{
+    color: red;
+  }
