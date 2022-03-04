@@ -152,3 +152,8 @@ function formatarMoeda() {
   elemento.value = valor;
   if(valor == 'NaN') elemento.value = '';
 }
+
+function menuAlterna(){
+  const trocaMenu = document.querySelector('.menu');
+  trocaMenu.classList.toggle('active');
+}

@@ -48,7 +48,6 @@ if(isset($_SESSION['usuario'])){
     <script src="swal.js"></script>
 
 </head>
-</style>
 
 <?php
   if(isset($_SESSION['servicoenviado'])) $onload = "servicoenviado";

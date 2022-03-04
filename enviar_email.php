@@ -1,10 +1,5 @@
 <?php
-<<<<<<< HEAD
 session_start();
-=======
-
-include ("verifica_login.php");
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
 include ("conexao.php");
 
 $nome_email = $_POST['nome'];
@@ -27,23 +22,13 @@ try{
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
-<<<<<<< HEAD
     $mail->SMTPAuth = true; // Alterar para true
-    $mail->Username = 'strmsc937@gmail.com'; //Substituir pelo email
-    $mail->Password = 'Melancia55'; //Substituir pela senha do email
-    $mail->Port = 587;
-
-    $mail->setFrom('strmsc937@gmail.com');
-    $mail->addAddress('strmsc937@gmail.com');
-=======
-    $mail->SMTPAuth = false; // Alterar para true
-    $mail->Username = '#'; //Substituir pelo email
+    $mail->Username = '#@gmail.com'; //Substituir pelo email
     $mail->Password = '#'; //Substituir pela senha do email
     $mail->Port = 587;
 
-    $mail->setFrom('stringmsc@gmail.com');
-    $mail->addAddress('stringmsc@gmail.com');
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
+    $mail->setFrom('#@gmail.com');
+    $mail->addAddress('#@gmail.com');
 
     $mail->isHTML(true);
     $mail->Subject = $titulo_email;

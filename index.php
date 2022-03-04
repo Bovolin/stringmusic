@@ -1,7 +1,6 @@
 <?php
 session_start();
 include ("conexao.php");
-
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
 
@@ -27,158 +26,141 @@ if(isset($_SESSION['usuario'])){
       elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
     }
   }
-  
 }
-
 ?>
-
 <!DOCTYPE html>
-<html lang="pt-BR" dir="ltr">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>StringMusic</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>String;Music</title>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- Boxicons -->
+    <link rel="stylesheet" href="css/style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
-
+    <script src="tent.js" defer></script>
+    <script src="script.js"></script>
 </head>
 <body>
-  <header>
-    <nav style="background: #2d2a30;">
-      <ul class="ul-nav">
-        <li class="logo"><a href="index.php"><img src="imgs/LogoAqui.png" alt="logo do site"></a></li>
-        <li class="items"><a href="index.php">Início</a></li>
-        <li class="items"><a href="loja.php">Produtos</a></li>
-        <li class="items"><a href="servico.php">Serviços</a></li>
-        <li class="items"><a href="contato.php">Contatos</a></li>
-        <?php
-        if(isset($_SESSION['usuario'])){
-          echo
-          '<li class="items">
-            <div class="action">
-              <div class="profile" onclick="menuAlterna();">
-                  <img src="'; echo $imagemusuario; echo'">
-              </div>
-              <div class="menu">
-                <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
-                  <ul class="un">
-                      <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
-                      <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
-                      <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
-                      <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                      <li class="info"><input type="checkbox" name="switch-theme" id="switch">
-                      <label for="switch">Toggle</label>
-                      <script src="script_dark.js"></script></li>
-                  </ul>
-              </div>
-            </div>
-          </li>';
-        }
-        else{
-          echo '<li class="items"><a href="login.php">Login</a></li>';
-        }
-        ?>
-        <li class="btn"><a href="#"><i class="fas fa-bars"></i></a></li>
-      </ul>
-    </nav>
-
-     <!-- NÃO TOCA AQUI PELO AMOR DE DEUS \/-->  
-     <script>
-        /*  $(document).ready(function(){
-          $('.btn').click(function(){
-            $('.items').toggleClass("show");
-            $('ul li').toggleClass("hide");
-          });
-        }); */
-        const btn = document.getElementsByClassName('btn')[0];
-          btn.addEventListener('click', function() {
-          let items = document.getElementsByClassName('items');
-          for (let i = 0; i <= items.length - 1; i += 1) {
-            if (items[i].classList.contains('show')) {
-              items[i].classList.remove('show');
-            } else {
-              items[i].classList.add('show');
-            }         
-          }
-        });
-     </script> 
-  </header>
-
-<div class="container">
-  <div class="row">
-    <div class="col-12">
+    <nav class="container-fluid nav">
+        <div class="container cf">
+          <i class="fa fa-bars nav-toggle"></i>
+          <ul>
+            <li class="navbar"><a href="index.php">Inicio</a></li>
+            <li class="navbar"><a href="loja.php">Produtos</a></li>
+            <li class="navbar"><a href="servico.php">Serviços</a></li>
+            <?php
+            if(isset($_SESSION['usuario'])){
+              echo
+              '<li class="navbar">
+                <div class="action">
+                  <div class="profile" onclick="menuAlterna();">
+                      <img src="'; echo $imagemusuario; echo'">
+                  </div>
+                  <div class="menu">
+                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                      <ul class="un">
+                        <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
+                        <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
+                        <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
+                        <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                        <label for="switch" class="toggle">Toggle</label>
+                        <script src="script_dark.js"></script></li>
+                      </ul>
+                  </div>
+                </div>
+              </li>';
+            }
+            else{
+              echo '<li class="items"><a href="login.php">Login</a></li>';
+            }
+            ?>
+          </ul>
+        </div>
+      </nav>
       
-      <div class="slider">
-        <div class="slide active">
-          <a href="loja.php">
-            <img src="imgs/banner_treix.png" alt="">
-          </a>
-        </div>
-        <div class="slide">
-          <img src="imgs/banner_dois.png" alt=""> 
-        </div>
-        <div class="slide">
-          <img src="imgs/banner_um.png" alt="">
-        </div>
-        <div class="navigation">
-          <i class="fas fa-chevron-left prev-btn"></i>
-          <i class="fas fa-chevron-right next-btn"></i>
-        </div>
-        <div class="navigation-visibility">
-          <div class="slide-icon active"></div>
-          <div class="slide-icon"></div>
-          <div class="slide-icon"></div>
+      <div class="container-fluid splash" id="splash">
+        <div class="container">
+          <img src="logo/roxo_preto.png" alt="Logo" class="profile-image">
         </div>
       </div>
-
-      <br>
-    </div>
-  </div>
-
-  
-  <h2>Produtos mais comprados</h2>
-  <main class="grid">
-    <article>
-      <img src="imgs/partitura.jpg" alt="">
-      <div class="text">
-        <h3>Interpretação</h3>
-        <p>Música: Ace of Spades</p>
-        <button class="btnpart">Comprar</button>
+      
+      <div class="container-fluid intro" id="about">
+        <div class="container">
+          <h2>Sobre nós</h2>
+          <p>Somos uma empresa de pipipi popopo (sdds daquele texto que fizemos na aula)</p>
+        </div>
       </div>
-    </article>
-    <article>
-      <img src="imgs/partitura.jpg" alt="">
-      <div class="text">
-        <h3>Interpretação</h3>
-        <p>Música: Ace of Spades</p>
-        <button class="btnpart">Comprar</button>
+      
+      <div class="container-fluid features" id="skills">
+        <div class="container cf">
+          <h2>Anuncie Já!</h2>
+          <div class="col-3">
+            <h3>Divulgue aqui seu trabalho! <i class="fas fa-briefcase"></i></h3>
+            <p>E encontre os melhores lugares para apresentá-lo!</p>
+          </div>
+          <div class="col-3">
+            <h3>Contrate os melhores músicos <i class="fas fa-music"></i></h3>
+            <p>Encontre aqui o músico perfeito para seu evento!</p>
+          </div>
+          <div class="col-3">
+            <h3>Anuncie aqui seu produto!</h3>
+            <p>Ir para página de adicionar produtos! <a href="adicionarprod.php"><i class="fas fa-sign-in-alt"></a></i></p>
+          </div>
+        </div>
       </div>
-    </article>
-    <article>
-      <img src="imgs/partitura.jpg" alt="">
-      <div class="text">
-        <h3>Interpretação</h3>
-        <p>Música: Ace of Spades</p>
-        <button class="btnpart">Comprar</button>
+      
+      <div class="container-fluid portfolio" id="portfolio">
+        <div class="container cf">
+          <h2>Produtos mais comprados</h2>
+          <div class="gallery">
+            <main class="grid">
+              <article>
+                <img src="imgs/partitura.jpg" alt="">
+                <div class="text">
+                  <h3>Interpretação</h3>
+                  <p>Música: Ace of Spades</p>
+                  <button class="btnpart">Comprar</button>
+                </div>
+              </article>
+              <article>
+                <img src="imgs/partitura.jpg" alt="">
+                <div class="text">
+                  <h3>Interpretação</h3>
+                  <p>Música: Ace of Spades</p>
+                  <button class="btnpart">Comprar</button>
+                </div>
+              </article>
+              <article>
+                <img src="imgs/partitura.jpg" alt="">
+                <div class="text">
+                  <h3>Interpretação</h3>
+                  <p>Música: Ace of Spades</p>
+                  <button class="btnpart">Comprar</button>
+                </div>
+              </article>
+            </main>
+          </div>
+        </div>
       </div>
-    </article>
-    <article>
-      <img src="imgs/partitura.jpg" alt="">
-      <div class="text">
-        <h3>Interpretação</h3>
-        <p>Música: Ace of Spades</p>
-        <button class="btnpart">Comprar</button>
+      
+      <div class="container-fluid contact" id="contact">
+        <div class="container">
+          <form action="enviar_email.php" method="post">
+            <h2>Contate-nos</h2>
+            <input type="text" placeholder="Nome" id="name" name="nome" class="full-half" maxlength="30">
+            <input type="text" placeholder="Telefone" id="telefone" name="telefone" class="full-half" maxlength="17">
+            <input type="email" placeholder="Email" id="email" name="email" maxlength="50">
+            <input type="text" placeholder="Assunto" id="subject" name="titulo" maxlength="20">
+            <textarea placeholder="Mensagem" id="message" name="mensagem" style="resize: none" maxlength="200"></textarea>
+            <input type="submit" value="Enviar">
+          </form>
+        </div>
       </div>
-    </article>
-  </main>
-</div>
-
-    <footer class="footer-distributed">
+      
+      <footer class="footer-distributed">
 
         <div class="footer-left">
             <h3>String<span>Music</span></h3>
@@ -186,9 +168,9 @@ if(isset($_SESSION['usuario'])){
             <p class="footer-links">
                 <a href="index.php">Início</a>
                 |
-                <a href="contato.php">Contatos</a>
+                <a href="#">Contatos</a>
                 |
-                <a href="login.php">Login</a>
+                <a href="#">Login</a>
             </p>
 
             <p class="footer-company-name">Copyright © 2021 <strong>StringMusic</strong>
@@ -214,7 +196,7 @@ if(isset($_SESSION['usuario'])){
         <div class="footer-right">
             <p class="footer-company-about">
                 <span>Sobre nós</span>
-                <strong>StringMusic</strong>
+                <strong>Somos um projeto de TCC do curso de Desenvolvimentos de Sistemas na unidade ETEC Dra Ruth Cardoso</strong>
             </p>
             <div class="footer-icons">
                 <a href="#"><i class="fa fa-facebook"></i></a>
@@ -223,183 +205,6 @@ if(isset($_SESSION['usuario'])){
             </div>
         </div>
     </footer>
-
-    <style>
-      /* footer */
-      footer {
-        position: static;
-        bottom: 0;
-      }
-
-      .footer-distributed {
-        background-color: #2d2a30;
-        box-sizing: border-box;
-        width: 100%;
-        text-align: left;
-        font: bold 16px sans-serif;
-        padding: 50px 50px 40px 50px;
-        margin-top: 80px;
-      }
-
-      .footer-distributed .footer-left, .footer-distributed .footer-center, .footer-distributed .footer-right {
-        display: inline-block;
-        vertical-align: top;
-      }
-
-      /* Footer left */
-
-      .footer-distributed .footer-left {
-        width: 30%;
-      }
-
-      .footer-distributed h3 {
-        color: #ffffff;
-        font: normal 36px 'Cookie', cursive;
-        margin: 0;
-      }
-
-
-      .footer-distributed h3 span {
-        color: #3F71EA;
-      }
-
-      /* Footer links */
-
-      .footer-distributed .footer-links {
-        color: #ffffff;
-        margin: 20px 0 12px;
-      }
-
-      .footer-distributed .footer-links a {
-        display: inline-block;
-        line-height: 1.8;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .footer-distributed .footer-company-name {
-        color: #8f9296;
-        font-size: 14px;
-        font-weight: normal;
-        margin: 0;
-      }
-
-
-      /* Footer Center */
-
-      .footer-distributed .footer-center {
-        width: 35%;
-      }
-
-      .footer-distributed .footer-center i {
-        background-color: #33383b;
-        color: #ffffff;
-        font-size: 25px;
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 42px;
-        margin: 10px 15px;
-        vertical-align: middle;
-      }
-
-      .footer-distributed .footer-center i.fa-envelope {
-        font-size: 17px;
-        line-height: 38px;
-      }
-
-      .footer-distributed .footer-center p {
-        display: inline-block;
-        color: #ffffff;
-        vertical-align: middle;
-        margin: 0;
-      }
-
-      .footer-distributed .footer-center p span {
-        display: block;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 2;
-      }
-
-      .footer-distributed .footer-center p a {
-        color: #3F71EA;
-        text-decoration: none;
-        ;
-      }
-
-      /* Footer Right */
-
-      .footer-distributed .footer-right {
-        width: 30%;
-      }
-
-      .footer-distributed .footer-company-about {
-        line-height: 20px;
-        color: #92999f;
-        font-size: 13px;
-        font-weight: normal;
-        margin: 0;
-      }
-
-      .footer-distributed .footer-company-about span {
-        display: block;
-        color: #ffffff;
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 20px;
-      }
-
-      .footer-distributed .footer-icons {
-        margin-top: 25px;
-      }
-
-      .footer-distributed .footer-icons a {
-        display: inline-block;
-        width: 35px;
-        height: 35px;
-        cursor: pointer;
-        background-color: #33383b;
-        border-radius: 2px;
-        font-size: 20px;
-        color: #ffffff;
-        text-align: center;
-        line-height: 35px;
-        margin-right: 3px;
-        margin-bottom: 5px;
-      }
-
-      .footer-distributed .footer-icons a:hover {
-        background-color: #3F71EA;
-      }
-
-      .footer-links a:hover {
-        color: #3F71EA;
-      }
-
-      @media (max-width: 880px) {
-        .footer-distributed .footer-left, .footer-distributed .footer-center, .footer-distributed .footer-right {
-            display: block;
-            width: 100%;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .footer-distributed .footer-center i {
-            margin-left: 0;
-        }
-      }     
-    </style>
-
-<!-- Menu navbar -> script interno -->
-<script>
-  function menuAlterna(){
-    const trocaMenu = document.querySelector('.menu');
-    trocaMenu.classList.toggle('active');
-  }
-</script>
-
-</div>
 
 </body>
 </html>
