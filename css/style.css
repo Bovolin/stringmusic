@@ -707,7 +707,35 @@ label:active:after {
     .action .menu{
       position: absolute;
       top: 120px;
-      left: 1%;
+      left: 650px;
+      z-index: 1;
+    }
+
+    .action .menu::before{
+      position: absolute;
+      top: -5px;
+      left: 150px;
+    }
+  }
+  @media (max-width: 800px) {
+    .action .menu{
+      position: absolute;
+      top: 120px;
+      left: 580px;
+      z-index: 1;
+    }
+
+    .action .menu::before{
+      position: absolute;
+      top: -5px;
+      left: 170px;
+    }
+  }
+  @media (max-width: 700px) {
+    .action .menu{
+      position: absolute;
+      top: 50px;
+      left: 10px;
       z-index: 1;
     }
 
