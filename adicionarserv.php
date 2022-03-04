@@ -54,7 +54,8 @@ if(isset($_SESSION['usuario'])){
   if(isset($_SESSION['servicoenviado'])) $onload = "servicoenviado";
   elseif(isset($_SESSION['size_stamp'])) $onload = "size_stamp";
   elseif(isset($_SESSION['error_stamp'])) $onload = "error_stamp";
-
+  elseif(isset($_SESSOIN['servico_existente'])) $onload ="servico_existente";
+ 
   if(isset($_SESSION['servicoenviado'])):
   ?>
   <script>
@@ -102,7 +103,21 @@ if(isset($_SESSION['usuario'])){
   <?php
   endif;
   unset($_SESSION['error_stamp']);
+
+  if(isset($_SESSION['servico_existente'])):
 ?>
+  <script>
+    function servico_existente(){
+      Swal.fire({
+        icon: 'error',
+        text: 'Serviço já existente com esse nome!'
+      })
+    }
+  </script>
+  <?php
+  endif;
+  unset($_SESSION['servico_existente']);
+  ?>
 <body onload="<?php echo $onload ?>()">
 
   <header>
@@ -178,14 +193,7 @@ if(isset($_SESSION['usuario'])){
                           Para a publicação, as imagens devem ter dimensões: 
                         </h5>
                         <h5>
-<<<<<<< HEAD
                           - 1920px de largura por 2560px de altura.
-=======
-                          - Mínimo de 1900px de largura por 2000px de altura;
-                        </h5>
-                        <h5>
-                          - Máximo de 1920px de largura por 2560px de altura.
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
                         </h5>
                       </div>
                     </div>

@@ -74,16 +74,25 @@
       $sql_select_serv = $sql_select_serv->fetch_assoc();
       $result_serv = $sql_select_serv['s'] + 1;
 
-      //insere o serviço no banco
-      $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
-      $query = $mysqli->query($sql_prod);
-
-      //cria sessão só para confirmar se foi postado
-      $_SESSION['servicoenviado'] = true;
-
-      //redireciona o cliente para a página de serviços
-      header("Location: adicionarserv.php");
-      die();
+      //Verificar se há produtos com esse nome
+      $sql_confere_nome = "SELECT COUNT(nm_servico) as nome FROM tb_servico WHERE nm_servico = '$vnome'";
+      $sql_confere_nome = $mysqli->query($sql_confere_nome);
+      $sql_confere_nome = $sql_confere_nome->fetch_assoc();
+      if($sql_confere_nome == 1){
+        $_SESSION['servico_existente'] = true;
+        header("Location: adicionarserv.php");
+        die();
+      }
+      else{
+        //insere o serviço no banco
+        $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
+        $query = $mysqli->query($sql_prod);
+        //cria sessão só para confirmar se foi postado
+        $_SESSION['servicoenviado'] = true;
+        //redireciona o cliente para a página de serviços
+        header("Location: adicionarserv.php");
+        die();
+      }
     }
     else{
       $_SESSION['servicorecusado'] = true;

@@ -75,16 +75,27 @@
       $sql_select_prod = $sql_select_prod->fetch_assoc();
       $result_prod = $sql_select_prod['i'] + 1;
 
-      //insere o produto no banco
-      $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, qt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vqtd', '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
-      $query_prod = $mysqli->query($sql_prod);
+      //Verificar se há produtos com esse nome
+      $sql_confere_nome = "SELECT COUNT(nm_interpretacao) as nome FROM tb_interpretacao WHERE nm_interpretacao = '$vnome'";
+      $sql_confere_nome = $mysqli->query($sql_confere_nome);
+      $sql_confere_nome = $sql_confere_nome->fetch_assoc();
+      if($sql_confere_nome == 1){
+        $_SESSION['produto_existente'] = true;
+        header("Location: adicionarprod.php");
+        die();
+      }
+      else{
+        //insere o produto no banco
+        $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, qt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vqtd', '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
+        $query_prod = $mysqli->query($sql_prod);
 
-      //cria sessão só para confirmar se foi postado
-      $_SESSION['produtoenviado'] = true;
-      
-      //redireciona o cliente para a página de produtos
-      header("Location: adicionarprod.php");
-      die();
+        //cria sessão só para confirmar se foi postado
+        $_SESSION['produtoenviado'] = true;
+        
+        //redireciona o cliente para a página de produtos
+        header("Location: adicionarprod.php");
+        die();
+      }
     }
     else{
       $_SESSION['produtorecusado'] = true;
