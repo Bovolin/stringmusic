@@ -42,27 +42,16 @@ if(isset($_SESSION['usuario'])){
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<<<<<<< HEAD
-=======
     <!-- Boxicons -->
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
 
 </head>
-<<<<<<< HEAD
-<body> 
-  <header>
-    <nav style="background: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);">
-      <ul class="ul-nav">
-        <li class="logo"><a href="index.php"><img src="logo/roxo_preto.png" style="width: 400px;" alt="logo do site"></a></li>
-=======
 <body>
   <header>
     <nav style="background: #2d2a30;">
       <ul class="ul-nav">
         <li class="logo"><a href="index.php"><img src="imgs/LogoAqui.png" alt="logo do site"></a></li>
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
         <li class="items"><a href="index.php">Início</a></li>
         <li class="items"><a href="loja.php">Produtos</a></li>
         <li class="items"><a href="servico.php">Serviços</a></li>

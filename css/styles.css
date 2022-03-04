@@ -190,13 +190,9 @@ color: #fff;
 font-size: 1.1rem;
 border: none;
 outline: none;
-cursor: pointer v;
+cursor: pointer;
 transition: .3s;
-<<<<<<< HEAD
-border-radius: 5px;
-=======
 border-radius: 25px;
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
 outline: none;
 font-size: 16px;
 padding-left: 15px;
@@ -473,10 +469,7 @@ animation: colors 10s ease infinite;
     width: 100%;
     border: 2px solid #ccc;
     outline: none;
-<<<<<<< HEAD
     border-radius: 5px;
-=======
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
     background-color: var(--bg-panel);
     padding: 0.5rem 1rem;
     font-size: 1.1rem;

@@ -156,7 +156,7 @@ unset($_SESSION['servicorecusado']);
         <p>'; echo $dados['ds_servico']; echo '</p>
         <p> R$'; echo $dados['vl_servico']; echo '</p>
         <form method="get" action="prodserv.php">
-          <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
+          <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
           <input type="submit" class="btnpart" value="Comprar">
         </form>
       </div>

@@ -250,11 +250,7 @@ textarea{
     outline: none !important;
     cursor: pointer;
     transition: .3s !important;
-<<<<<<< HEAD
-    border-radius: 5px !important;
-=======
     border-radius: 25px !important;
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
     outline: none !important;
     font-size: 16px !important;
     padding-left: 15px !important;

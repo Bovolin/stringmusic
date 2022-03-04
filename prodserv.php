@@ -4,7 +4,7 @@ include ("conexao.php");
 
 $c = $_GET['s'];
 
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_servico = '$c'") as $servico){
+foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_servico = '$c'") as $servico){
   $nomeinterpretacao = $servico['servico'];
   $descricaointerpretacao = $servico['descricao'];
   $nomedono = $servico['nomeusuario'];

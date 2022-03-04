@@ -249,11 +249,7 @@ textarea{
   outline: none;
   cursor: pointer;
   transition: .3s;
-<<<<<<< HEAD
-  border-radius: 5px;
-=======
   border-radius: 25px;
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
   outline: none;
   font-size: 16px;
   padding-left: 15px;
@@ -271,11 +267,7 @@ textarea{
   outline: none;
   cursor: pointer;
   transition: .3s;
-<<<<<<< HEAD
-  border-radius: 5px;
-=======
   border-radius: 25px;
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
   outline: none;
   font-size: 16px;
   padding-left: 15px;
@@ -420,11 +412,7 @@ textarea{
   margin-top: 0;
   color: var(--color-headings);
 }
-<<<<<<< HEAD
 .popup h5{
-=======
-.popup h4{
->>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
   margin-top: 0;
   color: var(--color-text);
 }
