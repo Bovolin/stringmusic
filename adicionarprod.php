@@ -176,7 +176,14 @@ if(isset($_SESSION['usuario'])){
                           Para a publicação, as imagens devem ter dimensões: 
                         </h5>
                         <h5>
+<<<<<<< HEAD
                           - 1920px de largura por 2560px de altura.
+=======
+                          - Mínimo de 1900px de largura por 2000px de altura;
+                        </h5>
+                        <h5>
+                          - Máximo de 1920px de largura por 2560px de altura.
+>>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
                         </h5>
                       </div>
                     </div>

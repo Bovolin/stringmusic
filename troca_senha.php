@@ -33,12 +33,21 @@ if(isset($_POST['enviar'])){
                     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
+<<<<<<< HEAD
                     $mail->SMTPAuth = true; // Alterar para true
                     $mail->Username = '#@gmail.com'; //Substituir pelo email
                     $mail->Password = '#'; //Substituir pela senha do email
                     $mail->Port = 587;
                 
                     $mail->setFrom('#@gmail.com');
+=======
+                    $mail->SMTPAuth = false; // Alterar para true
+                    $mail->Username = '#'; //Substituir pelo email
+                    $mail->Password = '#'; //Substituir pela senha do email
+                    $mail->Port = 587;
+                
+                    $mail->setFrom('stringmsc@gmail.com');
+>>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
                     $mail->addReplyTo('no-reply@gmail.com.br');
                     //Só funcionará quando hospedar
                     $mail->addAddress($email);

@@ -149,7 +149,11 @@ session_start();
             <h3>Novo na plataforma?</h3>
             <p>Clique no botão abaixo para ir para o menu de registro</p>
             <button class="btn transparent" id="sign-up-btn">Registrar</button>
+<<<<<<< HEAD
             <a href="index.php"><img src="logo/roxo_preto.png" style="margin-top: 20px; margin-left: -30px;" class="image" alt=""></a>
+=======
+            <a href="index.php"><img src="logo/roxo_preto.png" style="margin-top: 20px;" class="image" alt=""></a>
+>>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
           </div>  
         </div>
         <div class="panel right-panel">
@@ -157,7 +161,11 @@ session_start();
             <h3>Já possui conta?</h3>
             <p>Clique no botão abaixo para ir para o menu de login</p>
             <button class="btn transparent" id="sign-in-btn">Entrar</button>
+<<<<<<< HEAD
             <a href="index.php"><img src="logo/roxo_preto.png" style="margin-top: 20px; margin-left: 30px;" class="image" alt=""></a>
+=======
+            <a href="index.php"><img src="logo/roxo_preto.png" style="margin-top: 20px;" class="image" alt=""></a>
+>>>>>>> b9e2cb50115bcc004765b1939cb666f802bcbadd
           </div>
         </div>
       </div>
