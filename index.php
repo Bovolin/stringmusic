@@ -41,6 +41,7 @@ if(isset($_SESSION['usuario'])){
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <script src="tent.js" defer></script>
     <script src="script.js"></script>
+    <script src="swal.js"></script>
 </head>
 <body>
     <nav class="container-fluid nav">

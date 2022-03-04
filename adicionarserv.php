@@ -46,7 +46,6 @@ if(isset($_SESSION['usuario'])){
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <!--SWAL-->
     <script src="swal.js"></script>
-
 </head>
 
 <?php
