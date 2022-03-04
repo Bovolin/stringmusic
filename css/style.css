@@ -35,7 +35,7 @@ label {
     width: 52px;
     height: 27px;
     background: grey;
-    float: right;
+    margin-left: 25px;
     border-radius: 100px;
     position: relative;
 }
@@ -141,7 +141,7 @@ label:active:after {
     z-index: 1000
   }
   
-  nav ul {
+  nav .un-navbar {
     border-top: 1px solid #ccc;
     clear: both;
     list-style: none;
@@ -150,13 +150,13 @@ label:active:after {
     z-index: 999;
   }
   
-  nav ul .navbar {
+  nav .un-navbar .navbar {
     border-bottom: 1px solid #ccc;
     text-align: center;
     padding-top: 10px;
   }
   
-  nav ul .navbar a {
+  nav .un-navbar .navbar a {
     color: #444;
     display: block;
     padding: .75em;
@@ -164,7 +164,7 @@ label:active:after {
     transition: 0.5s;
   }
 
-  nav ul .navbar a:hover, nav ul .navbar a:focus, nav ul .navbar a:active {
+  nav .un-navbar .navbar a:hover, nav .un-navbar .navbar a:focus, nav .un-navbar .navbar a:active {
     color: #5995fd;
   }
   
@@ -587,7 +587,7 @@ label:active:after {
       display: none;
     }
     
-    nav ul {
+    nav .un-navbar {
       border: none;
       clear: none;
       display: inline-block !important;
@@ -596,18 +596,18 @@ label:active:after {
       padding: 25px 0;
     }
     
-    nav ul .navbar {
+    nav .un-navbar .navbar {
       border: none;
       display: inline-block;
       float: left;
       margin-right: 1.5em;
     }
     
-    nav ul .navbar:last-of-type {
+    nav .un-navbar .navbar:last-of-type {
       margin-right: 0;
     }
     
-    nav ul .navbar a {
+    nav .un-navbar .navbar a {
       padding: 0;
     }
     
@@ -751,35 +751,47 @@ label:active:after {
     font-weight: 400;
   }
 
-  .action .menu ul .info{
+  .action .menu .un{
+    padding-left: 0px;
+  }
+
+  .action .menu .un .info{
     list-style: none;
-    padding: 10px 5px;
+    padding: 15px 20px;
     border-top :1px solid rgba(0,0,0,0.05);
     display: flex;
     align-items: center;
   }
 
-  .action .menu ul li img{
+  .action .menu .un .sair{
+    list-style: none;
+    padding: 15px 50px;
+    border-top :1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+  }
+
+  .action .menu .un li img{
     max-width: 20px;
     margin-right: 10px;
     opacity: 0.5;
     transition: 0.5s;
   }
 
-  .action .menu ul li:hover img{
+  .action .menu .un li:hover img{
     opacity: 1;
   }
 
-  .action .menu ul li i{
+  .action .menu .un li i{
     opacity: 0.5;
     transition: 0.5s;
   }
 
-  .action .menu ul li:hover i{
+  .action .menu .un li:hover i{
     opacity: 1;
   }
 
-  .action .menu ul li a{
+  .action .menu .un li a{
     display: inline-block;
     text-decoration: none;
     color: #555;
@@ -787,10 +799,10 @@ label:active:after {
     transition: 0.5s;
   }
 
-  .action .menu ul .info:hover a{
+  .action .menu .un .info:hover a{
     color: blue;
   }
 
-  .action .menu ul .sair:hover a{
+  .action .menu .un .sair:hover a{
     color: red;
   }

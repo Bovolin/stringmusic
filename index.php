@@ -46,7 +46,7 @@ if(isset($_SESSION['usuario'])){
     <nav class="container-fluid nav">
         <div class="container cf">
           <i class="fa fa-bars nav-toggle"></i>
-          <ul>
+          <ul class="un-navbar">
             <li class="navbar"><a href="index.php">Inicio</a></li>
             <li class="navbar"><a href="loja.php">Produtos</a></li>
             <li class="navbar"><a href="servico.php">Serviços</a></li>
