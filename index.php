@@ -74,7 +74,7 @@ if(isset($_SESSION['usuario'])){
               </li>';
             }
             else{
-              echo '<li class="items"><a href="login.php">Login</a></li>';
+              echo '<li class="navbar"><a href="login.php">Login</a></li>';
             }
             ?>
           </ul>
