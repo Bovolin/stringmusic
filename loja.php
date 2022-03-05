@@ -39,6 +39,7 @@ if(isset($_SESSION['usuario'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <script src="script.js" defer></script>
+    <script src="tent.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Boxicons -->
@@ -65,72 +66,60 @@ if(isset($_SESSION['usuario'])){
     endif;
     unset($_SESSION['produtorecusado']);
   ?>
-  <header>
-    <nav style="background: #2d2a30;">
-      <ul class="ul-nav">
-        <li class="logo"><a href="index.php"><img src="imgs/LogoAqui.png" alt="logo do site"></a></li>
-        <li class="items"><a href="index.php">Início</a></li>
-        <li class="items"><a href="loja.php">Produtos</a></li>
-        <li class="items"><a href="servico.php">Serviços</a></li>
-        <li class="items"><a href="contato.php">Contatos</a></li>
-        <?php
-          if(isset($_SESSION['usuario'])){
-            echo
-            '<li class="items">
-              <div class="action">
-                <div class="profile" onclick="menuAlterna();">
-                    <img src="'; echo $imagemusuario; echo'">
+  <nav class="container-fluid nav">
+        <div class="container cf">
+          <div class="brand">
+            <a href="index.php"><img src="logo/roxo_preto.png" alt="Logo" style="width: 450px;"></a>
+          </div>
+          <i class="fa fa-bars nav-toggle"></i>
+          <ul class="un-navbar">
+            <li class="navbar"><a href="index.php">Inicio</a></li>
+            <li class="navbar"><a href="loja.php">Produtos</a></li>
+            <li class="navbar"><a href="servico.php">Serviços</a></li>
+            <?php
+            if(isset($_SESSION['usuario'])){
+              echo
+              '<li class="navbar">
+                <div class="action">
+                  <div class="profile" onclick="menuAlterna();">
+                      <img src="'; echo $imagemusuario; echo'">
+                  </div>
+                  <div class="menu">
+                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                      <ul class="un">
+                        <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
+                        <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
+                        <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
+                        <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                        <label for="switch" class="toggle">Toggle</label>
+                        <script src="script_dark.js"></script></li>
+                      </ul>
+                  </div>
                 </div>
-                <div class="menu">
-                  <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
-                    <ul class="un">
-                      <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
-                      <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
-                      <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
-                      <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                      <li class="info"><input type="checkbox" name="switch-theme" id="switch">
-                      <label for="switch">Toggle</label>
-                      <script src="script_dark.js"></script></li>
-                    </ul>
-                </div>
-              </div>
-            </li>';
-          }
-          else{
-            echo '<li class="items"><a href="login.php">Login</a></li>';
-          }
-        ?>
-        <li class="btn"><a href="#"><i class="fas fa-bars"></i></a></li>
-      </ul>
-    </nav>
-
-     <!-- NÃO TOCA AQUI PELO AMOR DE DEUS-->  
-     <script>
-        const btn = document.getElementsByClassName('btn')[0];
-          btn.addEventListener('click', function() {
-          let items = document.getElementsByClassName('items');
-          for (let i = 0; i <= items.length - 1; i += 1) {
-            if (items[i].classList.contains('show')) {
-              items[i].classList.remove('show');
-            } else {
-              items[i].classList.add('show');
-            }         
-          }
-        });
-     </script> 
-  </header>
+              </li>';
+            }
+            else{
+              echo '<li class="navbar"><a href="login.php">Login</a></li>';
+            }
+            ?>
+          </ul>
+        </div>
+      </nav>
 
   <div class="container">
-    <h2>Produtos</h2>
     <br>
+    <h2 style="display: inline;">Produtos</h2>
     <?php
-      if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5>Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
-      echo '<form action="busca.php" method="get">
+      if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="display: inline; margin-left: 30px;">Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
+      echo '<form action="busca.php" method="get" style="display:inline; float: right; margin-top: -15px;">
         <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
         <button class="btnpart" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
-      </form>
-      <br>';
+      </form>';
     ?>
+    <br>
+    <br>
+    <br>
     <main class="grid">
       <?php
 
