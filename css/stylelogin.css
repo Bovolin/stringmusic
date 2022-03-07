@@ -88,6 +88,14 @@ form.sign-in-form {
   font-size: 1.1rem;
 }
 
+.input-field button{
+  border: none;
+  background: none;
+  position: absolute;
+  left: 90%;
+  cursor: pointer;
+}
+
 .input-field input {
   background: none;
   outline: none;

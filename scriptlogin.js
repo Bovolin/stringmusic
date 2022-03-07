@@ -9,3 +9,14 @@ sign_up_btn.addEventListener("click", () => {
 sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
+
+function mostrarSenha(){
+  var senha = document.getElementById("senhalogar");
+  if(senha.type == "password"){
+    senha.type = "text";
+  } 
+  else{
+    senha.type = "password"; 
+  }
+   
+}

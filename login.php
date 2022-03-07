@@ -75,7 +75,8 @@ session_start();
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" name="senhalogar" minlegth="8" maxlength="16" placeholder="Senha" required/>
+              <input type="password" name="senhalogar" id="senhalogar" maxlength="16" placeholder="Senha" required/>
+              <button type="button"><i class="fas fa-eye" onclick="mostrarSenha(this)"></i></button>
             </div>
             <?php
               if(isset($_SESSION['nao_usuario'])):
@@ -164,8 +165,6 @@ session_start();
     </div>
     
 
-    <script src="scriptlogin.js"></script>
-
-    
+    <script src="scriptlogin.js"></script> 
   </body>
 </html>
