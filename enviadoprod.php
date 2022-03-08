@@ -21,12 +21,6 @@
       header('Location: adicionar.prod');
       exit;
     }
-
-    if($arquivo['size'] != 19660800){
-      $_SESSION['size_stamp'] = true;
-      header('Location: adicionarprod.php');
-      exit;
-    }
  
     //cria o diretório img/
     $pasta = "img/";

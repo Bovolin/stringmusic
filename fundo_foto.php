@@ -4,9 +4,9 @@ include ("verifica_login.php");
 $session = $_SESSION['usuario'];
 foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
     $semfoto = $conferefoto['confere'];
-  }
+}
 foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefundo){
-$semfundo = $conferefundo['confere_fundo'];
+  $semfundo = $conferefundo['confere_fundo'];
 }
 
   if(empty($semfoto) && empty($semfundo)){
