@@ -1,70 +1,5 @@
 <?php
-  include ("conexao.php");
-  include ("verifica_login.php");
-  $session = $_SESSION['usuario'];
-
-  foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-    $semfoto = $conferefoto['confere'];
-  }
-
-  if(empty($semfoto)){
-    foreach($mysqli->query(
-    "SELECT us.nm_usuario AS nome, 
-    us.nm_email AS email, 
-    us.sg_especialidade AS especialidade,
-    us.ds_usuario AS descricao, 
-    DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-    u.sg_uf AS uf,
-    cm.nm_cidade AS cidade
-      FROM tb_usuario AS us JOIN tb_uf AS u
-        ON u.cd_uf = us.cd_uf
-          JOIN tb_cidade AS cm
-            ON cm.cd_cidade = us.cd_cidade
-              WHERE us.cd_usuario = '$session'") as $usuarios){
-    $nomeusuario = $usuarios['nome'];
-    $descricaousuario = $usuarios['descricao'];
-    $emailusuario = $usuarios['email'];
-    $nascimentousuario = $usuarios['nascimento'];
-    $ufusuario = $usuarios['uf'];
-    $cidadeusuario = $usuarios['cidade'];
-    $imgusuario = "imgs/user.png";
-
-    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
-  }
-  else{
-    foreach($mysqli->query(
-      "SELECT us.nm_usuario AS nome, 
-      us.nm_email AS email, 
-      us.sg_especialidade AS especialidade, 
-      us.ds_usuario AS descricao, 
-      DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-      u.sg_uf AS uf,
-      cm.nm_cidade AS cidade,
-      i.path AS path
-        FROM tb_usuario AS us JOIN tb_uf AS u
-          ON u.cd_uf = us.cd_uf
-            JOIN tb_imagem AS i
-              ON i.cd_imagem = us.cd_imagem
-                JOIN tb_cidade AS cm
-                  ON cm.cd_cidade = us.cd_cidade
-                    WHERE us.cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $descricaousuario = $usuarios['descricao'];
-      $emailusuario = $usuarios['email'];
-      $nascimentousuario = $usuarios['nascimento'];
-      $ufusuario = $usuarios['uf']; 
-      $cidadeusuario = $usuarios['cidade'];
-      $imgusuario = $usuarios['path'];
-    
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-      }
-  }
-
+  include ("fundo_foto.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -153,7 +88,7 @@
       </script> 
     </header> 
         <section class="section-perfil-usuario">
-          <div class="perfil-usuario-fundo">
+          <div class="perfil-usuario-fundo" style="background<?php echo $imgfundo ?>">
             <div class="perfil-usuario-portal">
               <div class="perfil-usuario-avatar">
                 <img src="<?php echo $imgusuario ?>" alt="">
@@ -177,11 +112,14 @@
                   <form action="mudarfoto.php" method="post" id="form" onsubmit="fotoenviada()" enctype="multipart/form-data">
                     <input type="file" style="display:none;" id="file" name="file" accept="image/png, image/jpg, image/jpeg">
                   </form>
-                </button>
+                </button> 
               </div>
-              <button type="button" class="button-fundo">
+              <button type="button" class="button-fundo" id="loadFileXml" onclick="document.getElementById('fundo').click();">
                 <i class="fas fa-images"></i>Mudar fundo
               </button>
+              <form action="mudarfundo.php" method="post" id="form2" enctype="multipart/form-data">
+                <input type="file" style="display: none;" id="fundo" name="fundo" accept="image/png, img/jpg, image/jpeg">
+              </form>
             </div>
           </div>
           <div class="perfil-usuario-body">
@@ -262,7 +200,7 @@
     <style>
       /* footer */
       footer {
-        position: fixed;
+        position: absolute;
         bottom: 0;
       }
 
@@ -435,6 +373,10 @@
     <script>
           document.getElementById("file").onchange = function() {
             document.getElementById("form").submit();
+          };
+
+          document.getElementById("fundo").onchange = function() {
+            document.getElementById("form2").submit();
           };
     </script>
         

@@ -31,7 +31,6 @@ body{
     width: 100%;
     display: flex;
     justify-content: center;
-    background: linear-gradient(#B873FF, transparent);
     margin-bottom: 1.25rem;
 }
 
@@ -40,7 +39,6 @@ body{
     position: relative;
     width: 90%;
     height: 17rem;
-    background: linear-gradient(45deg, #BC3CFF, #317FFF);
     border-radius: 0 0 20px 20px;
 }
 
