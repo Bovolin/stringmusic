@@ -182,7 +182,7 @@ else{
             <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
             <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
             <form method="get" action="produto.php">
-            <input type="text" name="p" style="display: none;" value="'; echo $dados['cd_interpretacao']; echo '">
+            <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
             <input type="submit" class="btnpart" value="Comprar">
             </form>
         </div>
@@ -200,7 +200,7 @@ else{
         <p>'; echo $dados['ds_servico']; echo '</p>
         <p> R$'; echo $dados['vl_servico']; echo '</p>
         <form method="get" action="prodserv.php">
-            <input type="text" name="s" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
+            <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
             <input type="submit" class="btnpart" value="Comprar">
           </form>
       </div>

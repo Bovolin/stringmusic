@@ -569,3 +569,73 @@ label:active:after {
   .btnpart2:hover {
     background-color: #ca3232;
   }
+
+  .grid{ 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    align-items: center;
+  }
+  
+  .grid > article{
+    border: none;
+    background-color: var(--bg-panel);
+    box-shadow: 10px 8px 15px 4px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 260px;
+    transition: transform .3s;
+    border-radius: 25px;
+  }
+  
+  .grid > article:hover{
+    transform: translateY(5px);
+    box-shadow: 2px 2px 26px 0px rgba (0,0,0,0.3);
+  }
+  
+  .grid > article img{
+    width: 50%;
+  }
+  
+  .text{
+    padding: 0 20px 20px;
+  }
+  
+  .text h3{
+    text-transform: uppercase;
+    color: var(--color-headings);
+  }
+  
+  .text p{
+      color: var(--color-text);
+  }
+
+  .btnpart{
+    width: 150px;
+    background-color: #5995fd;
+    border: none;
+    outline: none;
+    height: 49px;
+    border-radius: 49px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.5s; 
+    text-transform: uppercase;
+  }
+
+  .btnpart:hover {
+    background-color: #326aca;
+  }
+  
+  @media (max-width: 768px){
+    .grid{
+        grid-template-columns: repeat(1, 1fr);
+        margin: 40px;
+    }
+  
+    .grid > article{
+        text-align: center;
+    }
+  }
