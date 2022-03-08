@@ -160,52 +160,5 @@ if(isset($_SESSION['usuario'])){
           </form>
         </div>
       </div>
-      
-      <footer class="footer-distributed">
-
-        <div class="footer-left">
-            <h3>String<span>Music</span></h3>
-
-            <p class="footer-links">
-                <a href="index.php">Início</a>
-                |
-                <a href="#">Contatos</a>
-                |
-                <a href="#">Login</a>
-            </p>
-
-            <p class="footer-company-name">Copyright © 2021 <strong>StringMusic</strong>
-            <p style="color: white;">Todos os direitos reservados</p>
-        </div>
-
-        <div class="footer-center">
-            <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>ETEC Dra Ruth Cardoso</span>
-                    São Vicente / SP</p>
-            </div>
-
-            <div>
-                <i class="fa fa-phone"></i>
-                <p>+55 (13) 5555-5555</p>
-            </div>
-            <div>
-                <i class="fa fa-envelope"></i>
-                <p><a href="#">stringmsc@email.com</a></p>
-            </div>
-        </div>
-        <div class="footer-right">
-            <p class="footer-company-about">
-                <span>Sobre nós</span>
-                <strong>Somos um projeto de TCC do curso de Desenvolvimentos de Sistemas na unidade ETEC Dra Ruth Cardoso</strong>
-            </p>
-            <div class="footer-icons">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
-
 </body>
 </html>
