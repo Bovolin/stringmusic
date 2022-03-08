@@ -78,7 +78,16 @@ label:active:after {
     padding: 0;
   }
 
-  h1 {
+.features {
+  background-color: var(--bg);
+}
+
+.features p{
+  color: var(--color-text);
+}
+
+  h1, h2, h3 {
+    color: var(--color-headings);
     font-weight: 900;
   }
   
@@ -226,32 +235,6 @@ label:active:after {
   .text p{
       color: var(--color-text);
   }
-  
-  /*.btnpart{
-  width: 100%;
-  padding: 0.5rem 1rem;
-  background-color: #358CFD;
-  color: #fff;
-  font-size: 1.1rem;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: .3s;
-  border-radius: 25px;
-  outline: none;
-  font-size: 16px;
-  padding-left: 15px;
-  border: 1px solid var(--bg-panel);
-  border-bottom-width: 2px;
-  transition: all 0.3s ease;
-  }
-  
-  .btnpart:hover{
-  
-  background: linear-gradient(45deg,#221372, #1a18ad, #1f58a1, #3181e9);
-  background-size: 300% 300%;
-  animation: colors 10s ease infinite;
-  }*/
 
   .btnpart{
     width: 150px;
@@ -288,7 +271,7 @@ label:active:after {
   
   .splash {
     background: linear-gradient(rgba(44, 62, 80, 0.65), rgba(52, 152, 219, 0.65)),
-                  url("") no-repeat fixed center;
+                  url("imgs/Sem-Titulo-2.jpg") no-repeat fixed center;
       background-size: cover;
       color: #fff;
   }
@@ -380,9 +363,13 @@ label:active:after {
 
   /* FORM CONTATO */
 
+  .contact{
+    background-color: var(--bg);
+  }
+
   .contact form {
-    background-color: #f0f0f0;
     border-radius: 4px;
+    background-color: var(--bg);
     border-top: 8px solid #5995fd;
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
     padding: 1em;
@@ -392,9 +379,11 @@ label:active:after {
     border: none;
     border-radius: 40px;
     display: block;
+    background-color: var(--bg-panel);
     margin-bottom: 1em;
     padding: 1em;
     width: 100%;
+    color: var(--color-text);
   }
   
   .contact form textarea {

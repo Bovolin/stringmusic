@@ -1,32 +1,5 @@
 <?php
-session_start();
-include ("conexao.php");
-if(isset($_SESSION['usuario'])){
-  $session = $_SESSION['usuario'];
-
-  foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-    $semfoto = $conferefoto['confere'];
-  }
-
-  if(empty($semfoto)){
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.png";
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
-  }
-  else{
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = $usuarios['path'];
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
-  }
-}
+include ("foto.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -91,7 +64,9 @@ if(isset($_SESSION['usuario'])){
       <div class="container-fluid intro" id="about">
         <div class="container">
           <h2>Sobre nós</h2>
-          <p>Somos uma empresa de pipipi popopo (sdds daquele texto que fizemos na aula)</p>
+          <p>Na carência de apoio a músicos e compositores que passam por vicissitudes em relação à procura de emprego e formas de 
+            demonstrar seus talentos, o String;Music é uma plataforma que visa auxiliar esses profissionais com meios de divulgar seus 
+            trabalhos através de alas de serviços e produtos.</p>
         </div>
       </div>
       

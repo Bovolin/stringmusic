@@ -1,6 +1,5 @@
 <?php
-include ("conexao.php");
-include ("verifica_login.php");
+include ("fundo_foto.php");
 
 $session = $_SESSION['usuario'];
 
@@ -168,25 +167,27 @@ else{
     </head>
 
     <body>
-    <header>
-      <nav style="background: #2d2a30;">
-        <ul class="ul-nav">
-          <li class="logo"><a href="index.php"><img src="imgs/LogoAqui.png" alt="logo do site"></a></li>
-          <li class="items"><a href="index.php">Início</a></li>
-          <li class="items"><a href="loja.php">Produtos</a></li>
-          <li class="items"><a href="servico.php">Serviços</a></li>
-          <li class="items"><a href="contato.php">Contatos</a></li>
-          <?php
+    <nav class="container-fluid nav">
+        <div class="container cf">
+          <div class="brand">
+            <a href="index.php"><img src="logo/roxo_preto.png" alt="Logo" style="width: 450px;"></a>
+          </div>
+          <i class="fa fa-bars nav-toggle"></i>
+          <ul class="un-navbar">
+            <li class="navbar"><a href="index.php">Inicio</a></li>
+            <li class="navbar"><a href="loja.php">Produtos</a></li>
+            <li class="navbar"><a href="servico.php">Serviços</a></li>
+            <?php
             if(isset($_SESSION['usuario'])){
               echo
-              '<li class="items">
+              '<li class="navbar">
                 <div class="action">
                   <div class="profile" onclick="menuAlterna();">
                       <img src="'; echo $imgusuario; echo'">
                   </div>
                   <div class="menu">
-                    <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
-                      <ul>
+                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                      <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
                         <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                         <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
@@ -200,36 +201,14 @@ else{
               </li>';
             }
             else{
-              echo '<li class="items"><a href="login.php">Login</a></li>';
+              echo '<li class="navbar"><a href="login.php">Login</a></li>';
             }
-          ?>
-          <li class="btn"><a href="#"><i class="fas fa-bars"></i></a></li>
-        </ul>
+            ?>
+          </ul>
+        </div>
       </nav>
-
-      <!-- NÃO TOCA AQUI PELO AMOR DE DEUS \/-->  
-      <script>
-          /*  $(document).ready(function(){
-            $('.btn').click(function(){
-              $('.items').toggleClass("show");
-              $('ul li').toggleClass("hide");
-            });
-          }); */
-          const btn = document.getElementsByClassName('btn')[0];
-            btn.addEventListener('click', function() {
-            let items = document.getElementsByClassName('items');
-            for (let i = 0; i <= items.length - 1; i += 1) {
-              if (items[i].classList.contains('show')) {
-                items[i].classList.remove('show');
-              } else {
-                items[i].classList.add('show');
-              }         
-            }
-          });
-      </script> 
-    </header>
         <section class="section-perfil-usuario">
-            <div class="perfil-usuario-fundo">
+            <div class="perfil-usuario-fundo" style="background<?php echo $imgfundo ?>">
                 <div class="perfil-usuario-portal">
                     <div class="perfil-usuario-avatar">
                         <img src="<?php echo $imgusuario ?>" alt="">
