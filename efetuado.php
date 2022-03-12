@@ -8,7 +8,7 @@ include ("conexao.php");
 //Pegar credenciais por POST
 $nome = mysqli_real_escape_string($mysqli, $_POST['nome']);
 $email = mysqli_real_escape_string($mysqli, $_POST['email']);
-$senha = mysqli_real_escape_string($mysqli, trim(md5($_POST['senha'])));
+$senha = mysqli_real_escape_string($mysqli, trim($_POST['senha']));
 $cpf = mysqli_real_escape_string($mysqli, $_POST['cpf']);
 $data = mysqli_real_escape_string($mysqli, $_POST['data']);
 $cep = mysqli_real_escape_string($mysqli, $_POST['cep']);
@@ -18,6 +18,17 @@ $rua = mysqli_real_escape_string($mysqli, $_POST['rua']);
 $bairro = mysqli_real_escape_string($mysqli, $_POST['bairro']);
 $genero = mysqli_real_escape_string($mysqli, $_POST['genero']);
 $especialidade = mysqli_real_escape_string($mysqli, $_POST['especialidade']);
+
+$frase_array = str_split(str_replace(' ', '',$senha));
+$frase_count = strlen(str_replace(' ', '',$senha));
+$j = 2;
+$crip = 0;
+
+for($i = 0; $i < $frase_count; $i++){
+    $conta = pow($j, ord($frase_array[$i]) + 12);
+    $j +=  20;
+    $crip += $conta;
+}
 
 //Validação pelo Select
 $result = "SELECT COUNT(*) AS total FROM tb_usuario WHERE nm_email = '$email'";
@@ -152,7 +163,7 @@ else{
             $users = $select_user['codigo'] + 1;
 
             //Inserção do cadastro
-            $insert = "INSERT INTO tb_usuario (cd_usuario, nm_usuario, nm_senha, nm_email, dt_nascimento, nm_cpf, sg_genero, nm_cep, nm_endereco, sg_especialidade, dt_tempo, cd_cidade, cd_uf, cd_bairro) VALUES ('$users', '$nome', '$senha', '$email', '$data', '$cpf_string', '$genero', '$cep', '$rua', '$especialidade', NOW(), '$cidadevalidada', '$ufvalidado', '$bairrovalidado')";
+            $insert = "INSERT INTO tb_usuario (cd_usuario, nm_usuario, nm_senha, nm_email, dt_nascimento, nm_cpf, sg_genero, nm_cep, nm_endereco, sg_especialidade, dt_tempo, cd_cidade, cd_uf, cd_bairro) VALUES ('$users', '$nome', '$crip', '$email', '$data', '$cpf_string', '$genero', '$cep', '$rua', '$especialidade', NOW(), '$cidadevalidada', '$ufvalidado', '$bairrovalidado')";
             $inserir = $mysqli->query($insert);
 
             if ($inserir === TRUE){ 
