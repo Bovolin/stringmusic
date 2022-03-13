@@ -12,9 +12,9 @@ include ("foto.php");
     <link rel="stylesheet" href="css/style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
-    <script src="tent.js" defer></script>
-    <script src="script.js"></script>
-    <script src="swal.js"></script>
+    <script src="js/tent.js" defer></script>
+    <script src="js/script.js"></script>
+    <script src="js/swal.js"></script>
 </head>
 <body>
     <nav class="container-fluid nav">
@@ -41,7 +41,7 @@ include ("foto.php");
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
                         <li class="info"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
-                        <script src="script_dark.js"></script></li>
+                        <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
                 </div>

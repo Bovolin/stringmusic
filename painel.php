@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/styleusuarios.css" />
-        <script src="swal.js"></script>
+        <script src="js/swal.js"></script>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
         <title>StringMusic</title>
@@ -135,7 +135,7 @@
           </div>
         </section>
 
-        <script src="script_dark.js"></script>
+        <script src="js/script_dark.js"></script>
 
     <script>
           document.getElementById("file").onchange = function() {

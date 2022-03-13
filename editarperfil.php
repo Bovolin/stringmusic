@@ -91,7 +91,7 @@ else{
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/styleusuarios.css" />
-        <script src="swal.js"></script>
+        <script src="js/swal.js"></script>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
         <title>StringMusic</title>
@@ -194,7 +194,7 @@ else{
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
                         <li class="info"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
-                        <script src="script_dark.js"></script></li>
+                        <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
                 </div>

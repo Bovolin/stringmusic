@@ -62,14 +62,14 @@
     <title>StringMusic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styleadicionars.css">
-    <script src="script.js" defer></script>
+    <script src="js/script.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <!--SWAL-->
-    <script src="swal.js"></script>
+    <script src="js/swal.js"></script>
 
 </head>
 
@@ -102,7 +102,7 @@
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
                         <li class="info"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
-                        <script src="script_dark.js"></script></li>
+                        <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
                 </div>

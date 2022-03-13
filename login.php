@@ -9,7 +9,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/stylelogin.css" />
-    <script src="swal.js"></script>
+    <script src="js/swal.js"></script>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <title>StringMusic</title>
   </head>
@@ -165,6 +165,6 @@ session_start();
     </div>
     
 
-    <script src="scriptlogin.js"></script> 
+    <script src="js/scriptlogin.js"></script> 
   </body>
 </html>
