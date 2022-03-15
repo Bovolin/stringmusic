@@ -12,11 +12,11 @@
             <ul>
                 <li>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" value="test_user_19653727@testuser.com">
                 </li>
                 <li>
                     <label for="cardNumber">Número do Cartão</label>
-                    <input type="text" id="cardNumber" data-checkout="cardNumber">
+                    <input type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     <div class="brand"></div>
                 </li>
                 <li>
@@ -24,8 +24,12 @@
                     <input type="text" id="securityCode" data-checkout="securityCode">
                 </li>
                 <li>
-                    <label for="cardExperiationYear">Data de Expiração</label>
-                    <input type="text" id="cardExperiationYear" data-checkout="cardExperiationYear">
+                    <label for="cardExpirationMonth">Mês de Expiração</label>
+                    <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth">
+                </li>
+                <li>
+                    <label for="cardExpirationYear">Ano de Expiração</label>
+                    <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear">
                 </li>
                 <li>
                     <label for="cardholderName">Titular do Cartão</label>
@@ -36,8 +40,13 @@
                     <select id="docType" data-checkout="docType"></select>
                 </li>
                 <li>
+                    <!--
+                        4235647728025682
+                        123
+                        11/25
+                     -->
                     <label for="docNumber">Número do Documento</label>
-                    <select id="docNumber" data-checkout="docNumber"></select>
+                    <input type="text" id="docNumber" data-checkout="docNumber">
                 </li>
                 <li>
                     <label for="installments">Parcelas</label>

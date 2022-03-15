@@ -46,4 +46,28 @@
             installmentsSel.options[installmentsSel.options.length] = new Option(txtOpt, valOpt);
         });
     };
+
+    //Gerar Token
+    function sendPayment(event){
+        event.preventDefault();
+        window.Mercadopago.createToken(event.target, sdkResponseHandler);
+    }
+    function sdkResponseHandler(status, response){
+        if(status != 200 && status != 201){
+            alert("verify filled data");
+       }
+       else{
+           let form = document.querySelector('#pay');
+           let card = document.createElement('input');
+           card.setAttribute('name', 'token');
+           card.setAttribute('type', 'hidden');
+           card.setAttribute('value', response.id);
+           form.appendChild(card);
+           form.submit();
+       }
+    }
+    if(doc.querySelector('#pay')){
+        let formPay = doc.querySelector('#pay');
+        formPay.addEventListener('submit', sendPayment, false);
+    }
 })(window,document);
