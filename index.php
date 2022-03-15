@@ -1,5 +1,5 @@
 <?php
-include ("foto.php");
+    include ("foto.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -17,123 +17,158 @@ include ("foto.php");
     <script src="js/swal.js"></script>
 </head>
 <body>
-    <nav class="container-fluid nav">
-        <div class="container cf">
-          <i class="fa fa-bars nav-toggle"></i>
-          <ul class="un-navbar">
-            <li class="navbar"><a href="index.php">Inicio</a></li>
-            <li class="navbar"><a href="loja.php">Produtos</a></li>
-            <li class="navbar"><a href="servico.php">Serviços</a></li>
-            <?php
+    <!-- HEADER -->
+<header>
+    <a href="#" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+
+    <nav class="navbar">
+        <a href="#">Início</a>
+        <a href="#">Loja</a>
+        <?php
             if(isset($_SESSION['usuario'])){
               echo
-              '<li class="navbar">
-                <div class="action">
+              '<div class="action">
                   <div class="profile" onclick="menuAlterna();">
                       <img src="'; echo $imagemusuario; echo'">
                   </div>
                   <div class="menu">
-                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                    <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
                       <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
                         <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                         <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                        <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
                         <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
-                </div>
-              </li>';
+                </div>';
             }
             else{
-              echo '<li class="navbar"><a href="login.php">Login</a></li>';
+              echo '<a href="login.php">Login</a>';
             }
             ?>
-          </ul>
+    </nav>
+
+</header>
+
+<!-- HEADER FIM -->
+
+<!-- HOME  -->
+
+<section class="home" id="home">
+    <div class="content">
+        <h3>A plataforma própria para<span> músicos</span></h3>
+        <p>Já pensou em algum lugar onde você possa comprar tudo relacionado a música? Acesse nossa loja!</p>
+        <a href="#" class="btn">Acessar Loja</a>
+    </div>
+    <div class="image">
+        <img src="#" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
+    </div>
+</section>
+
+<!-- HOME FIM -->
+
+<!-- DESTAQUES  -->
+
+<section class="features" id="features">
+    <h1 class="heading"> Destaques da plataforma </h1>
+    <div class="box-container">
+        <div class="box">
+            <img src="images/manoguitarra.jpg" alt="">
+            <h3>Divulgue aqui seu trabalho!</i></h3>
+            <p>E encontre lugares para apresentá-lo!</p>
         </div>
-      </nav>
-      
-      <div class="container-fluid splash" id="splash">
-        <div class="container">
-          <img src="logo/roxo_preto.png" alt="Logo" class="profile-image">
+        <div class="box">
+            <img src="images/manoguitarra.jpg" alt="">
+            <h3>Contrate os melhores!</h3>
+            <p>Encontre aqui o músico ideal para seu evento!</p>
         </div>
-      </div>
-      
-      <div class="container-fluid intro" id="about">
-        <div class="container">
-          <h2>Sobre nós</h2>
-          <p>Na carência de apoio a músicos e compositores que passam por vicissitudes em relação à procura de emprego e formas de 
-            demonstrar seus talentos, o String;Music é uma plataforma que visa auxiliar esses profissionais com meios de divulgar seus 
-            trabalhos através de alas de serviços e produtos.</p>
-        </div>
-      </div>
-      
-      <div class="container-fluid features" id="skills">
-        <div class="container cf">
-          <h2>Anuncie Já!</h2>
-          <div class="col-3">
-            <h3>Divulgue aqui seu trabalho! <i class="fas fa-briefcase"></i></h3>
-            <p>E encontre os melhores lugares para apresentá-lo!</p>
-          </div>
-          <div class="col-3">
-            <h3>Contrate os melhores músicos <i class="fas fa-music"></i></h3>
-            <p>Encontre aqui o músico perfeito para seu evento!</p>
-          </div>
-          <div class="col-3">
+        <div class="box">
+            <img src="images/manoguitarra.jpg" alt="">
             <h3>Anuncie aqui seu produto!</h3>
             <p>Ir para página de adicionar produtos! <a href="adicionarprod.php"><i class="fas fa-sign-in-alt"></a></i></p>
-          </div>
         </div>
-      </div>
-      
-      <div class="container-fluid portfolio" id="portfolio">
-        <div class="container cf">
-          <h2>Produtos mais comprados</h2>
-          <div class="gallery">
-            <main class="grid">
-              <article>
-                <img src="imgs/partitura.jpg" alt="">
-                <div class="text">
-                  <h3>Interpretação</h3>
-                  <p>Música: Ace of Spades</p>
-                  <button class="btnpart">Comprar</button>
-                </div>
-              </article>
-              <article>
-                <img src="imgs/partitura.jpg" alt="">
-                <div class="text">
-                  <h3>Interpretação</h3>
-                  <p>Música: Ace of Spades</p>
-                  <button class="btnpart">Comprar</button>
-                </div>
-              </article>
-              <article>
-                <img src="imgs/partitura.jpg" alt="">
-                <div class="text">
-                  <h3>Interpretação</h3>
-                  <p>Música: Ace of Spades</p>
-                  <button class="btnpart">Comprar</button>
-                </div>
-              </article>
-            </main>
-          </div>
+    </div>
+</section>
+
+<!-- FEATURES FIM -->
+
+<!-- SOBRE  -->
+
+<section class="about" id="about">
+
+    <h1 class="heading"> Sobre a plataforma </h1>
+
+    <div class="column">
+
+        <div class="image">
+            <img src="images/manoguitarra.png" alt="">
         </div>
-      </div>
-      
-      <div class="container-fluid contact" id="contact">
-        <div class="container">
-          <form action="enviar_email.php" method="post">
-            <h2>Contate-nos</h2>
-            <input type="text" placeholder="Nome" id="name" name="nome" class="full-half" maxlength="30">
-            <input type="text" placeholder="Telefone" id="telefone" name="telefone" class="full-half" maxlength="17">
-            <input type="email" placeholder="Email" id="email" name="email" maxlength="50">
-            <input type="text" placeholder="Assunto" id="subject" name="titulo" maxlength="20">
-            <textarea placeholder="Mensagem" id="message" name="mensagem" style="resize: none" maxlength="200"></textarea>
-            <input type="submit" value="Enviar">
-          </form>
+
+        <div class="content">
+            <h3>A melhor solução para a fins de musicalidade</h3>
+            <p>singed e suas frases icônicas inseridas aqui</p>
         </div>
-      </div>
+
+    </div>
+
+</section>
+
+<!-- SOBRE FIM -->
+
+
+<!-- CONTATO  -->
+
+<section class="contact" id="contact">
+    <div class="image">
+        <img src="images/padrão.png" alt="">
+    </div>
+    <form action="">
+        <h1 class="heading">Contato</h1>
+        <div class="inputBox">
+            <input type="text" required>
+            <p class="lbl_index">Nome</p>
+        </div>
+        <div class="inputBox">
+            <input type="email" required>
+            <p class="lbl_index">Email</p>
+        </div>
+        <div class="inputBox">
+            <input type="text" required>
+            <p class="lbl_index">Telefone</p>
+        </div>
+        <div class="inputBox">
+            <textarea required name="" id="" cols="30" rows="10"></textarea>
+            <p class="lbl_index">Mensagem</p>
+        </div>
+        <input type="submit" class="btn" value="Enviar">
+    </form>
+
+</section>
+
+<!-- CONTATO FIM --> 
+
+<!-- FOOTER -->
+
+<footer>
+    <ul class="social-icon">
+        <li><a href="#"><i class='bx bxl-facebook-circle'></i></a></li>
+        <li><a href="#"><i class='bx bxl-instagram-alt' ></i></a></li>
+        <li><a href="#"><i class='bx bxl-youtube' ></i></a></li>
+    </ul>
+    <ul class="menu">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Loja</a></li>
+        <li><a href="#">Login</a></li>
+    </ul>
+    <p>Copyright</p>
+</footer>
+
+<!-- FOOTER FIM-->
 </body>
 </html>

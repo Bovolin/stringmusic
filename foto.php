@@ -11,7 +11,7 @@ if(isset($_SESSION['usuario'])){
   if(empty($semfoto)){
     foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
       $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.png";
+      $imagemusuario = "imgs/user.jpeg";
       if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
       elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
       elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
