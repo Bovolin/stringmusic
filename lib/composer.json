@@ -1,0 +1,13 @@
+{
+    "name": "stringmusic/mp",
+    "description": "Mercado Pago",
+    "authors": [
+        {
+            "name": "Filipe Bovolin",
+            "email": "filipe.bovolin@gmail.com"
+        }
+    ],
+    "require": {
+        "mercadopago/dx-php": "dev-master"
+    }
+}

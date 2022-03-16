@@ -54,7 +54,7 @@
                 </li>
             </ul>
             <input type="hidden" name="amount" id="amount" value="120.00">
-            <input type="hidden" name="description">
+            <input type="hidden" name="description" value="Instrumento Bom">
             <input type="hidden" name="paymentMethodId">
             <input type="submit" value="Pagar!">
         </fieldset>
