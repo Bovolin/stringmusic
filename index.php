@@ -12,21 +12,20 @@
     <link rel="stylesheet" href="css/style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
-    <script src="js/tent.js" defer></script>
     <script src="js/script.js"></script>
     <script src="js/swal.js"></script>
 </head>
 <body>
     <!-- HEADER -->
 <header>
-    <a href="#" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+    <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
 
     <input type="checkbox" id="menu-bar">
     <label for="menu-bar" class="fas fa-bars"></label>
 
     <nav class="navbar">
-        <a href="#">Início</a>
-        <a href="#">Loja</a>
+        <a href="index.php">Início</a>
+        <a href="loja.php">Loja</a>
         <?php
             if(isset($_SESSION['usuario'])){
               echo
@@ -64,10 +63,10 @@
     <div class="content">
         <h3>A plataforma própria para<span> músicos</span></h3>
         <p>Já pensou em algum lugar onde você possa comprar tudo relacionado a música? Acesse nossa loja!</p>
-        <a href="#" class="btn">Acessar Loja</a>
+        <a href="loja.php" class="btn">Acessar Loja</a>
     </div>
     <div class="image">
-        <img src="#" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
+        <img src="logo/padrão.png" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
     </div>
 </section>
 
@@ -79,17 +78,17 @@
     <h1 class="heading"> Destaques da plataforma </h1>
     <div class="box-container">
         <div class="box">
-            <img src="images/manoguitarra.jpg" alt="">
+            <img src="imgs/Powerwolf.jpg" alt="">
             <h3>Divulgue aqui seu trabalho!</i></h3>
             <p>E encontre lugares para apresentá-lo!</p>
         </div>
         <div class="box">
-            <img src="images/manoguitarra.jpg" alt="">
+            <img src="imgs/Powerwolf.jpg" alt="">
             <h3>Contrate os melhores!</h3>
             <p>Encontre aqui o músico ideal para seu evento!</p>
         </div>
         <div class="box">
-            <img src="images/manoguitarra.jpg" alt="">
+            <img src="imgs/Powerwolf.jpg" alt="">
             <h3>Anuncie aqui seu produto!</h3>
             <p>Ir para página de adicionar produtos! <a href="adicionarprod.php"><i class="fas fa-sign-in-alt"></a></i></p>
         </div>
@@ -107,12 +106,12 @@
     <div class="column">
 
         <div class="image">
-            <img src="images/manoguitarra.png" alt="">
+            <img src="imgs/manoguitarra.png" alt="">
         </div>
 
         <div class="content">
             <h3>A melhor solução para a fins de musicalidade</h3>
-            <p>singed e suas frases icônicas inseridas aqui</p>
+            <p>e suas frases icônicas inseridas aqui</p>
         </div>
 
     </div>
@@ -126,7 +125,7 @@
 
 <section class="contact" id="contact">
     <div class="image">
-        <img src="images/padrão.png" alt="">
+        <img src="logo/padrão.png" alt="">
     </div>
     <form action="">
         <h1 class="heading">Contato</h1>
@@ -140,7 +139,11 @@
         </div>
         <div class="inputBox">
             <input type="text" required>
-            <p class="lbl_index">Telefone</p>
+            <p class="lbl_index" onkeypress="return Onlynumbers(this)">Telefone</p>
+        </div>
+        <div class="inputBox">
+            <input type="text" required>
+            <p class="lbl_index">Título</p>
         </div>
         <div class="inputBox">
             <textarea required name="" id="" cols="30" rows="10"></textarea>
@@ -162,9 +165,8 @@
         <li><a href="#"><i class='bx bxl-youtube' ></i></a></li>
     </ul>
     <ul class="menu">
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Loja</a></li>
-        <li><a href="#">Login</a></li>
+        <li><a href="index.php">Inicio</a></li>
+        <li><a href="loja.php">Loja</a></li>
     </ul>
     <p>Copyright</p>
 </footer>
