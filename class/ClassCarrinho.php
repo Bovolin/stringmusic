@@ -40,25 +40,27 @@ class ClassCarrinho{
     //Listar produtos
     public function listProducts(){
         $html="";
-        foreach($_SESSION['products'] as $product){
-            $html.="<tr>";
-            $html.="<td>" . $product['id'] . "</td>";
-            $html.="<td>" . $product['description'] . "</td>";
-            $html.="<td>" . floatval($product['quantity']) * $product['price'] . "</td>";
-            $html.="</tr>";
+        if(isset($_SESSION['products'])){
+            foreach($_SESSION['products'] as $product){
+                $html.="<tr>";
+                $html.="<td>" . $product['id'] . "</td>";
+                $html.="<td>" . $product['description'] . "</td>";
+                $html.="<td>" . (int)$product['quantity'] * $product['price'] . "</td>";
+                $html.="</tr>";
+            } 
         }
+        
         return $html;
     }
 
     //Amount produtos
     public function getAmount(){
         $amount = 0;
-        if(isset($_SESSION['´products'])){
+        if(isset($_SESSION['products'])){
            foreach($_SESSION['products'] as $product){
-                $amount += floatval($product['quantity']) * $product['price'];
+                $amount += $product['quantity'] * $product['price'];
             } 
         }
-        
         return $amount;
     }
 }

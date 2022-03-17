@@ -54,7 +54,7 @@
       //pega os atributos do serviço pelo método post
       $vnome = $_POST["nome"];
       $vdesc = $_POST["desc"];
-      $vprc = $_POST["prc"];
+      $vprc = str_replace(",", ".", $_POST['prc']);
       $genero_musical = $_POST['genero_musical'];
       if($genero_musical == ""){
         $_SESSION['selecione_genero'];

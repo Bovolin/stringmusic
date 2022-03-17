@@ -30,7 +30,7 @@ $carrinho = new \Classes\ClassCarrinho();
         </table>
     </div>
 
-    <form action="controllers/PaymentController.php" method="post" id="pay" name="pay">
+    <form action="../controllers/PaymentController.php" method="post" id="pay" name="pay">
         <fieldset>
             <h2>Você possui <?php echo $carrinho->getQuantity();?> produto(s) no carrinho</h2>
             <ul>
@@ -87,6 +87,6 @@ $carrinho = new \Classes\ClassCarrinho();
     </form>
     
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<script src="mercadopag.js"></script>
+<script src="../mercadopag.js"></script>
 </body>
 </html>
