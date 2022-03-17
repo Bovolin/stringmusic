@@ -9,5 +9,10 @@
     ],
     "require": {
         "mercadopago/dx-php": "dev-master"
+    },
+    "autoload":{
+        "psr-4":{
+            "Classes\\":"../class/"
+        }
     }
 }

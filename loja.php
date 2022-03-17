@@ -98,13 +98,13 @@ include("foto.php");
             <h3>Partituras</h3>
             <p>Textinho</p>
             <img src="img/partitura.jpg" alt="">
-            <a href="#" class="btn">Acessar</a>
+            <a href="interpretacoes.php" class="btn">Acessar</a>
         </div>
         <div class="box">
             <h3>Serviços</h3>
             <p>Textinho</p>
             <img src="img/partitura.jpg" alt="">
-            <a href="#" class="btn">Acessar</a>
+            <a href="servico.php" class="btn">Acessar</a>
         </div>
 
     </div>

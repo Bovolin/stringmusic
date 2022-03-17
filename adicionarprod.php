@@ -42,7 +42,7 @@ include ("foto.php");
         confirmButtonText: 'Prosseguir'
       }).then((result) => {
         if(result.isConfirmed){
-          window.location.href = "loja.php";
+          window.location.href = "interpretacoes.php";
         }
       })
     }

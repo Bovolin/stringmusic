@@ -1,3 +1,8 @@
+<?php
+require("../../lib/vendor/autoload.php");
+$carrinho = new \Classes\ClassCarrinho();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,8 +12,27 @@
     <title>Mercado Pago</title>
 </head>
 <body>
+
+    <div>
+        <table style="width: 80%; margin: 30px 10%; text-align: center;">
+            <thead>
+                <tr style="background: #333; font-weight: bold; color: #fff">
+                    <th style="padding: 7px; 0;">ID</th>
+                    <th style="padding: 7px; 0;">Descrição</th>
+                    <th style="padding: 7px; 0;">Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    echo $carrinho->listProducts();
+                ?>
+            </tbody>
+        </table>
+    </div>
+
     <form action="controllers/PaymentController.php" method="post" id="pay" name="pay">
         <fieldset>
+            <h2>Você possui <?php echo $carrinho->getQuantity();?> produto(s) no carrinho</h2>
             <ul>
                 <li>
                     <label for="email">Email</label>
@@ -53,10 +77,12 @@
                     <select id="installments" class="form-control" name="installments"></select>
                 </li>
             </ul>
-            <input type="hidden" name="amount" id="amount" value="120.00">
+            <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
             <input type="hidden" name="description" value="Instrumento Bom">
             <input type="hidden" name="paymentMethodId">
             <input type="submit" value="Pagar!">
+            
+            <a href="https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=clear">Esvaziar Carrinho</a>
         </fieldset>
     </form>
     

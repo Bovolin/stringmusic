@@ -4,7 +4,7 @@ include ("conexao.php");
 
 $c = $_GET['p']; 
 
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.qt_interpretacao AS quantidade, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$c'") as $interpretacao){
+foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.qt_interpretacao AS quantidade, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$c'") as $interpretacao){
   $nomeinterpretacao = $interpretacao['interpretacao'];
   $descricaointerpretacao = $interpretacao['descricao'];
   $quantidadeinterpretacao = $interpretacao['quantidade'];
@@ -13,6 +13,7 @@ foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_interpretacao
   $valorinterpretacao = $interpretacao['valor'];
   $path = $interpretacao['pathh'];
   $codigouser = $interpretacao['codigousuario'];
+  $codigointerpretacao = $interpretacao['codigo'];
 }
 foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
   $dono_sem_foto = $confere_foto_dono['conferefoto'];
@@ -157,9 +158,10 @@ else{
               <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
               <h5 style="color: var(--color-text);">Quantidade: <?php echo $quantidadeinterpretacao ?></h5>
               <a href="#">
-                <button type="button" class="btnpart" style="width: 200px;">
-                  <i class="fas fa-shopping-cart"></i> Comprar
-                </button>
+                <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
+              </a>
+              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product=' . $nomeinterpretacao . '&price=' . $valorinterpretacao . '&id=' . $codigointerpretacao ?>">
+                <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
               </a>
             </div>
           </div>      
