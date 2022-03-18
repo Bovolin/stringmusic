@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require('../config/config.php');
 // Carregar Autoload do composer
@@ -30,5 +31,7 @@ $payment->payer = array(
     "email" => $email
 );
 $payment->save();
-echo '<pre>',print_r($payment),'</pre>';
+$_SESSION['payment'] = $payment;
+header("Location: ../view/result.php");
+//echo '<pre>',print_r($payment),'</pre>';
 ?>
