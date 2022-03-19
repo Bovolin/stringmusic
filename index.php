@@ -63,7 +63,7 @@
     <div class="content">
         <h3>A plataforma própria para<span> músicos</span></h3>
         <p>Já pensou em algum lugar onde você possa comprar tudo relacionado a música? Acesse nossa loja!</p>
-        <a href="loja.php" class="btn">Acessar Loja</a>
+        <a href="loja.php" class="btnpart">Acessar Loja</a>
     </div>
     <div class="image">
         <img src="logo/padrão.png" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
@@ -149,7 +149,7 @@
             <textarea required name="" id="" cols="30" rows="10"></textarea>
             <p class="lbl_index">Mensagem</p>
         </div>
-        <input type="submit" class="btn" value="Enviar">
+        <input type="submit" class="btnpart" value="Enviar">
     </form>
 
 </section>

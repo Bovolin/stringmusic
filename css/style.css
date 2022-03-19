@@ -4,6 +4,10 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
   }
+
+  a{
+      text-decoration: none !important;
+  }
   
   html {
     position: relative;
@@ -86,7 +90,7 @@ html{
 }
 
 body{
-    background: var(--bg);
+    background: var(--bg) !important;
 }
 
 section{
@@ -96,7 +100,7 @@ section{
     padding-bottom: 2rem;
 }
 
-.btn{
+.btnpart{
     display: inline-block;
     margin-top: 1rem;
     padding:.8rem 3rem;
@@ -109,7 +113,26 @@ section{
     transition: all .3s linear;
 }
 
-.btn:hover{
+.btnpart:hover{
+    background-color: #326aca;
+}
+
+.btnpart_loja{
+    display: inline-block;
+    margin: 10px 0;
+    border: none;
+    outline: none;
+    height: 49px;
+    border-radius: 49px;
+    background: #5995fd;
+    font-size: 1.7rem;
+    color:#fff;
+    cursor: pointer;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    transition: all .3s linear;
+}
+
+.btnpart_loja:hover{
     background-color: #326aca;
 }
 
@@ -125,7 +148,6 @@ section{
 }
 
 header{
-    position: fixed;
     top:0;
     left:0;
     width:100%;
@@ -623,7 +645,6 @@ footer .social-icon {
   }
 
   .action .menu.active{
-    top: 115%;
     visibility: visible;
     opacity: 1;
   }
@@ -718,4 +739,76 @@ footer .social-icon {
 
   .action .menu .un .sair:hover a{
     color: red;
+  }
+
+  /* CARD */
+
+
+  @media (max-width: 768px){
+    .grid{
+        grid-template-columns: repeat(1, 1fr);
+        margin: 40px;
+    }
+  
+    .grid > article{
+        text-align: center;
+    }
+  }
+
+  .field{
+    width: 100%;
+    border: 2px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    background-color: var(--bg-panel);
+    padding: 0.5rem 1rem;
+    font-size: 1.7rem;
+    transition: .3s;
+    color: var(--color-text);
+  }
+  
+  .field:hover{
+    background-color: var(--bg);
+  }
+  /* NAVBAR */
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+    align-items: center;
+  }
+  
+  .grid > article{
+    border: none;
+    background-color: var(--bg-panel);
+    box-shadow: 10px 8px 15px 4px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 260px;
+    transition: transform .3s;
+    border-radius: 25px;
+  }
+  
+  .grid > article:hover{
+    transform: translateY(5px);
+    box-shadow: 2px 2px 26px 0px rgba (0,0,0,0.3);
+  }
+  
+  .grid > article img{
+    width: 50%;
+  }
+  
+  .text{
+    padding: 0 20px 20px;
+  }
+  
+  .text h3{
+    font-size: 25px;
+    text-transform: uppercase;
+    color: var(--color-headings);
+  }
+  
+  .text p{
+      font-size: 15px;
+      color: var(--color-text);
   }

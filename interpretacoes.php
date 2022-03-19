@@ -12,7 +12,7 @@ if(isset($_SESSION['usuario'])){
   if(empty($semfoto)){
     foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
       $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.png";
+      $imagemusuario = "imgs/user.jpeg";
       if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
       elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
       elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
@@ -37,9 +37,8 @@ if(isset($_SESSION['usuario'])){
     <meta charset="UTF-8">
     <title>StringMusic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
-    <script src="js/tent.js" defer></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Boxicons -->
@@ -66,55 +65,56 @@ if(isset($_SESSION['usuario'])){
     endif;
     unset($_SESSION['produtorecusado']);
   ?>
-  <nav class="container-fluid nav">
-        <div class="container cf">
-          <div class="brand">
-            <a href="index.php"><img src="logo/roxo_preto.png" alt="Logo" style="width: 450px;"></a>
-          </div>
-          <i class="fa fa-bars nav-toggle"></i>
-          <ul class="un-navbar">
-            <li class="navbar"><a href="index.php">Inicio</a></li>
-            <li class="navbar"><a href="loja.php">Produtos</a></li>
-            <li class="navbar"><a href="servico.php">Serviços</a></li>
-            <?php
+  <!-- HEADER -->
+<header>
+    <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+
+    <nav class="navbar">
+        <a href="index.php">Início</a>
+        <a href="#">Instrumentos</a>
+        <a href="interpretacoes.php">Partituras</a>
+        <a href="servico.php">Serviços</a>
+        <?php
             if(isset($_SESSION['usuario'])){
               echo
-              '<li class="navbar">
-                <div class="action">
+              '<div class="action">
                   <div class="profile" onclick="menuAlterna();">
                       <img src="'; echo $imagemusuario; echo'">
                   </div>
-                  <div class="menu">
-                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                  <div class="menu" style="right: -2% !important;">
+                    <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
                       <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
                         <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                         <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                        <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
                         <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
-                </div>
-              </li>';
+                </div>';
             }
             else{
-              echo '<li class="navbar"><a href="login.php">Login</a></li>';
+              echo '<a href="login.php">Login</a>';
             }
             ?>
-          </ul>
-        </div>
-      </nav>
+    </nav>
+
+</header>
 
   <div class="container">
     <br>
-    <h2 style="display: inline;">Produtos</h2>
+    <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Produtos</h2>
     <?php
-      if(isset($_SESSION['usuario'])) echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="display: inline; margin-left: 30px;">Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
-      echo '<form action="busca.php" method="get" style="display:inline; float: right; margin-top: -15px;">
+      if(isset($_SESSION['usuario'])) { echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';}
+      echo 
+      '<form action="busca.php" method="get" style="display:inline; float: right; margin-top: -15px;">
         <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
-        <button class="btnpart" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
+        <button class="btnpart_loja" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
       </form>';
     ?>
     <br>

@@ -8,7 +8,7 @@
 }
 
 html{
-  --bg: #FCFCFC;
+  --bg: #f9f9f9;
   --bg-panel: #EBEBEB;
   --color-headings: black;
   --color-text: #333333;
@@ -18,11 +18,14 @@ body{
   background-color: var(--bg);
   align-items: center;
   color: #444;
-  font-size: 18px;
   font-weight: 300;
   line-height: 1;
   margin: 0;
   padding: 0;
+}
+
+a{
+  text-decoration: none !important;
 }
 
 h1 {
@@ -64,99 +67,71 @@ p {
 }
 
 /* NAVBAR */
-nav {
-  background-color: #e8f0ff;
-  box-shadow: 0 2px 2px rgba(0,0,0,.45);
-  position: relative;
-  top: 0;
+header{
+  top:0;
+  left:0;
+  width:100%;
+  background:#fff;
+  height: 100px;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+  padding:2rem 9%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
 }
 
-nav .brand {
-  display: inline-block;
-  float: left;
-  font-size: 1.25em;
-  font-weight: 900;
+header .navbar{
+display: flex;
+align-items: center;
+gap: 30px;
 }
 
-nav .brand a {
-  color: #444;
-  display: block;
-  padding: 1em 0;
-}
-
-nav .nav-toggle {
-  color: #444;
-  cursor: pointer;
-  display: inline-block;
-  float: right;
-  font-size: 1.25em;
-  padding: 1em 0;
-  z-index: 1000
-}
-
-nav .un-navbar {
-  border-top: 1px solid #ccc;
-  clear: both;
-  list-style: none;
-  margin: 0 -1em;
-  padding: 0;
-  z-index: 999;
-}
-
-nav .un-navbar .navbar {
-  border-bottom: 1px solid #ccc;
-  text-align: center;
-  padding-top: 10px;
-}
-
-nav .un-navbar .navbar a {
-  color: #444;
-  display: block;
-  padding: .75em;
-  text-decoration: none;
-  transition: 0.5s;
-}
-
-nav .un-navbar .navbar a:hover, nav .un-navbar .navbar a:focus, nav .un-navbar .navbar a:active {
+header .logo{
+  font-size: 2rem;
   color: #5995fd;
 }
 
-nav.sticky {
-  animation: show-header .5s ease;
-  position: fixed;
-  top: 0;
-  width: 100%;
+header .logo span{
+  color: black;
 }
 
-@media (min-width: 768px) {
-    
-  nav .nav-toggle {
-    display: none;
-  }
+header .navbar a{
+  margin-left: 20px ;
+  color: #5995fd;
+}
+
+header .navbar a:hover{
+  color: #5995fd;
+}
+
+header input{
+  display: none;
+}
+
+header .fas{
+  font-size: 3rem;
+  color: #5995fd;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.nav-logo{
+height: 45px; 
+width: 450px;
+}
+
+@media (max-width: 450px){
+.nav-logo{
   
-  nav .un-navbar {
-    border: none;
-    clear: none;
-    display: inline-block !important;
-    float: right;
-    margin: 0;
-    padding: 25px 0;
-  }
-  
-  nav .un-navbar .navbar {
-    border: none;
-    display: inline-block;
-    float: left;
-    margin-right: 1.5em;
-  }
-  
-  nav .un-navbar .navbar:last-of-type {
-    margin-right: 0;
-  }
-  
-  nav .un-navbar .navbar a {
-    padding: 0;
-  }
+  height: 20px; 
+  width: 200px;
+}
+}
+
+header nav .action{
+display: inline-flex;
 }
 
 .section-perfil-usuario .perfil-usuario-body,
@@ -348,6 +323,7 @@ label {
   width: 52px;
   height: 27px;
   background: grey;
+  margin-top: 0.5rem;
   float: right;
   border-radius: 100px;
   position: relative;
@@ -407,115 +383,177 @@ label:active:after {
     }
 }
     /* foto perfil */
-    .action .profile{
-      position: relative;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      overflow: hidden;
-      cursor: pointer;
-    }
+  .action .profile{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
 
-    .action .profile img{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  .action .profile img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
+  .action .menu{
+    position: absolute;
+    top: 120px;
+    right: 8%;
+    padding: 15px 25px;
+    background-color: rgb(228, 228, 228);
+    width: 200px;
+    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    transition: 0.5s;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  @media (max-width: 900px) {
     .action .menu{
       position: absolute;
       top: 120px;
-      left: 1055px;
-      padding: 10px 20px;
-      background-color: rgb(228, 228, 228);
-      width: 200px;
-      box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-      border-radius: 15px;
-      transition: 0.5s;
-      visibility: hidden;
-      opacity: 0;
+      left: 650px;
       z-index: 1;
     }
 
-    .action .menu.active{
-      top: 115%;
-      visibility: visible;
-      opacity: 1;
+    .action .menu::before{
+      position: absolute;
+      top: -5px;
+      left: 150px;
+    }
+  }
+  @media (max-width: 800px) {
+    .action .menu{
+      position: absolute;
+      top: 120px;
+      left: 580px;
+      z-index: 1;
     }
 
     .action .menu::before{
-      content: '';
       position: absolute;
       top: -5px;
-      right: 28px;
-      width: 20px;
-      height: 20px;
-      background-color: rgb(197, 197, 197);
-      transform: rotate(45deg);
+      left: 170px;
+    }
+  }
+  @media (max-width: 700px) {
+    .action .menu{
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      z-index: 1;
     }
 
-    .action .menu h3{
-      width: 100%;
-      text-align: center;
-      font-size: 18px;
-      padding: 20px 0;
-      font-weight: 500;
-      color: #555;
-      line-height: 1.2em;
+    .action .menu::before{
+      position: absolute;
+      top: -5px;
+      left: 10px;
     }
+  }
 
-    .action .menu h3 span{
-      font-size: 14px;
-      color: #555;
-      font-weight: 400;
-    }
+  .action .menu.active{
+    visibility: visible;
+    opacity: 1;
+  }
 
-    .action .menu ul li{
-      list-style: none;
-      padding: 10px 8px;
-      border-top :1px solid rgba (0,0,0,0.05);
-      display: flex;
-      align-items: center;
-    }
+  .action .menu::before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(197, 197, 197);
+    transform: rotate(45deg);
+  }
 
-    .action .menu ul li img{
-      max-width: 20px;
-      margin-right: 10px;
-      opacity: 0.5;
-      transition: 0.5s;
-    }
+  .action .menu h3{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 0;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.2em;
+  }
 
-    .action .menu ul li:hover img{
-      opacity: 1;
-    }
+  .action .menu h3 span{
+    font-size: 14px;
+    color: #555;
+    font-weight: 400;
+  }
 
-    .action .menu ul li i{
-      opacity: 0.5;
-      transition: 0.5s;
-    }
+  .action .menu .un{
+    padding-left: 0px;
+  }
 
-    .action .menu ul li:hover i{
-      opacity: 1;
-    }
+  .action .menu .un .info{
+    list-style: none;
+    padding: 21px 20px;
+    border-top :1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+  }
 
-    .action .menu ul li a{
-      display: inline-block;
-      text-decoration: none;
-      color: #555;
-      font-weight: 500;
-      transition: 0.5s;
-    }
+  .action .menu .un .info_button{
+    list-style: none;
+    padding: 15px 30%;
+    border-top :1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+  }
 
-    .action .menu ul .info:hover a{
-      color: blue;
-    }
+  .action .menu .un .sair{
+    list-style: none;
+    padding: 15px 20px;
+    border-top :1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+  }
 
-    .action .menu ul .sair:hover a{
-      color: red;
-    }
+  .action .menu .un li img{
+    max-width: 20px;
+    margin-right: 10px;
+    opacity: 0.5;
+    transition: 0.5s;
+  }
+
+  .action .menu .un li:hover img{
+    opacity: 1;
+  }
+
+  .action .menu .un li i{
+    opacity: 0.5;
+    transition: 0.5s;
+    font-size: 20px;
+  }
+
+  .action .menu .un li:hover i{
+    opacity: 1;
+  }
+
+  .action .menu .un li a{
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    transition: 0.5s;
+  }
+
+  .action .menu .un .info:hover a{
+    color: blue;
+  }
+
+  .action .menu .un .sair:hover a{
+    color: red;
+  }
 
     /* A mais */
     .field{

@@ -35,7 +35,7 @@ if(empty($semfoto)){
     $bairrousuario = $usuarios['bairro'];
     $cepusuario = $usuarios['cep'];
     $cidadeusuario = $usuarios['cidade'];
-    $imgusuario = "imgs/user.png";
+    $imgusuario = "imgs/user.jpeg";
 
     if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
     elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
@@ -167,46 +167,42 @@ else{
     </head>
 
     <body>
-    <nav class="container-fluid nav">
-        <div class="container cf">
-          <div class="brand">
-            <a href="index.php"><img src="logo/roxo_preto.png" alt="Logo" style="width: 450px;"></a>
-          </div>
-          <i class="fa fa-bars nav-toggle"></i>
-          <ul class="un-navbar">
-            <li class="navbar"><a href="index.php">Inicio</a></li>
-            <li class="navbar"><a href="loja.php">Produtos</a></li>
-            <li class="navbar"><a href="servico.php">Serviços</a></li>
+    <header>
+        <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+
+        <input type="checkbox" id="menu-bar">
+        <label for="menu-bar" class="fas fa-bars"></label>
+
+        <nav class="navbar">
+            <a href="index.php">Início</a>
+            <a href="loja.php">Loja</a>
             <?php
-            if(isset($_SESSION['usuario'])){
-              echo
-              '<li class="navbar">
-                <div class="action">
-                  <div class="profile" onclick="menuAlterna();">
-                      <img src="'; echo $imgusuario; echo'">
-                  </div>
-                  <div class="menu">
-                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
-                      <ul class="un">
-                        <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
-                        <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
-                        <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
-                        <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
-                        <label for="switch" class="toggle">Toggle</label>
-                        <script src="js/script_dark.js"></script></li>
-                      </ul>
-                  </div>
-                </div>
-              </li>';
-            }
-            else{
-              echo '<li class="navbar"><a href="login.php">Login</a></li>';
-            }
-            ?>
-          </ul>
-        </div>
-      </nav>
+                if(isset($_SESSION['usuario'])){
+                  echo
+                  '<div class="action">
+                      <div class="profile" onclick="menuAlterna();">
+                          <img src="'; echo $imgusuario; echo'">
+                      </div>
+                      <div class="menu">
+                        <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                          <ul class="un">
+                            <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
+                            <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
+                            <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
+                            <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                            <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
+                            <label for="switch" class="toggle">Toggle</label>
+                            <script src="js/script_dark.js"></script></li>
+                          </ul>
+                      </div>
+                    </div>';
+                }
+                else{
+                  echo '<a href="login.php">Login</a>';
+                }
+                ?>
+        </nav>
+    </header>
         <section class="section-perfil-usuario">
             <div class="perfil-usuario-fundo" style="background<?php echo $imgfundo ?>">
                 <div class="perfil-usuario-portal">
@@ -219,7 +215,7 @@ else{
                     <div class="perfil-usuario-descricao">
                         <h3 class="titulo"><?php echo $nomeusuario?></h3>
                         <form action="editar.php" method="post">
-                        <input placeholder="Insira uma descrição sobre você:" type="text" name="descricao" value="<?php echo $descricaousuario?>" class="field">
+                        <input placeholder="Insira uma descrição sobre você:" type="text" name="descricao" style="width: 345px;" value="<?php echo $descricaousuario?>" class="field">
                     </div>
                     <div class="perfil-usuario-footer">
                         <ul class="dados">
