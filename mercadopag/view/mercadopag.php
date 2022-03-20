@@ -20,6 +20,7 @@ $carrinho = new \Classes\ClassCarrinho();
                     <th style="padding: 7px; 0;">ID</th>
                     <th style="padding: 7px; 0;">Descrição</th>
                     <th style="padding: 7px; 0;">Preço</th>
+                    <th style="padding: 7px; 0;">Quantidade</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,6 +77,11 @@ $carrinho = new \Classes\ClassCarrinho();
                     <label for="installments">Parcelas</label>
                     <select id="installments" class="form-control" name="installments"></select>
                 </li>
+                <li>
+                    <label for="terms">
+                        <input type="checkbox" name="terms" id="terms" required>Estou ciente e de acordo com todos os Termos de Proteção e que o String;Music não reterá nenhum dado digitado.
+                    </label>
+                </li>
             </ul>
             <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
             <input type="hidden" name="description" value="Instrumento Bom">
@@ -85,7 +91,9 @@ $carrinho = new \Classes\ClassCarrinho();
             <a href="https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=clear">Esvaziar Carrinho</a>
         </fieldset>
     </form>
-    
+    <img src="https://imgmp.mlstatic.com/org-img/MLB/MP/BANNERS/tipo2_735X40.jpg?v=1" alt="Mercado Pago - Meios de pagamento" title="Mercado Pago - Meios de pagamento" width="735" height="40"/>
+<a href="https://www.mercadopago.com.br/ajuda/Custos-de-parcelamento_322">Veja os juros de parcelamento!</a>
+
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>
 </body>

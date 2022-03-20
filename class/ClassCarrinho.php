@@ -46,6 +46,7 @@ class ClassCarrinho{
                 $html.="<td>" . $product['id'] . "</td>";
                 $html.="<td>" . $product['description'] . "</td>";
                 $html.="<td>" . (int)$product['quantity'] * $product['price'] . "</td>";
+                $html.="<td>" . (int)$product['quantity'] . "</td>";
                 $html.="</tr>";
             } 
         }
