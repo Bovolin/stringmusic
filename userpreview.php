@@ -181,6 +181,7 @@ else{
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/styleusuarios.css" />
         <script src="js/swal.js"></script>
+        <script src="js/script.js"></script>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
         <title>StringMusic</title>
