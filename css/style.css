@@ -136,92 +136,92 @@ section{
     background-color: #326aca;
 }
 
-.heading{
-    text-align: center;
-    background: #5995fd;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    font-size: 3.5rem;
-    text-transform: uppercase;
-    padding:1rem;
-}
+  .heading{
+      text-align: center;
+      background: #5995fd;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      font-size: 3.5rem;
+      text-transform: uppercase;
+      padding:1rem;
+  }
 
-header{
-    top:0;
-    left:0;
-    width:100%;
-    background:#fff;
-    height: 100px;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
-    padding:2rem 9%;
+  header{
+      top:0;
+      left:0;
+      width:100%;
+      background:#fff;
+      height: 100px;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+      padding:2rem 9%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+  }
+
+  header .navbar{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    z-index: 1000;
-}
-
-header .navbar{
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-header .logo{
-    font-size: 2rem;
-    color: #5995fd;
-}
-
-header .logo span{
-    color: black;
-}
-
-header .navbar a{
-    font-size: 1.7rem;
-    margin-left: 2rem ;
-    color: #5995fd;
-}
-
-header .navbar a:hover{
-    color: #5995fd;
-}
-
-header .navbar select{
-  text-align: center;
-  background: none;
-  font-size: 1.7rem;
-  width: 150px;
-  color: #5995fd;
-}
-
-header input{
-    display: none;
-}
-
-header .fas{
-    font-size: 3rem;
-    color: #5995fd;
-    cursor: pointer;
-    visibility: hidden;
-    opacity: 0;
-}
-
-.nav-logo{
-  height: 45px; 
-  width: 450px;
-}
-
-@media (max-width: 450px){
-  .nav-logo{
-    
-    height: 20px; 
-    width: 200px;
+    gap: 30px;
   }
-}
 
-header nav .action{
-  display: inline-flex;
-}
+  header .logo{
+      font-size: 2rem;
+      color: #5995fd;
+  }
+
+  header .logo span{
+      color: black;
+  }
+
+  header .navbar a{
+      font-size: 1.7rem;
+      margin-left: 2rem ;
+      color: #5995fd;
+  }
+
+  header .navbar a:hover{
+      color: #5995fd;
+  }
+
+  header .navbar select{
+    text-align: center;
+    background: none;
+    font-size: 1.7rem;
+    width: 150px;
+    color: #5995fd;
+  }
+
+  header input{
+      display: none;
+  }
+
+  header .fas{
+      font-size: 3rem;
+      color: #5995fd;
+      cursor: pointer;
+      visibility: hidden;
+      opacity: 0;
+  }
+
+  .nav-logo{
+    height: 45px; 
+    width: 450px;
+  }
+
+  @media (max-width: 450px){
+    .nav-logo{
+      
+      height: 20px; 
+      width: 200px;
+    }
+  }
+
+  header nav .action{
+    display: inline-flex;
+  }
 
 .home{
     display: flex;

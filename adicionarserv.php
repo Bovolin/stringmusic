@@ -12,7 +12,7 @@ if(isset($_SESSION['usuario'])){
   if(empty($semfoto)){
     foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
       $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.png";
+      $imagemusuario = "imgs/user.jpeg";
       if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
       elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
       elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
@@ -118,46 +118,48 @@ if(isset($_SESSION['usuario'])){
   ?>
 <body onload="<?php echo $onload ?>()">
 
-<nav class="container-fluid nav">
-        <div class="container cf">
-          <div class="brand">
-            <a href="index.php"><img src="logo/roxo_preto.png" alt="Logo" style="width: 450px;"></a>
-          </div>
-          <i class="fa fa-bars nav-toggle"></i>
-          <ul class="un-navbar">
-            <li class="navbar"><a href="index.php">Inicio</a></li>
-            <li class="navbar"><a href="loja.php">Produtos</a></li>
-            <li class="navbar"><a href="servico.php">Serviços</a></li>
-            <?php
+<header>
+    <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+
+    <nav class="navbar">
+        <a href="index.php">Início</a>
+        <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
+            <option value="loja.php">Loja</option>
+            <option value="instrumentos.php">Instrumentos</option>
+            <option value="interpretacoes.php">Partituras</option>
+            <option value="servico.php" selected>Serviços</option>
+        </select>
+        <?php
             if(isset($_SESSION['usuario'])){
               echo
-              '<li class="navbar">
-                <div class="action">
+              '<div class="action">
                   <div class="profile" onclick="menuAlterna();">
                       <img src="'; echo $imagemusuario; echo'">
                   </div>
-                  <div class="menu">
-                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                  <div class="menu" style="right: -2% !important;">
+                    <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
                       <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
                         <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                         <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                        <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
                         <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
-                </div>
-              </li>';
+                </div>';
             }
             else{
-              echo '<li class="navbar"><a href="login.php">Login</a></li>';
+              echo '<a href="login.php">Login</a>';
             }
             ?>
-          </ul>
-        </div>
-      </nav>
+    </nav>
+
+</header>
 
     <form method="post" action="enviadoserv.php" enctype="multipart/form-data">
         <div class="container">
@@ -198,7 +200,7 @@ if(isset($_SESSION['usuario'])){
                     <br>
                     <label>Gênero Musical:</label>
                     <div class="box">
-                      <select name="genero_musical" id="genero_musical">
+                      <select class="box-select" name="genero_musical" id="genero_musical">
                         <option value="">Selecione</option>
                         <option value="jazz">Jazz</option>
                         <option value="mpb">MPB</option>
