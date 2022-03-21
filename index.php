@@ -33,7 +33,7 @@
                   <div class="profile" onclick="menuAlterna();">
                       <img src="'; echo $imagemusuario; echo'">
                   </div>
-                  <div class="menu">
+                  <div class="menu" style="top: 90px !important; right: 8.5% !important">
                     <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
                       <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>

@@ -97,7 +97,7 @@ else{
                   <div class="profile" onclick="menuAlterna();">
                       <img src="'; echo $imagemusuario; echo'">
                   </div>
-                  <div class="menu" style="right: -2% !important;">
+                  <div class="menu">
                     <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
                       <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>

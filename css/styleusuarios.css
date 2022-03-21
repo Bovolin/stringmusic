@@ -105,6 +105,15 @@ header .navbar a:hover{
   color: #5995fd;
 }
 
+header .navbar select{
+  text-align: center;
+  background: none;
+  font-size: 1rem;
+  width: 150px;
+  color: #5995fd;
+  border: none;
+}
+
 header input{
   display: none;
 }
@@ -403,7 +412,7 @@ label:active:after {
 
   .action .menu{
     position: absolute;
-    top: 120px;
+    top: 110px;
     right: 8%;
     padding: 15px 25px;
     background-color: rgb(228, 228, 228);

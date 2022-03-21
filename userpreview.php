@@ -14,7 +14,7 @@ if(isset($_SESSION['usuario'])){
     if(empty($semfoto_conta)){
         foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $conta_propria){
             $nomeusuario_conta = $conta_propria['nome'];
-            $imagemusuario_conta = "imgs/user.png";
+            $imagemusuario_conta = "imgs/user.jpeg";
             if($conta_propria['especialidade'] == "m") $especialidadeusuario_conta = "Músico";
             elseif($conta_propria['especialidade'] == "c") $especialidadeusuario_conta = "Compositor";
             elseif($conta_propria['especialidade'] == "v") $especialidadeusuario_conta = "Visitante";      
@@ -34,8 +34,11 @@ if(isset($_SESSION['usuario'])){
 foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$preview_user'") as $conferefoto){
   $semfoto = $conferefoto['confere'];
 }
+foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE cd_usuario = '$preview_user'") as $conferefundo){
+    $semfundo = $conferefundo['confere_fundo'];
+  }
 
-if(empty($semfoto)){
+if(empty($semfoto) && empty($semfundo)){
   foreach($mysqli->query(
   "SELECT us.nm_usuario AS nome, 
   us.nm_email AS email, 
@@ -54,7 +57,8 @@ if(empty($semfoto)){
   $emailusuario = $usuarios['email'];
   $tempousuario = $usuarios['tempo'];
   $cidadeusuario = $usuarios['cidade'];
-  $imgusuario = "imgs/user.png";
+  $imgusuario = "imgs/user.jpeg";
+  $imgfundo = ": linear-gradient(45deg, #BC3CFF, #317FFF);";
 
   if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
   elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
@@ -63,6 +67,70 @@ if(empty($semfoto)){
   if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
   }
 }
+elseif(empty($semfoto)){
+    foreach($mysqli->query(
+    "SELECT us.nm_usuario AS nome, 
+    us.nm_email AS email, 
+    us.sg_especialidade AS especialidade, 
+    us.ds_usuario AS descricao, 
+    DATE_FORMAT(us.dt_tempo, '%m/%Y') AS tempo,
+    u.sg_uf AS uf,
+    c.nm_cidade AS cidade,
+    (SELECT im.path FROM tb_fundo as f 
+      	JOIN tb_imagem as im
+      	  ON im.cd_imagem = f.cd_imagem
+       		JOIN tb_usuario as us
+       		  ON us.cd_fundo = f.cd_fundo
+      			WHERE us.cd_usuario = '$preview_user') AS fundo
+      FROM tb_usuario AS us JOIN tb_uf AS u
+          ON u.cd_uf = us.cd_uf
+              JOIN tb_cidade AS c
+                  ON c.cd_cidade = us.cd_cidade
+                      WHERE us.cd_usuario = '$preview_user'") as $usuarios){
+    $nomeusuario = $usuarios['nome'];
+    $descricaousuario = $usuarios['descricao'];
+    $emailusuario = $usuarios['email'];
+    $tempousuario = $usuarios['tempo'];
+    $cidadeusuario = $usuarios['cidade'];
+    $imgusuario = "imgs/user.jpeg";
+    $imgfundo = "-image: url(" . $usuarios['fundo'] . ")";
+  
+    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";
+    
+    if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
+    }
+  }
+  elseif(empty($semfundo)){
+    foreach($mysqli->query(
+    "SELECT us.nm_usuario AS nome, 
+    us.nm_email AS email, 
+    us.sg_especialidade AS especialidade, 
+    us.ds_usuario AS descricao, 
+    DATE_FORMAT(us.dt_tempo, '%m/%Y') AS tempo,
+    u.sg_uf AS uf,
+    c.nm_cidade AS cidade
+      FROM tb_usuario AS us JOIN tb_uf AS u
+          ON u.cd_uf = us.cd_uf
+              JOIN tb_cidade AS c
+                  ON c.cd_cidade = us.cd_cidade
+                      WHERE us.cd_usuario = '$preview_user'") as $usuarios){
+    $nomeusuario = $usuarios['nome'];
+    $descricaousuario = $usuarios['descricao'];
+    $emailusuario = $usuarios['email'];
+    $tempousuario = $usuarios['tempo'];
+    $cidadeusuario = $usuarios['cidade'];
+    $imgusuario = $usuarios['path'];
+    $imgfundo = ": linear-gradient(45deg, #BC3CFF, #317FFF);";
+  
+    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";
+    
+    if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
+    }
+  }
 else{
   foreach($mysqli->query(
     "SELECT us.nm_usuario AS nome, 
@@ -72,7 +140,13 @@ else{
     DATE_FORMAT(us.dt_tempo, '%m/%Y') AS nascimento,
     u.sg_uf AS uf,
     i.path AS path,
-    c.nm_cidade AS cidade
+    c.nm_cidade AS cidade,
+    (SELECT im.path FROM tb_fundo as f 
+      	JOIN tb_imagem as im
+      	  ON im.cd_imagem = f.cd_imagem
+       		JOIN tb_usuario as us
+       		  ON us.cd_fundo = f.cd_fundo
+      			WHERE us.cd_usuario = '$preview_user') AS fundo
         FROM tb_usuario AS us JOIN tb_uf AS u
             ON u.cd_uf = us.cd_uf
                 JOIN tb_imagem AS i
@@ -86,6 +160,7 @@ else{
     $tempousuario = $usuarios['nascimento'];
     $imgusuario = $usuarios['path'];
     $cidadeusuario = $usuarios['cidade'];
+    $imgfundo = "-image: url(" . $usuarios['fundo'] . ")";
   
     if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
     elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
@@ -113,49 +188,51 @@ else{
 
     <body>
 
-    <nav class="container-fluid nav">
-        <div class="container cf" style="background<?php echo $imgfundo ?>">
-          <div class="brand" >
-            <a href="index.php"><img src="logo/roxo_preto.png" alt="Logo" style="width: 450px;"></a>
-          </div>
-          <i class="fa fa-bars nav-toggle"></i>
-          <ul class="un-navbar">
-            <li class="navbar"><a href="index.php">Inicio</a></li>
-            <li class="navbar"><a href="loja.php">Produtos</a></li>
-            <li class="navbar"><a href="servico.php">Serviços</a></li>
-            <?php
+    <header>
+    <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+
+    <nav class="navbar">
+        <a href="index.php">Início</a>
+        <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
+            <option value="loja.php">Loja</option>
+            <option value="instrumentos.php">Instrumentos</option>
+            <option value="interpretacoes.php" selected>Partituras</option>
+            <option value="servico.php">Serviços</option>
+        </select>
+        <?php
             if(isset($_SESSION['usuario'])){
               echo
-              '<li class="navbar">
-                <div class="action">
+              '<div class="action">
                   <div class="profile" onclick="menuAlterna();">
-                      <img src="'; echo $imgusuario; echo'">
+                      <img src="'; echo $imagemusuario_conta; echo'">
                   </div>
                   <div class="menu">
-                    <h3 style="margin-bottom: 0px;">'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                    <h3>'; echo $nomeusuario_conta; echo '<br><span>'; echo $especialidadeusuario_conta; echo '</span></h3>
                       <ul class="un">
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
                         <li class="info"><i class="bx bxs-user-detail"></i><a href="editarperfil.php">Editar Perfil</a></li>
                         <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                        <li class="info"><input type="checkbox" name="switch-theme" id="switch">
+                        <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
                         <script src="js/script_dark.js"></script></li>
                       </ul>
                   </div>
-                </div>
-              </li>';
+                </div>';
             }
             else{
-              echo '<li class="navbar"><a href="login.php">Login</a></li>';
+              echo '<a href="login.php">Login</a>';
             }
             ?>
-          </ul>
-        </div>
-      </nav>
+    </nav>
+
+</header>
 
         <section class="section-perfil-usuario">
-            <div class="perfil-usuario-fundo">
+            <div class="perfil-usuario-fundo" style="background<?php echo $imgfundo ?>">
                 <div class="perfil-usuario-portal">
                     <div class="perfil-usuario-avatar">
                         <img src="<?php echo $imgusuario ?>" alt="">
@@ -272,5 +349,12 @@ else{
         </div>
         <?php } ?>
     </div>  
+
+    <script>
+            function menuAlterna(){
+              const trocaMenu = document.querySelector('.menu');
+              trocaMenu.classList.toggle('active');
+            }
+  </script>
   </body>
 </html>
