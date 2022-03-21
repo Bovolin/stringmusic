@@ -367,6 +367,14 @@ header .navbar a:hover{
   color: #5995fd;
 }
 
+header .navbar select{
+  text-align: center;
+  background: none;
+  font-size: 1.7rem;
+  width: 150px;
+  color: #5995fd;
+}
+
 header input{
   display: none;
 }

@@ -74,9 +74,12 @@ if(isset($_SESSION['usuario'])){
 
     <nav class="navbar">
         <a href="index.php">Início</a>
-        <a href="#">Instrumentos</a>
-        <a href="interpretacoes.php">Partituras</a>
-        <a href="servico.php">Serviços</a>
+        <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
+            <option value="loja.php">Loja</option>
+            <option value="instrumentos.php">Instrumentos</option>
+            <option value="interpretacoes.php" selected>Partituras</option>
+            <option value="servico.php">Serviços</option>
+        </select>
         <?php
             if(isset($_SESSION['usuario'])){
               echo
@@ -106,21 +109,21 @@ if(isset($_SESSION['usuario'])){
 
 </header>
 
-  <div class="container">
-    <br>
-    <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Produtos</h2>
-    <?php
-      if(isset($_SESSION['usuario'])) { echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';}
-      echo 
-      '<form action="busca.php" method="get" style="display:inline; float: right; margin-top: -15px;">
-        <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
-        <button class="btnpart_loja" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
-      </form>';
-    ?>
-    <br>
-    <br>
-    <br>
-    <main class="grid">
+    <div class="container">
+      <br>
+      <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Produtos</h2>
+      <?php
+        if(isset($_SESSION['usuario'])) { echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';}
+        echo 
+        '<form action="busca.php" method="get" style="display:inline; float: right; margin-top: -15px;">
+          <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
+          <button class="btnpart_loja" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
+        </form>';
+      ?>
+      <br>
+      <br>
+      <br>
+      <main class="grid">
       <?php
 
       $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";

@@ -157,3 +157,7 @@ function menuAlterna(){
   const trocaMenu = document.querySelector('.menu');
   trocaMenu.classList.toggle('active');
 }
+
+function abreJanela(URL) {
+  location.href = URL; // se for popup utiliza o window.open
+}

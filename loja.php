@@ -29,7 +29,12 @@ include("foto.php");
 
     <nav class="navbar">
         <a href="index.php">Início</a>
-        <a href="loja.php">Loja</a>
+        <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
+            <option value="loja.php" selected>Loja</option>
+            <option value="instrumentos.php">Instrumentos</option>
+            <option value="interpretacoes.php">Partituras</option>
+            <option value="servico.php">Serviços</option>
+        </select>
         <?php
             if(isset($_SESSION['usuario'])){
               echo
@@ -123,9 +128,8 @@ include("foto.php");
 
         <div class="box">
             <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" class="fas fa-copy"></a>
             </div>
             <img src="img/partitura.jpg" alt="">
             <h3>Musica 1</h3>
@@ -143,9 +147,8 @@ include("foto.php");
         <div class="box">
             <span class="discount">-45%</span>
             <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" class="fas fa-copy"></a>
             </div>
             <img src="img/partitura.jpg" alt="">
             <h3>Musica 2</h3>
@@ -162,9 +165,8 @@ include("foto.php");
 
         <div class="box">
             <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" class="fas fa-copy"></a>
             </div>
             <img src="img/partitura.jpg" alt="">
             <h3>Musica 3</h3>
@@ -181,9 +183,8 @@ include("foto.php");
 
         <div class="box">
             <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" class="fas fa-copy"></a>
             </div>
             <img src="img/partitura.jpg" alt="">
             <h3>Musica 4</h3>
@@ -200,9 +201,8 @@ include("foto.php");
 
         <div class="box">
             <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" class="fas fa-copy"></a>
             </div>
             <img src="img/partitura.jpg" alt="">
             <h3>Musica 5</h3>
@@ -220,9 +220,8 @@ include("foto.php");
         <div class="box">
             <span class="discount">-29%</span>
             <div class="icons">
-                <a href="#" class="fas fa-heart"></a>
                 <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" class="fas fa-copy"></a>
             </div>
             <img src="img/partitura.jpg" alt="">
             <h3>Musica 6</h3>

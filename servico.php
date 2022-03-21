@@ -74,9 +74,12 @@ unset($_SESSION['servicorecusado']);
 
     <nav class="navbar">
         <a href="index.php">Início</a>
-        <a href="#">Instrumentos</a>
-        <a href="interpretacoes.php">Partituras</a>
-        <a href="servico.php">Serviços</a>
+        <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
+            <option value="loja.php">Loja</option>
+            <option value="instrumentos.php">Instrumentos</option>
+            <option value="interpretacoes.php">Partituras</option>
+            <option value="servico.php" selected>Serviços</option>
+        </select>
         <?php
             if(isset($_SESSION['usuario'])){
               echo
