@@ -161,3 +161,27 @@ function menuAlterna(){
 function abreJanela(URL) {
   location.href = URL; // se for popup utiliza o window.open
 }
+
+
+
+function payment(event){
+  const valor = event.value;
+  const cartao = document.querySelector("#payment-cartao");
+  const boleto = document.querySelector("#payment-boleto");
+  const pix = document.querySelector("#payment-pix");
+  if(valor == 'payment-cartao'){
+    cartao.classList.add('selecionado');
+    boleto.classList.remove('selecionado');
+    pix.classList.remove('selecionado');
+  }
+  else if(valor == 'payment-boleto'){
+    boleto.classList.add('selecionado');
+    cartao.classList.remove('selecionado');
+    pix.classList.remove('selecionado')
+  }
+  else{
+    pix.classList.add('selecionado');
+    boleto.classList.remove('selecionado');
+    cartao.classList.remove('selecionado')
+  }
+}
