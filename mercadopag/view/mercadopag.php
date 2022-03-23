@@ -22,7 +22,7 @@ $carrinho = new \Classes\ClassCarrinho();
                     <th style="padding: 7px; 0;">Preço</th>
                     <th style="padding: 7px; 0;">Quantidade</th>
                 </tr>
-            </thead>
+            </thead> 
             <tbody>
                 <?php
                     echo $carrinho->listProducts();

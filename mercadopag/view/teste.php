@@ -1,16 +1,19 @@
-
+<?php
+require("../../lib/vendor/autoload.php");
+$carrinho = new \Classes\ClassCarrinho();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>String;Music</title>
-    <link rel="stylesheet" href="css/stylepayment.css">
-    <script src="js/script.js"></script>
+    <title>StringMusic</title>
+    <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/stylepagamento.css"/>
+    <script src="../../js/script.js"></script>
 </head>
 <body>
-    
     <div class='container'>
         <div class='window'>
           <div class='order-info'>
@@ -19,87 +22,24 @@
               <div class='line'></div>
               <table class='order-table'>
                 <tbody>
-                  <tr>
-                    <td>
-                      <img src='img/nota.jpg' class='full-width'>
-                    </td>
-                    <td>
-                      <br> <span class='thin'>Tipo de produto</span>
-                      <br>Nome do produto<br> <span class='thin small'> Descrição<br><br></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class='price'>R$99,95</div>
-                    </td>
-                  </tr>
+                  <?php
+                    echo $carrinho->listProducts();
+                  ?>
                 </tbody>
-              </table>
-              <div class='line'></div>
-              <table class='order-table'>
-                <tbody>
-                  <tr>
-                    <td><img src='img/nota.jpg' class='full-width'>
-                    </td>
-                    <td>
-                      <br> <span class='thin'>Tipo de produto</span>
-                      <br>Nome do produto<br> <span class='thin small'> Descrição</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class='price'>R$235,95</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class='line'></div>
-              <table class='order-table'>
-                <tbody>
-                  <tr>
-                    <td><img src='img/nota.jpg' class='full-width'>
-                    </td>
-                    <td>
-                      <br> <span class='thin'>Tipo de produto</span>
-                      <br>Nome do produto<br> <span class='thin small'> Descrição</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class='price'>R$25.95</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class='line'></div> <!-- SEMPRE QUE FOR ADICIONAR UM NOVO PRODUTO, TEM QUE SER COPIADO A PARTIR DAQUI-->
-              <table class='order-table'>
-                <tbody>
-                  <tr>
-                    <td><img src='img/nota.jpg' class='full-width'>
-                    </td>
-                    <td>
-                      <br> <span class='thin'>Tipo de produto</span>
-                      <br>Nome do produto<br> <span class='thin small'> Descrição</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class='price'>R$235,95</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> <!-- ATÉ O FINAL DA TABLE, E EM SEGUIDA COLAR NOVAMENTE OUTRA LINE > ORDER-TABLE-->             
+              </table>           
               <div class='line'></div>
               <div class='total'>
                 <span style='float:left;'>
                   TOTAL
                 </span>
                 <span style='float:right; text-align:right;'>
-                  R$999,99
+                  R$<?php echo $carrinho->getAmount(); ?>
+                  <p>Você possui <?php echo $carrinho->getQuantity(); ?> produto(s) no carrinho</p>
+                  <a href="https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=clear"><i class="fas fa-trash"></i> Esvaziar Carrinho</a>
                 </span>
               </div>
-      </div>
-      </div>
+            </div>
+          </div>
               <div class='credit-info'>
                 <div class='credit-info-content'>
                   <select name="select-payment" id="select-payment" class="dropdown-btn" onchange="payment(this)">  
@@ -109,7 +49,7 @@
                   </select>
                   <div id="pai">
                     <div id="payment-cartao" class="selecionado">
-                      <form action="mercadopag/controllers/PaymentController.php" method="post">
+                      <form action="../controllers/PaymentController.php" method="post">
                         <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80' class='credit-card-image' id='credit-card-image'> <!-- imagem trocando de acordo com o tipo de cartão-->
                         Nome
                         <input type="text" class='input-field'>
@@ -126,10 +66,13 @@
                           </tr>
                         </table>
                         <button class='pay-btn'>Comprar</button>
+                        <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
+                        <input type="hidden" name="description" value="Instrumento Bom">
+                        <input type="hidden" name="paymentMethodId">
                       </form>
                     </div>
                     <div id="payment-boleto">
-                      <form action="mercadopag/controllers/PaymentController2.php" method="post">
+                      <form action="../controllers/PaymentController2.php" method="post">
                         Nome
                         <input type="text" class="input-field">
                         Sobrenome
@@ -171,10 +114,13 @@
                           </tr>
                         </table>
                         <button class="pay-btn">Comprar</button>
+                        <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
+                        <input type="hidden" name="description" value="Instrumento Bom">
+                        <input type="hidden" name="paymentMethodId">
                       </form>
                     </div>
                     <div id="payment-pix">
-                      <form action="mercadopag/controllers/PaymentController3.php" method="post">
+                      <form action="../controllers/PaymentController3.php" method="post">
                         Nome
                         <input type="text" class="input-field">
                         Sobrenome
@@ -216,13 +162,18 @@
                           </tr>
                         </table>
                         <button class="pay-btn">Comprar</button>
+                        <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
+                        <input type="hidden" name="description" value="Instrumento Bom">
+                        <input type="hidden" name="paymentMethodId">
                       </form>
                     </div>
                   </div>
                 </div>
-                
               </div>
             </div>
           </div> <!-- container -->
+
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+<script src="../mercadopag.js"></script>
 </body>
 </html>

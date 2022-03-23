@@ -43,10 +43,15 @@ class ClassCarrinho{
         if(isset($_SESSION['products'])){
             foreach($_SESSION['products'] as $product){
                 $html.="<tr>";
-                $html.="<td>" . $product['id'] . "</td>";
-                $html.="<td>" . $product['description'] . "</td>";
-                $html.="<td>" . (int)$product['quantity'] * $product['price'] . "</td>";
-                $html.="<td>" . (int)$product['quantity'] . "</td>";
+                $html.="<td>";
+                $html.="<br> <strong><span class='thin'>" . $product['description'] . "</span></strong>";
+                $html.="<br> <span class='thin small'> Quantidade: " . $product['quantity'] . "<br><br></span>";
+                $html.="</td>";
+                $html.="</tr>";
+                $html.="<tr>";
+                $html.="<td>";
+                $html.="<div class='price'>R$" . $product['price'] . "</div>";
+                $html.="</td>";
                 $html.="</tr>";
             } 
         }

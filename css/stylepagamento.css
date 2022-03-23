@@ -62,7 +62,7 @@ ul li:hover {
   box-sizing:border-box;
 }
 .thin {
-  font-weight:400;
+  font-size: medium;
 }
 .small {
   font-size:12px;
@@ -100,9 +100,6 @@ ul li:hover {
   position:relative;
 }
 .price {
-  bottom:0px;
-  position:absolute;
-  right:0px;
   color:#4488dd;
 }
 .order-table td:first-of-type {
@@ -120,7 +117,7 @@ ul li:hover {
 }
 .order-table td:last-of-type {
   vertical-align:top;
-  width: 150px;
+  width: 300px;
   padding-left: 25px;
 }
 .order-info-content {
@@ -182,7 +179,7 @@ ul li:hover {
 .credit-info {
   background:#4488dd;
   height:100%;
-  width:50%;
+  width:80%;
   color:#eee;
   -webkit-box-pack:center;
   -webkit-justify-content:center;
@@ -257,6 +254,11 @@ ul li:hover {
     padding-bottom:100px;
     border-radius:0px;
   }
+}
+
+a{
+  text-decoration: none;
+  color: #326aca;
 }
 
 #payment-cartao, #payment-boleto, #payment-pix{
