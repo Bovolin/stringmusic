@@ -29,6 +29,42 @@
             const paymentMethodElement = doc.querySelector('input[name=paymentMethodId');
             paymentMethodElement.value = response[0].id;
             doc.querySelector('.brand').innerHTML="<img src='" + response[0].thumbnail +"' alt='Bandeira do Cartão'>";
+            if(response[0].thumbnail == "http://img.mlstatic.com/org-img/MP3/API/logos/visa.gif"){
+                var img = document.getElementById('bandeira');
+                img.src = '';
+                img.src = '../../imgs/visa.png';
+                img.classList.add('selecionada');
+            }
+            else if(response[0].thumbnail == "http://img.mlstatic.com/org-img/MP3/API/logos/master.gif"){
+                var img = document.getElementById('bandeira');
+                img.src = '';
+                img.src = '../../imgs/mastercard.png';
+                img.classList.add('selecionada');
+            }
+            else if(response[0].thumbnail =="http://img.mlstatic.com/org-img/MP3/API/logos/amex.gif"){
+                var img = document.getElementById('bandeira');
+                img.src = '';
+                img.src = '../../imgs/amex.png';
+                img.classList.add('selecionada');
+            }
+            else if(response[0].thumbnail == "http://img.mlstatic.com/org-img/MP3/API/logos/hipercard.gif"){
+                var img = document.getElementById('bandeira');
+                img.src = '';
+                img.src = '../../imgs/hipercard.png';
+                img.classList.add('selecionada');
+            }
+            else if(response[0].thumbnail == "http://img.mlstatic.com/org-img/MP3/API/logos/elo.gif"){
+                var img = document.getElementById('bandeira');
+                img.src = '';
+                img.src = '../../imgs/elo.png';
+                img.classList.add('selecionada');
+            }
+            else if(response[0].thumbnail == "http://img.mlstatic.com/org-img/MP3/API/logos/diners.gif"){
+                var img = document.getElementById('bandeira');
+                img.src = '';
+                img.src = '../../imgs/dinersclub.png';
+                img.classList.add('selecionada');
+            }
         }
         else alert(`Payment method info error: ${response}`);
     };

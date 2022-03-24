@@ -19,7 +19,7 @@ $carrinho = new \Classes\ClassCarrinho();
           <div class='order-info'>
             <div class='order-info-content'>
               <h2>Carrinho</h2>
-              <div class='line'></div>
+              <?php if($carrinho->getQuantity() != 0) echo "<div class='line'></div>"; ?>
               <table class='order-table'>
                 <tbody>
                   <?php
@@ -50,17 +50,24 @@ $carrinho = new \Classes\ClassCarrinho();
                   <div id="pai">
                     <div id="payment-cartao" class="selecionado">
                       <form action="../controllers/PaymentController.php" method="post">
-                        <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80' class='credit-card-image' id='credit-card-image'> <!-- imagem trocando de acordo com o tipo de cartão-->
-                        Nome
-                        <input type="text" class='input-field'>
-                        Número do cartão
-                        <input type="text" class='input-field'>
+                        <div class="brand" style="display: none;"></div>
+                        <br>    
+                        <img alt="Bandeira Cartão" style="width: 250px; height:100px; margin-left: 20%" id="bandeira">
+                        <br>
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" class='input-field'>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class='input-field'>
+                        <label for="cardNumber">Número do cartão</label>
+                        <input type="text" class='input-field' id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                         <table class='half-input-table'>
                           <tr>
-                            <td>Validade (mm/aa)
+                            <td>
+                              Validade (mm/aa)
                               <input type="text" class='input-field'>
                             </td>
-                            <td>CVV
+                            <td>
+                              CVV
                               <input type="text" class='input-field'>
                             </td>
                           </tr>

@@ -267,3 +267,9 @@ a{
 #payment-cartao.selecionado, #payment-boleto.selecionado, #payment-pix.selecionado{
   display: block;
 }
+#bandeira{
+  display: none;
+}
+#bandeira.selecionada{
+  display: block;
+}
