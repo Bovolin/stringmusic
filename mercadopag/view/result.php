@@ -10,6 +10,7 @@ $exception = new \Classes\ClassException();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../js/swal.js"></script>
     <title>Mercado Pago</title>
 </head>
 <style>
@@ -18,34 +19,30 @@ $exception = new \Classes\ClassException();
         .alert{width: 50%; background: #ff544d; border-radius: 5px; padding: 10px; text-align: center;}
         .error{width: 50%; background: #ffd809; border-radius: 5px; padding: 10px; text-align: center;}
 </style>
-<body>
+<?php 
+$exception->setPayment($_SESSION['payment']);
 
-    <div>
-        <table style="width: 80%; margin: 30px 10%; text-align: center;">
-            <thead>
-                <tr style="background: #333; font-weight: bold; color: #fff">
-                    <th style="padding: 7px; 0;">ID</th>
-                    <th style="padding: 7px; 0;">Descrição</th>
-                    <th style="padding: 7px; 0;">Preço</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    echo $carrinho->listProducts();
-                ?>
-            </tbody>
-        </table>
-    </div>
+if($exception->verifyTransaction()['class'] == 'error') $icone = 'error';
+elseif($exception->verifyTransaction()['class'] == 'success') $icone = 'success';
+elseif($exception->verifyTransaction()['class'] == 'alert') $icone = 'info';
+?>
+<script>
+    function teste(){
+        Swal.fire({
+            icon: '<?php echo $icone ?>',
+            text: '<?php echo $exception->verifyTransaction()['message'] ?>'
+        })
+    }
+</script>
+<body onload="teste()">
 
-    <div class="result">
-        <?php $exception->setPayment($_SESSION['payment']); ?>
-        <div class="<?php echo $exception->verifyTransaction()['class']; ?>">
-            <?php echo $exception->verifyTransaction()['message']; ?>
+    <!--<div class="result">
+        <?php //$exception->setPayment($_SESSION['payment']); ?>
+        <div class="<?php //echo $exception->verifyTransaction()['class']; ?>">
+            <?php //echo $exception->verifyTransaction()['message']; ?>
         </div>
-    </div>
-    
-
-    
+    </div>-->
+        
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>
 </body>

@@ -106,4 +106,4 @@
         let formPay = doc.querySelector('#pay');
         formPay.addEventListener('submit', sendPayment, false);
     }
-})(window,document);
+})(window,document);    
