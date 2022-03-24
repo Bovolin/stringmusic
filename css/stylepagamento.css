@@ -261,6 +261,14 @@ a{
   color: #326aca;
 }
 
+.bandeira-img{
+  width: 40px; 
+  height: 20px; 
+  position: absolute;
+  top: 48%;
+  right: 10%;
+}
+
 #payment-cartao, #payment-boleto, #payment-pix{
   display: none;
 }
