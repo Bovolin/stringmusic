@@ -13,12 +13,6 @@ $exception = new \Classes\ClassException();
     <script src="../../js/swal.js"></script>
     <title>Mercado Pago</title>
 </head>
-<style>
-    .result{display: grid; width: 100%; justify-items: center;}
-        .success{width: 50%; background: #77c563; border-radius: 5px; padding: 10px; text-align: center;}
-        .alert{width: 50%; background: #ff544d; border-radius: 5px; padding: 10px; text-align: center;}
-        .error{width: 50%; background: #ffd809; border-radius: 5px; padding: 10px; text-align: center;}
-</style>
 <?php 
 $exception->setPayment($_SESSION['payment']);
 

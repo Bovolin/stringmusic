@@ -1,6 +1,10 @@
 <?php
+ini_set('display_errors', 0);
+error_reporting(0);
 require("../../lib/vendor/autoload.php");
 $carrinho = new \Classes\ClassCarrinho();
+include("../../conexao.php");
+include("../../verifica_login.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
