@@ -31,6 +31,20 @@ $payment->payer = array(
     "email" => $email
 );
 $payment->save();
+
+//Selecionar codigo comprador
+foreach($mysqli->query("SELECT cd_usuario AS codigo FROM tb_usuario WHERE nm_email = '$email'") as $seleciona){
+    $codigo_usuario = $seleciona['codigo'];
+}
+
+
+//Contador da tabela compras
+$select_compra = $mysqli->query("SELECT COUNT(cd_compra) AS compra FROM tb_compra");
+$select_compra = $select_compra->fetch_assoc();
+$contador_compra = $select_compra['compra'] + 1;
+
+$insert_compra = $mysqli->query("INSERT INTO tb_compra (cd_compra, dt_compra, vl_compra, cd_usuario) VALUES ('$contador_compra', NOW(), '$amount', '$codigo_usuario')");
+
 $_SESSION['payment'] = $payment;
 header("Location: ../view/result.php");
 //echo '<pre>',print_r($payment),'</pre>';

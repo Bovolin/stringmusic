@@ -41,7 +41,7 @@ if($result['total'] == 1){
 }
 else{
     //Verificação do Estado
-    $verifica_uf = "SELECT COUNT(sg_uf) AS verificado FROM tb_uf WHERE sg_uf = '$uf'";
+    $verifica_uf = "SELECT COUNT(cd_uf) AS verificado FROM tb_uf WHERE sg_uf = '$uf'";
     $verifica_uf = $mysqli->query($verifica_uf);
     $verifica_uf = $verifica_uf->fetch_assoc();
     //Se já tiver um Estado no banco --> utilizar o código dele
