@@ -4,18 +4,9 @@ include ("conexao.php");
 
 $produto = $_GET['p'];
 
-/*
-if(isset($produto)){
-  $result = $mysqli->query("SELECT i.cd_interpretacao AS codigo FROM tb_interpretacao AS i WHERE 
-  i.nm_produto = $produto");
-  $_SESSION['id_interpretacao'] = $result; // = 1
-}
-*/
-
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.qt_interpretacao AS quantidade, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$produto'") as $interpretacao){
+foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$produto'") as $interpretacao){
   $nomeinterpretacao = $interpretacao['interpretacao'];
   $descricaointerpretacao = $interpretacao['descricao'];
-  $quantidadeinterpretacao = $interpretacao['quantidade'];
   $nomedono = $interpretacao['nomeusuario'];
   $descricaousuario = $interpretacao['descricaousuario'];
   $valorinterpretacao = $interpretacao['valor'];
@@ -166,7 +157,6 @@ else{
               </div>
               <h4 style="color: var(--color-text);">Descrição:</h4>
               <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
-              <h5 style="color: var(--color-text);">Quantidade: <?php echo $quantidadeinterpretacao ?></h5>
               <a href="#">
                 <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
               </a>
@@ -182,7 +172,7 @@ else{
   <main class="grid">
   <?php
 
-    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query = $mysqli->query($sql);
 
     while($dados = $query->fetch_array()){
@@ -192,7 +182,6 @@ else{
             <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
             <p>'; echo $dados['ds_interpretacao']; echo '</p>
             <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-            <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
             <form method="get" action="produto.php">
             <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
             <input type="submit" class="btnpart" value="Comprar">

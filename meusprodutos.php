@@ -143,7 +143,7 @@ unset($_SESSION['removido']);
 
             <?php
 
-                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
+                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
                 $query = $mysqli->query($meusprods);
 
                 while($dados = $query->fetch_array()){
@@ -154,7 +154,6 @@ unset($_SESSION['removido']);
                             <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
                             <p>'; echo $dados['ds_interpretacao']; echo '</p>
                             <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-                            <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
                             <form action="view_prod.php" method="get">
                               <input type="text" style="display: none;" name="p" value="'; echo $dados['cd_interpretacao']; echo '">
                               <button class="btnpart">Visualizar</button>

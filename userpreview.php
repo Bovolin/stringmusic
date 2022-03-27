@@ -278,13 +278,13 @@ else{
         else{
         ?>
         <div class="prod">
-            <h2 style="color: var(--color-headings)">Produtos</h2>
+            <h2 style="color: var(--color-headings)">Partituras</h2>
             <br>
             <main class="grid">
 
             <?php
 
-                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$preview_user'";
+                $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$preview_user'";
                 $query = $mysqli->query($meusprods);
 
                 while($dados = $query->fetch_array()){
@@ -295,7 +295,6 @@ else{
                             <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
                             <p>'; echo $dados['ds_interpretacao']; echo '</p>
                             <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-                            <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
                             <form method="get" action="produto.php">
                               <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
                               <input type="submit" class="btnpart" value="Comprar">
@@ -318,8 +317,6 @@ else{
         }
         else{
         ?>
-        <br>
-        <br>
         <div class="serv">
             <h2 style="color: var(--color-headings)">Serviços</h2>
             <br>

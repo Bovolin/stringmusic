@@ -111,9 +111,9 @@ if(isset($_SESSION['usuario'])){
 
     <div class="container">
       <br>
-      <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Produtos</h2>
+      <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Partituras</h2>
       <?php
-        if(isset($_SESSION['usuario'])) { echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Produto <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';}
+        if(isset($_SESSION['usuario'])) { echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Partitura <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';}
         echo 
         '<form action="busca.php" method="get" style="display:inline; float: right; margin-top: -15px;">
           <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do produto">
@@ -126,7 +126,7 @@ if(isset($_SESSION['usuario'])){
       <main class="grid">
       <?php
 
-      $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, s.qt_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
+      $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
       $query = $mysqli->query($sql);
 
       while($dados = $query->fetch_array()){
@@ -136,7 +136,6 @@ if(isset($_SESSION['usuario'])){
               <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
               <p>'; echo $dados['ds_interpretacao']; echo '</p>
               <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-              <p>Quantidade: '; echo $dados['qt_interpretacao']; echo '</p>
               <form method="get" action="produto.php">
               <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
               <input type="submit" class="btnpart" value="Comprar">

@@ -4,10 +4,9 @@
 
     $c = $_GET['p'];
 
-    foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.qt_interpretacao AS quantidade, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_interpretacao = '$c'") as $interpretacao){
+    foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_interpretacao = '$c'") as $interpretacao){
     $nomeinterpretacao = $interpretacao['interpretacao'];
     $descricaointerpretacao = $interpretacao['descricao'];
-    $quantidadeinterpretacao = $interpretacao['quantidade'];
     $nomedono = $interpretacao['nomeusuario'];
     $descricaousuario = $interpretacao['descricaousuario'];
     $valorinterpretacao = $interpretacao['valor'];
@@ -144,7 +143,6 @@
                     </div>
                     <h4 style="color: var(--color-text)">Descrição:</h4>
                     <input type="text" name="desc" value="<?php echo $descricaointerpretacao ?>" class="field" placeholder="Digite o que seu produto é" id="descricao" required>
-                    <h5 style="color: var(--color-text)">Quantidade: <?php echo $quantidadeinterpretacao ?></h5>
                         <input type="text" value="<?php echo $c ?>" name="codigo" style="display: none;">
                         <button type="submit" name="alterar" value="a" class="btnpart" style="width: 200px;">
                             Modificar <i class="fas fa-arrow-alt-circle-right"></i>

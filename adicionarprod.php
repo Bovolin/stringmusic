@@ -164,15 +164,12 @@ include ("foto.php");
                   <img class="preview">
                 </div>
                 <div class="right">
-                    <h2>Adicionar Produto</h2>
+                    <h2>Adicionar Partitura</h2>
                     <label>Nome:</label>
                     <input type="text" name="nome" maxlength="100" placeholder="Digite o nome do produto" class="field" id="nome" required>
                     <br>
                     <label>Descrição:</label>
                     <input type="text" name="desc" class="field" placeholder="Digite o que seu produto é" id="descricao" required>
-                    <br>
-                    <label>Quantidade:</label>
-                    <input type="number" name="qtd" min="1" max="100" placeholder="Quantas unidades você venderá" onkeypress="return Onlynumbers(event)" class="field" id="quantidade" required>
                     <br>
                     <label>Preço:</label>
                     <input type="text" name="prc" onkeypress="return Only(event)" maxlength="12" placeholder="Digite o preço do produto" class="field" id="valor" onkeyup="formatarMoeda()" required> 

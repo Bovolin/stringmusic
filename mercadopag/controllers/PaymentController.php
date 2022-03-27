@@ -36,25 +36,7 @@ $payment->save();
 //Selecionar codigo comprador
 /*foreach($mysqli->query("SELECT cd_usuario AS codigo FROM tb_usuario WHERE nm_email = '$email'") as $seleciona){
     $codigo_usuario = $seleciona['codigo'];
-}
-
-//Contador da tabela compras
-$select_compra = $mysqli->query("SELECT COUNT(cd_compra) AS compra FROM tb_compra");
-$select_compra = $select_compra->fetch_assoc();
-$contador_compra = $select_compra['compra'] + 1;
-
-$insert_compra = $mysqli->query("INSERT INTO tb_compra (cd_compra, dt_compra, vl_compra, cd_usuario) VALUES ('$contador_compra', NOW(), '$amount', '$codigo_usuario')");
-
-//Contador de itens
-$select_itens = $mysqli->query("SELECT COUNT(cd_item) AS item FROM tb_item");
-$select_itens = $select_itens->fetch_assoc();
-$contador_itens = $select_itens['item'] + 1;
-
-//Inserir item
-$insert_item = $mysqli->query("INSERT INTO tb_item (cd_item, cd_compra, 
-                                cd_interpretacao, cd_instrumento, cd_servico)
-                                VALUES ('$contador_itens', '$contador_compra', 
-                                '', '', '')");*/
+}*/
 
 $_SESSION['payment'] = $payment;
 header("Location: ../view/result.php");

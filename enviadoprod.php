@@ -54,7 +54,6 @@
       //pega os atributos do produto pelo método post
       $vnome = $_POST["nome"];
       $vdesc = $_POST["desc"];
-      $vqtd = $_POST["qtd"];
       $vprc = str_replace(",", ".", $_POST['prc']);
       $genero_musical = $_POST['genero_musical'];
       if($genero_musical == ""){
@@ -80,7 +79,7 @@
       }
       else{
         //insere o produto no banco
-        $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, qt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vqtd', '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
+        $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
         $query_prod = $mysqli->query($sql_prod);
 
         //cria sessão só para confirmar se foi postado
