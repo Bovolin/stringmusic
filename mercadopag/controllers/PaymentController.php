@@ -2,6 +2,8 @@
 session_start();
 include("../../conexao.php");
 
+$compra = new \Compra\ClassCompra();
+
 require('../config/config.php');
 // Carregar Autoload do composer
 require('../../lib/vendor/autoload.php');

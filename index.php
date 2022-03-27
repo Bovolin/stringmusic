@@ -106,7 +106,7 @@
     <div class="column">
 
         <div class="image">
-            <img src="imgs/manoguitarra.png" alt="">
+            <img src="imgs/Guitarra.jpg" alt="">
         </div>
 
         <div class="content">
