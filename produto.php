@@ -2,9 +2,17 @@
 session_start();
 include ("conexao.php");
 
-$c = $_GET['p']; 
+$produto = $_GET['p'];
 
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.qt_interpretacao AS quantidade, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$c'") as $interpretacao){
+/*
+if(isset($produto)){
+  $result = $mysqli->query("SELECT i.cd_interpretacao AS codigo FROM tb_interpretacao AS i WHERE 
+  i.nm_produto = $produto");
+  $_SESSION['id_interpretacao'] = $result; // = 1
+}
+*/
+
+foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.qt_interpretacao AS quantidade, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$produto'") as $interpretacao){
   $nomeinterpretacao = $interpretacao['interpretacao'];
   $descricaointerpretacao = $interpretacao['descricao'];
   $quantidadeinterpretacao = $interpretacao['quantidade'];
@@ -162,7 +170,7 @@ else{
               <a href="#">
                 <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
               </a>
-              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product=' . $nomeinterpretacao . '&price=' . $valorinterpretacao . '&id=' . $codigointerpretacao ?>">
+              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product=' . $nomeinterpretacao . '&price=' . $valorinterpretacao ?>">
                 <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
               </a>
             </div>

@@ -9,11 +9,10 @@ class ClassCarrinho{
 
     //Add produtos
     public function addProducts(ClassProdutos $product){
-        if(isset($_SESSION['products']) && array_key_exists($product->getId(),$_SESSION['products'])){
-            $_SESSION['products'][$product->getId()]['quantity']+=1;
+        if(isset($_SESSION['products']) && array_key_exists($product->getDescription(),$_SESSION['products'])){
+            $_SESSION['products'][$product->getDescription()]['quantity']+=1;
         }else{
-            $_SESSION['products'][$product->getId()]=[
-                'id'=>$product->getId(),
+            $_SESSION['products'][$product->getDescription()]=[
                 'description'=>$product->getDescription(),
                 'price'=>$product->getPrice(),
                 'quantity'=>1

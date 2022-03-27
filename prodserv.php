@@ -4,7 +4,7 @@ include ("conexao.php");
 
 $c = $_GET['s'];
 
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_servico = '$c'") as $servico){
+foreach($mysqli->query("SELECT i.cd_servico AS codigo, i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_servico = '$c'") as $servico){
   $nomeinterpretacao = $servico['servico'];
   $descricaointerpretacao = $servico['descricao'];
   $nomedono = $servico['nomeusuario'];
@@ -12,6 +12,7 @@ foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_servico AS se
   $valorinterpretacao = $servico['valor'];
   $path = $servico['pathh'];
   $codigouser = $servico['codigousuario'];
+  $codigointerpretacao = $servico['codigo'];
 }
 foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
   $dono_sem_foto = $confere_foto_dono['conferefoto'];
@@ -156,9 +157,10 @@ if(isset($_SESSION['usuario'])){
               <h4 style="color: var(--color-text);">Descrição:</h4>
               <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
               <a href="#">
-                <button type="button" class="btnpart" style="width: 200px;">
-                  <i class="fas fa-shopping-cart"></i> Comprar
-                </button>
+                <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
+              </a>
+              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product=' . $nomeinterpretacao . '&price=' . $valorinterpretacao?>">
+                <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
               </a>
             </div>
           </div>
