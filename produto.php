@@ -74,7 +74,7 @@ else{
 
 </head>
 <body>
-  
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <header>
     <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
 
@@ -128,8 +128,9 @@ else{
           <div class="right">
             <div class="info-produto">
               <div class="espec-produto">
-                <h1 style="color: var(--color-headings);"><?php echo $nomeinterpretacao?></h1>
+                <h1 style="color: var(--color-headings);" id="nm"><?php echo $nomeinterpretacao?></h1>
                 <h3 style="color: rgb(34, 211, 211);">R$ <?php echo $valorinterpretacao ?></h3>
+                <h3 style="display: none" id="price"><?php echo $valorinterpretacao; ?></h3>
                 <h4>
                   <a href="#popup1" style="color: var(--color-headings);">
                     <?php echo $nomedono ?>
@@ -160,9 +161,7 @@ else{
               <a href="#">
                 <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
               </a>
-              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product=' . $nomeinterpretacao . '&price=' . $valorinterpretacao ?>">
-                <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
-              </a>
+              <button type="button" class="btnpart" style="width: 200px;" id="addCarrinho">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
             </div>
           </div>      
        </div>   
@@ -281,5 +280,7 @@ else{
                 </div>
             </div>
   </section>
+
+<script src="js/script_carrinho.js"></script>
 </body>
 </html>

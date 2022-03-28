@@ -11,7 +11,8 @@ class ClassCarrinho{
     public function addProducts(ClassProdutos $product){
         if(isset($_SESSION['products']) && array_key_exists($product->getDescription(),$_SESSION['products'])){
             $_SESSION['products'][$product->getDescription()]['quantity']+=1;
-        }else{
+        }
+        else{
             $_SESSION['products'][$product->getDescription()]=[
                 'description'=>$product->getDescription(),
                 'price'=>$product->getPrice(),

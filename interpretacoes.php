@@ -137,8 +137,8 @@ if(isset($_SESSION['usuario'])){
               <p>'; echo $dados['ds_interpretacao']; echo '</p>
               <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
               <form method="get" action="produto.php">
-              <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
-              <input type="submit" class="btnpart" value="Comprar">
+                <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
+                <input type="submit" class="btnpart" value="Comprar">
               </form>
           </div> 
         </article>';

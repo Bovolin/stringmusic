@@ -2,8 +2,9 @@
 require("../../lib/vendor/autoload.php");
 
 $carrinho= new \Classes\ClassCarrinho();
-if($_GET['action'] == 'add'){
-    $product = new \Classes\ClassProdutos($_GET['product'],$_GET['price']);
+if(isset($_POST['nm'])){
+    $product = new \Classes\ClassProdutos($_POST['nm'],$_POST['price']);
+    $_SESSION['quantity'] = $_POST['qt'];
     $carrinho->addProducts($product);
 }
 
