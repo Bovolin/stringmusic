@@ -106,12 +106,9 @@ if(isset($_SESSION['usuario'])){
             }
             ?>
     </nav>
-
 </header>
-
-    <div class="container">
-      <br>
-      <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Partituras</h2>
+<section class="product" id="product">
+  <h1 style="font-size: 25px;display: inline; color: var(--color-headings);">Partituras</h1>
       <?php
         if(isset($_SESSION['usuario'])) { echo '<a href="adicionarprod.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Partitura <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';}
         echo 
@@ -120,34 +117,44 @@ if(isset($_SESSION['usuario'])){
           <button class="btnpart_loja" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
         </form>';
       ?>
-      <br>
-      <br>
-      <br>
-      <main class="grid">
+      <br><br><br>
+      <div class="box-container">
       <?php
-
-      $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
+      $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
       $query = $mysqli->query($sql);
 
       while($dados = $query->fetch_array()){
-        echo '<article>
-          <img src="'; echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-          <div class="text">
-              <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
-              <p>'; echo $dados['ds_interpretacao']; echo '</p>
-              <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-              <form method="get" action="produto.php">
-                <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
-                <input type="submit" class="btnpart" value="Comprar">
-              </form>
-          </div> 
-        </article>';
+        echo '<div class="box">
+          <div class="icons">
+              <a href="#" class="fas fa-share"></a>
+              <a href="#" class="fas fa-copy"></a>
+          </div>
+          <img src="'; echo $dados['path']; echo '" alt="">
+          <h3>'; 
+          if(strlen($dados['nm_interpretacao']) > 14){
+            echo str_replace(substr($dados['nm_interpretacao'], 11, 13), '...', $dados['nm_interpretacao']);
+          }
+          else{
+            echo $dados['nm_interpretacao'];
+          } 
+          echo '</h3>
+          <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="price"> R$'; echo $dados['vl_interpretacao'];  echo '</div>
+          <form method="get" action="produto.php">
+            <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
+            <input type="submit" class="btnpart" value="Comprar">
+          </form>
+      </div>';
       }
-
       ?>
-        
-    </main>
-  </div>  
+  </div>
+</section>
    
   <!-- Botão menu mobile -->
   <script>

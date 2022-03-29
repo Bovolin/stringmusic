@@ -109,9 +109,8 @@ unset($_SESSION['servicorecusado']);
 
 </header>
 
-<div class="container">
-  <br>
-  <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Serviços</h2>
+<section class="product" id="product">
+  <h1 style="font-size: 25px;display: inline; color: var(--color-headings);">Partituras</h1>
   <?php
   if(isset($_SESSION['usuario']))
     echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
@@ -121,40 +120,44 @@ unset($_SESSION['servicorecusado']);
       </form>
     <br>';
   ?>
-  <br>
-  <br>
-  <br>
-  <main class="grid">
-
+    <br><br><br>
+    <div class="box-container">
     <?php 
-
     $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
     $query = $mysqli->query($sql);
       
-
-    while ($dados = $query->fetch_array()){
-      
-      echo '<article>
-      <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-      <div class="text">
-        <h3>';  echo $dados['nm_servico']; echo '</h3>
-        <p>'; echo $dados['ds_servico']; echo '</p>
-        <p> R$'; echo $dados['vl_servico']; echo '</p>
-        <form method="get" action="prodserv.php">
-          <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
+    while($dados = $query->fetch_array()){
+      echo '<div class="box">
+        <div class="icons">
+            <a href="#" class="fas fa-share"></a>
+            <a href="#" class="fas fa-copy"></a>
+        </div>
+        <img src="'; echo $dados['path']; echo '" alt="">
+        <h3>'; echo $dados['nm_servico']; echo '</h3>
+        <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+        </div>
+        <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
+        <form method="get" action="produto.php">
+          <input type="text" name="p" style="display: none;" value="'; 
+          if(strlen($dados['nm_servico']) > 14){
+            echo str_replace(substr($dados['nm_servico'], 11, 13), '...', $dados['nm_servico']);
+          }
+          else{
+            echo $dados['nm_servico'];
+          }  echo '">
           <input type="submit" class="btnpart" value="Comprar">
         </form>
-      </div>
-    </article>';
-
+    </div>';
     }
-
-      
-
     ?>
 
-  </main>
 </div>
+</section>
   
   <script>
     let arrow = document.querySelectorAll(".arrow");
