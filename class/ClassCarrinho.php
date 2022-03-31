@@ -58,7 +58,18 @@ class ClassCarrinho extends Conexao{
 
     //Limpar produtos
     public function clearProducts(){
-        unset($_SESSION['products']);
+        $this->mysqli = Conexao::getConection();
+
+        //Pegar codigo do usuario
+        $code_user = $_SESSION['usuario'];
+        
+        //Mudar todos os produtos para nm_inativo para 1
+        $count_car = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS cd_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
+        $i = 0;
+        do{
+            $del_car = $this->mysqli->query("UPDATE tb_carrinho SET nm_inativo = 1 WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
+        }
+        while($i >= $count_car);
     }
 
     //Contar produtos
