@@ -40,86 +40,12 @@ if($result['total'] == 1){
     exit;
 }
 else{
-    //Verificação do Estado
-    $verifica_uf = "SELECT COUNT(cd_uf) AS verificado FROM tb_uf WHERE sg_uf = '$uf'";
-    $verifica_uf = $mysqli->query($verifica_uf);
-    $verifica_uf = $verifica_uf->fetch_assoc();
-    //Se já tiver um Estado no banco --> utilizar o código dele
-    if($verifica_uf['verificado'] == 1){
-        //Selecionando o Estado
-        foreach($mysqli->query("SELECT cd_uf AS uf FROM tb_uf WHERE sg_uf = '$uf'") as $rowuf){
-            $ufvalidado = $rowuf["uf"];
-        }   
-    }
-    //Se não --> cadastrar o Estado
-    else{
-        //Contador de Estado
-        $contador_uf = "SELECT COUNT(cd_uf) AS codigo FROM tb_uf";
-        $contador_uf = $mysqli->query($contador_uf);
-        $contador_uf = $contador_uf->fetch_assoc();
-        $estado = $contador_uf['codigo'] + 1;
-        //Inserção do Estado
-        $insert_uf = "INSERT INTO tb_uf (cd_uf, sg_uf) VALUES ('$estado', '$uf')";
-        $query_insert_uf = $mysqli->query($insert_uf);
-        //Seleciona o Estado novamente para cadastro
-        foreach($mysqli->query("SELECT cd_uf AS uf FROM tb_uf WHERE sg_uf = '$uf'") as $rowuf){
-            $ufvalidado = $rowuf["uf"];
-        }
-    }
-
-    //Verificação de Cidade
-    $verifica_cidade = "SELECT COUNT(cd_cidade) AS cidade FROM tb_cidade WHERE nm_cidade = '$cidade'";
-    $verifica_cidade = $mysqli->query($verifica_cidade);
-    $verifica_cidade = $verifica_cidade->fetch_assoc();
-    //Se já tiver um Cidade no banco --> utilizar o código dele
-    if($verifica_cidade['cidade'] == 1){
-        //Selecionando a Cidade
-        foreach($mysqli->query("SELECT cd_cidade AS city FROM tb_cidade WHERE nm_cidade = '$cidade'") as $rowcidade){
-            $cidadevalidada = $rowcidade["city"];
-        }
-    }
-    //Se não --> insere a Cidade
-    else{
-        //Contador de Cidade
-        $contador_cidade = "SELECT COUNT(cd_cidade) AS codigo FROM tb_cidade";
-        $contador_cidade = $mysqli->query($contador_cidade);
-        $contador_cidade = $contador_cidade->fetch_assoc();
-        $city = $contador_cidade['codigo'] + 1;
-        //Inserção da Cidade
-        $insert_cidade = "INSERT INTO tb_cidade (cd_cidade, nm_cidade) VALUES ('$city', '$cidade')";
-        $query_insert_cidade = $mysqli->query($insert_cidade);
-        //Seleção da Cidade inserida
-        foreach($mysqli->query("SELECT cd_cidade AS city FROM tb_cidade WHERE nm_cidade = '$cidade'") as $rowcidade){
-            $cidadevalidada = $rowcidade["city"];
-        }
-    }
-
-    //Verificação de Bairro
-    $verifica_bairro = "SELECT COUNT(cd_bairro) AS bairro FROM tb_bairro WHERE nm_bairro = '$bairro'";
-    $verifica_bairro = $mysqli->query($verifica_bairro);
-    $verifica_bairro = $verifica_bairro->fetch_assoc();
-    //Se já tiver um Bairro no banco --> utilizar código dele
-    if($verifica_bairro['bairro'] == 1){
-        //Selecionando o Bairro
-        foreach($mysqli->query("SELECT cd_bairro AS bairro FROM tb_bairro WHERE nm_bairro = '$bairro'") as $rowbairro){
-            $bairrovalidado = $rowbairro["bairro"];
-        }
-    }
-    //Se não --> Insere o bairro
-    else{
-        //Contador de Bairro
-        $contador_bairro = "SELECT COUNT(cd_bairro) AS codigo FROM tb_bairro";
-        $contador_bairro = $mysqli->query($contador_bairro);
-        $contador_bairro = $contador_bairro->fetch_assoc();
-        $distric = $contador_bairro['codigo'] + 1;
-        //Insere o Bairro
-        $insert_bairro = "INSERT INTO tb_bairro (cd_bairro, nm_bairro) VALUES ('$distric', '$bairro')";
-        $query_insert_bairro = $mysqli->query($insert_bairro);
-        //Selecionando o Bairro
-        foreach($mysqli->query("SELECT cd_bairro AS bairro FROM tb_bairro WHERE nm_bairro = '$bairro'") as $rowbairro){
-            $bairrovalidado = $rowbairro["bairro"];
-        }
-    }
+    //Contador de Endereço
+    $verifica_end = $mysqli->query("SELECT COUNT(cd_endereco) AS endereco FROM tb_endereco");
+    $verifica_end = $verifica_end->fetch_assoc();
+    $result_end = $verifica_end['endereco'] + 1;
+    //Inserir Endereço
+    $insert_end = $mysqli->query("INSERT INTO tb_endereco (cd_endereco, sg_uf, nm_cidade, nm_bairro, nm_rua, nm_cep) VALUES ('$result_end', '$uf', '$cidade', '$bairro', '$rua', '$cep')");
 
     //Verificar CPF válido
     $cpf_string = strval($cpf);
@@ -163,7 +89,7 @@ else{
             $users = $select_user['codigo'] + 1;
 
             //Inserção do cadastro
-            $insert = "INSERT INTO tb_usuario (cd_usuario, nm_usuario, nm_senha, nm_email, dt_nascimento, nm_cpf, sg_genero, nm_cep, nm_endereco, sg_especialidade, dt_tempo, cd_cidade, cd_uf, cd_bairro) VALUES ('$users', '$nome', '$crip', '$email', '$data', '$cpf_string', '$genero', '$cep', '$rua', '$especialidade', NOW(), '$cidadevalidada', '$ufvalidado', '$bairrovalidado')";
+            $insert = "INSERT INTO tb_usuario (cd_usuario, nm_usuario, nm_senha, nm_email, dt_nascimento, nm_cpf, sg_genero, sg_especialidade, dt_tempo, cd_endereco) VALUES ('$users', '$nome', '$crip', '$email', '$data', '$cpf_string', '$genero', '$especialidade', NOW(), '$result_end')";
             $inserir = $mysqli->query($insert);
 
             if ($inserir === TRUE){ 

@@ -11,21 +11,18 @@ if(empty($semfoto)){
     foreach($mysqli->query(
     "SELECT us.nm_usuario AS nome, 
     us.nm_email AS email,
-    us.nm_cep AS cep,
-    us.nm_endereco AS rua,
+    e.nm_cep AS cep,
+    e.nm_endereco AS rua,
     us.sg_especialidade AS especialidade,
     us.ds_usuario AS descricao, 
     DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-    u.sg_uf AS uf,
-    b.nm_bairro AS bairro,
-    cm.nm_cidade AS cidade
-        FROM tb_usuario AS us JOIN tb_uf AS u
-            ON u.cd_uf = us.cd_uf
-                JOIN tb_cidade AS cm
-                    ON cm.cd_cidade = us.cd_cidade
-                        JOIN tb_bairro AS b
-                            ON b.cd_bairro = us.cd_bairro
-                                WHERE us.cd_usuario = '$session'") as $usuarios){
+    e.sg_uf AS uf,
+    e.nm_bairro AS bairro,
+    e.nm_cidade AS cidade
+        FROM tb_usuario AS us
+            JOIN tb_endereco AS e
+                ON e.cd_endereco = us.cd_endereco
+                    WHERE us.cd_usuario = '$session'") as $usuarios){
     $nomeusuario = $usuarios['nome'];
     $descricaousuario = $usuarios['descricao'];
     $emailusuario = $usuarios['email'];
@@ -46,24 +43,21 @@ else{
     foreach($mysqli->query(
         "SELECT us.nm_usuario AS nome, 
         us.nm_email AS email,
-        us.nm_cep AS cep,
-        us.nm_endereco AS rua,
+        e.nm_cep AS cep,
+        e.nm_rua AS rua,
         us.sg_especialidade AS especialidade, 
         us.ds_usuario AS descricao, 
         DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-        u.sg_uf AS uf,
-        b.nm_bairro AS bairro,
-        cm.nm_cidade AS cidade,
+        e.sg_uf AS uf,
+        e.nm_bairro AS bairro,
+        e.nm_cidade AS cidade,
         i.path AS path
-        FROM tb_usuario AS us JOIN tb_uf AS u
-            ON u.cd_uf = us.cd_uf
-            JOIN tb_imagem AS i
-            ON i.cd_imagem = us.cd_imagem
-                JOIN tb_cidade AS cm
-                ON cm.cd_cidade = us.cd_cidade
-                    JOIN tb_bairro AS b
-                    ON b.cd_bairro = us.cd_bairro
-                        WHERE us.cd_usuario = '$session'") as $usuarios){
+        FROM tb_usuario AS us 
+            JOIN tb_endereco AS e
+                ON e.cd_endereco = us.cd_endereco
+                    JOIN tb_imagem AS i
+                        ON i.cd_imagem = us.cd_imagem
+                            WHERE us.cd_usuario = '$session'") as $usuarios){
         $nomeusuario = $usuarios['nome'];
         $descricaousuario = $usuarios['descricao'];
         $emailusuario = $usuarios['email'];

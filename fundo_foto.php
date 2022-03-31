@@ -16,13 +16,12 @@ foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE c
     us.sg_especialidade AS especialidade,
     us.ds_usuario AS descricao, 
     DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-    u.sg_uf AS uf,
-    cm.nm_cidade AS cidade
-      FROM tb_usuario AS us JOIN tb_uf AS u
-        ON u.cd_uf = us.cd_uf
-          JOIN tb_cidade AS cm
-            ON cm.cd_cidade = us.cd_cidade
-              WHERE us.cd_usuario = '$session'") as $usuarios){
+    e.sg_uf AS uf,
+    e.nm_cidade AS cidade
+    FROM tb_usuario AS us
+      JOIN tb_endereco AS e
+        ON e.cd_endereco = us.cd_endereco
+          WHERE us.cd_usuario = '$session'") as $usuarios){
     $nomeusuario = $usuarios['nome'];
     $descricaousuario = $usuarios['descricao'];
     $emailusuario = $usuarios['email'];
@@ -44,18 +43,17 @@ foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE c
       us.sg_especialidade AS especialidade,
       us.ds_usuario AS descricao, 
       DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-      u.sg_uf AS uf,
-      cm.nm_cidade AS cidade,
+      e.sg_uf AS uf,
+      e.nm_cidade AS cidade,
       (SELECT im.path FROM tb_fundo as f 
       	JOIN tb_imagem as im
       	  ON im.cd_imagem = f.cd_imagem
        		JOIN tb_usuario as us
        		  ON us.cd_fundo = f.cd_fundo
       			WHERE us.cd_usuario = '$session') AS fundo
-        FROM tb_usuario AS us JOIN tb_uf AS u
-          ON u.cd_uf = us.cd_uf
-            JOIN tb_cidade AS cm
-              ON cm.cd_cidade = us.cd_cidade
+        FROM tb_usuario AS us
+          JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco
                 WHERE us.cd_usuario = '$session'") as $usuarios){
       $nomeusuario = $usuarios['nome'];
       $descricaousuario = $usuarios['descricao'];
@@ -78,16 +76,15 @@ foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE c
       us.sg_especialidade AS especialidade, 
       us.ds_usuario AS descricao, 
       DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-      u.sg_uf AS uf,
-      cm.nm_cidade AS cidade,
+      e.sg_uf AS uf,
+      e.nm_cidade AS cidade,
       i.path AS path
-        FROM tb_usuario AS us JOIN tb_uf AS u
-          ON u.cd_uf = us.cd_uf
-            JOIN tb_imagem AS i
+        FROM tb_usuario AS us
+          JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco
+              JOIN tb_imagem AS i
               ON i.cd_imagem = us.cd_imagem
-                JOIN tb_cidade AS cm
-                  ON cm.cd_cidade = us.cd_cidade
-                    WHERE us.cd_usuario = '$session'") as $usuarios){
+                WHERE us.cd_usuario = '$session'") as $usuarios){
       $nomeusuario = $usuarios['nome'];
       $descricaousuario = $usuarios['descricao'];
       $emailusuario = $usuarios['email'];
@@ -109,8 +106,8 @@ foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE c
       us.sg_especialidade AS especialidade, 
       us.ds_usuario AS descricao, 
       DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-      u.sg_uf AS uf,
-      cm.nm_cidade AS cidade,
+      e.sg_uf AS uf,
+      e.nm_cidade AS cidade,
       i.path AS path,
       (SELECT im.path FROM tb_fundo as f 
       	JOIN tb_imagem as im
@@ -118,13 +115,12 @@ foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE c
        		JOIN tb_usuario as us
        		  ON us.cd_fundo = f.cd_fundo
       			WHERE us.cd_usuario = '$session') AS fundo
-        FROM tb_usuario AS us JOIN tb_uf AS u
-          ON u.cd_uf = us.cd_uf
-            JOIN tb_imagem AS i
-              ON i.cd_imagem = us.cd_imagem
-                JOIN tb_cidade AS cm
-                  ON cm.cd_cidade = us.cd_cidade
-                    WHERE us.cd_usuario = '$session'") as $usuarios){
+        FROM tb_usuario AS us
+          JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco 
+              JOIN tb_imagem AS i
+                ON i.cd_imagem = us.cd_imagem
+                  WHERE us.cd_usuario = '$session'") as $usuarios){
       $nomeusuario = $usuarios['nome'];
       $descricaousuario = $usuarios['descricao'];
       $emailusuario = $usuarios['email'];
