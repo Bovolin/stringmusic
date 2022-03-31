@@ -53,7 +53,6 @@ else{
       }
     }
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +73,6 @@ else{
 
 </head>
 <body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <header>
     <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
 
@@ -158,10 +156,10 @@ else{
               </div>
               <h4 style="color: var(--color-text);">Descrição:</h4>
               <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
-              <a href="#">
-                <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
+              <p style="display:none" id="codigo_interp"><?php echo $codigointerpretacao ?></p>
+              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product='.$nomeinterpretacao.'&price='.$valorinterpretacao.'&code='.$codigointerpretacao ?>">
+                <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
               </a>
-              <button type="button" class="btnpart" style="width: 200px;" id="addCarrinho">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
             </div>
           </div>      
        </div>   
@@ -227,7 +225,7 @@ else{
                     <div class="profile">
                         <!-- img-->
                         <div class="profile-img">
-                            <img src="imgs/user.png" alt="foto de usuário">
+                            <img src="imgs/user.jpeg" alt="foto de usuário">
                         </div>
                         <!-- nome e username-->
                         <div class="name-user">
@@ -257,7 +255,7 @@ else{
                     <div class="profile">
                         <!-- img-->
                         <div class="profile-img">
-                            <img src="imgs/user.png" alt="foto de usuário">
+                            <img src="imgs/user.jpeg" alt="foto de usuário">
                         </div>
                         <!-- nome e username-->
                         <div class="name-user">
@@ -281,6 +279,5 @@ else{
             </div>
   </section>
 
-<script src="js/script_carrinho.js"></script>
 </body>
 </html>

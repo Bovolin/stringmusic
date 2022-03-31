@@ -156,10 +156,10 @@ if(isset($_SESSION['usuario'])){
               </div>
               <h4 style="color: var(--color-text);">Descrição:</h4>
               <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
-              <a href="#">
-                <button type="button" class="btnpart" style="width: 200px;">Comprar</button>
-              </a>
-              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product=' . $nomeinterpretacao . '&price=' . $valorinterpretacao?>">
+              <input type="hidden" id="codigo_user" value="<?php echo $codigo ?>">
+              <input type="hidden" id="codigo_serv" value="<?php echo $codigointerpretacao ?>">
+              <input type="hidden" id="codigo_interp" value="0">
+              <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product='.$nomeinterpretacao.'&price='.$valorinterpretacao.'&code='.$codigointerpretacao ?>">
                 <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
               </a>
             </div>

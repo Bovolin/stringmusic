@@ -1,17 +1,19 @@
 <?php
 require("../../lib/vendor/autoload.php");
 
-$carrinho= new \Classes\ClassCarrinho();
-if(isset($_POST['nm'])){
-    $product = new \Classes\ClassProdutos($_POST['nm'],$_POST['price']);
-    $_SESSION['quantity'] = $_POST['qt'];
+include("../../class/ClassCarrinho.php");
+include("../../class/ClassProdutos.php");
+
+$carrinho = new ClassCarrinho();
+
+if($_GET['action'] == 'add'){
+    $product = new ClassProdutos($_GET['product'],$_GET['price'],$_GET['code']);
     $carrinho->addProducts($product);
 }
-
 elseif($_GET['action'] == 'clear'){
     $carrinho->clearProducts();
 }
 
-header("Location: ../view/mercadopag.php")
+header("Location: ../view/mercadopag.php");
 
 ?>
