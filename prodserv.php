@@ -85,8 +85,8 @@ if(isset($_SESSION['usuario'])){
         <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
             <option value="loja.php">Loja</option>
             <option value="instrumentos.php">Instrumentos</option>
-            <option value="interpretacoes.php" selected>Partituras</option>
-            <option value="servico.php">Serviços</option>
+            <option value="interpretacoes.php">Partituras</option>
+            <option value="servico.php" selected>Serviços</option>
         </select>
         <?php
             if(isset($_SESSION['usuario'])){
@@ -156,9 +156,7 @@ if(isset($_SESSION['usuario'])){
               </div>
               <h4 style="color: var(--color-text);">Descrição:</h4>
               <p style="color: var(--color-text);"><?php echo $descricaointerpretacao?></p>
-              <input type="hidden" id="codigo_user" value="<?php echo $codigo ?>">
-              <input type="hidden" id="codigo_serv" value="<?php echo $codigointerpretacao ?>">
-              <input type="hidden" id="codigo_interp" value="0">
+              <p style="display:none" id="codigo_serv"><?php echo $codigointerpretacao ?></p>
               <a href="<?php echo 'https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=add&product='.$nomeinterpretacao.'&price='.$valorinterpretacao.'&code='.$codigointerpretacao ?>">
                 <button type="button" class="btnpart" style="width: 200px;">Adicionar ao Carrinho <i class="fas fa-shopping-cart"></i></button>
               </a>

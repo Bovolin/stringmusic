@@ -142,8 +142,8 @@ unset($_SESSION['servicorecusado']);
             <i class="fas fa-star-half-alt"></i>
         </div>
         <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
-        <form method="get" action="produto.php">
-          <input type="text" name="p" style="display: none;" value="'; 
+        <form method="get" action="prodserv.php">
+          <input type="text" name="s" style="display: none;" value="'; 
           if(strlen($dados['nm_servico']) > 14){
             echo str_replace(substr($dados['nm_servico'], 11, 13), '...', $dados['nm_servico']);
           }
