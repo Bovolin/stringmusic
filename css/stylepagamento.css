@@ -101,6 +101,7 @@ ul li:hover {
 }
 .price {
   color:#4488dd;
+  padding-left: 250%;
 }
 .order-table td:first-of-type {
   width:25%;
@@ -148,8 +149,7 @@ ul li:hover {
 
 .total {
   margin-top:25px;
-  font-size:20px;
-  font-size:1.3rem;
+  font-size:1rem;
   position:absolute;
   right:27px;
   padding: 5px;
