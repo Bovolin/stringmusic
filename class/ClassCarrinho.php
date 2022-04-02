@@ -166,12 +166,26 @@ class ClassCarrinho extends Conexao{
 
     //Amount produtos
     public function getAmount(){
+        $this->mysqli = Conexao::getConection();
+
+        //Pegar codigo do usuario
+        $code_user = $_SESSION['usuario'];
+
         $amount = 0;
-        if(isset($_SESSION['products'])){
-           foreach($_SESSION['products'] as $product){
-                $amount += $product['quantity'] * $product['price'];
-            } 
+
+        //Verificar se há produtos no carrinho
+        $verifica_prod = $this->mysqli->query("SELECT COUNT(cd_carrinho) FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = $code_user");
+
+        if($verifica_prod != 0){
+            //Pegar quantidade e valor
+            foreach($this->mysqli->query("SELECT ((c.qt_carrinho + 0.0) * i.vl_interpretacao) AS total FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quantidade_prod){
+                $amount += $quantidade_prod['total'];
+            }
+            foreach($this->mysqli->query("SELECT ((c.qt_carrinho + 0.0) * s.vl_servico) AS total FROM tb_carrinho AS c JOIN tb_servico AS s ON s.cd_servico = c.cd_servico WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quantidade_serv){
+                $amount += $quantidade_serv['total'];
+            }
         }
+
         return $amount;
     }
 }
