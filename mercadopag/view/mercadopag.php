@@ -37,7 +37,7 @@ include("../../verifica_login.php");
                   TOTAL
                 </span>
                 <span style='float:right; text-align:right;'>
-                  R$<?php echo $carrinho->getAmount(); ?>
+                  R$<?php echo str_replace('.',',',$carrinho->getAmount()); ?>
                   <p>Você possui <?php echo $carrinho->getQuantity(); ?> produto(s) no carrinho</p>
                   <a href="https://localhost/stringmusic/mercadopag/controllers/CarrinhoController.php?action=clear"><i class="fas fa-trash"></i> Esvaziar Carrinho</a>
                 </span>

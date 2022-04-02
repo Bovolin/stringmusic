@@ -128,7 +128,7 @@ class ClassCarrinho extends Conexao{
                 $html.="</tr>";
                 $html.="<tr>";
                 $html.="<td>";
-                $html.="<div class='price'>R$" . $product['vl_interp'] . "</div>";
+                $html.="<div class='price'>R$" . str_replace('.',',',$product['vl_interp']) . "</div>";
                 $html.="</td>";
                 $html.="</tr>";
             }
@@ -155,7 +155,7 @@ class ClassCarrinho extends Conexao{
                 $html.="</tr>";
                 $html.="<tr>";
                 $html.="<td>";
-                $html.="<div class='price'>R$" . $product['vl_serv'] . "</div>";
+                $html.="<div class='price'>R$" . str_replace('.',',',$product['vl_serv']) . "</div>";
                 $html.="</td>";
                 $html.="</tr>";
             }
@@ -178,11 +178,15 @@ class ClassCarrinho extends Conexao{
 
         if($verifica_prod != 0){
             //Pegar quantidade e valor
-            foreach($this->mysqli->query("SELECT ((c.qt_carrinho + 0.0) * i.vl_interpretacao) AS total FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quantidade_prod){
-                $amount += $quantidade_prod['total'];
+            foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, i.vl_interpretacao AS vl_interp FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_prod){
+                $qt_car = $quant_prod['qt_car'];
+                $vl_interp = $quant_prod['vl_interp'];
+                $amount += floor(($qt_car * $vl_interp)*100) /100;
             }
-            foreach($this->mysqli->query("SELECT ((c.qt_carrinho + 0.0) * s.vl_servico) AS total FROM tb_carrinho AS c JOIN tb_servico AS s ON s.cd_servico = c.cd_servico WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quantidade_serv){
-                $amount += $quantidade_serv['total'];
+            foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, s.vl_servico AS vl_serv FROM tb_carrinho AS c JOIN tb_servico AS s ON s.cd_servico = c.cd_servico WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_serv){
+                $qt_car = $quant_serv['qt_car'];
+                $vl_serv = $quant_serv['vl_serv'];
+                $amount += floor(($qt_car * $vl_serv) * 100) / 100;
             }
         }
 
