@@ -1,6 +1,6 @@
 <?php
 require("../../lib/vendor/autoload.php");
-$carrinho = new \Classes\ClassCarrinho();
+session_start();
 $exception = new \Classes\ClassException();
 ?>
 

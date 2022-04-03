@@ -56,7 +56,7 @@ include("../../verifica_login.php");
                       <form action="../controllers/PaymentController.php" method="post" id="pay" name="pay">
                         <div class="brand" style="display: none;"></div>
                         <label for="cardholderName">Nome Completo</label>
-                        <input type="text" id="cardholderName" data-checkout="cardholderName" class='input-field'>
+                        <input id="nome_completo" name="nome_completo" type="text" id="cardholderName" data-checkout="cardholderName" class='input-field'>
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" class='input-field' value="test_user_19653727@testuser.com">
                         <table class="half-input-table">
