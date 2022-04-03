@@ -275,7 +275,7 @@ display: inline-flex;
     color: var(--color-headings);
 }
 
-.section-perfil-usuario .dados h4{
+.section-perfil-usuario .dados h3{
     color: var(--color-text);
 }
 
