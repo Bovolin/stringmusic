@@ -9,6 +9,7 @@
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/styleusuarios.css" />
         <script src="js/swal.js"></script>
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
           google.charts.load('current', {'packages':['bar']});
@@ -16,41 +17,59 @@
 
           function drawChart(){
             var data = google.visualization.arrayToDataTable([
-              ['Produtos', 'Interpretações', 'Serviços', 'Instrumentos'],
+              ['Produtos', 'Interpretações', 'Serviços', 'Instrumentos', 'Total'],
 
               <?php
                 //Vendas do usuário
-                $vendas = $mysqli->query("SELECT count(i.cd_interpretacao) as 'Interpretações', 
-                                          (select count(s.cd_servico)
-                                            from tb_servico as s
-                                                join tb_usuario as u
-                                                    on u.cd_usuario = s.cd_usuario
-                                                        join tb_carrinho as c
-                                                            on s.cd_servico = c.cd_servico
-                                                                join tb_compra as co
-                                                                    on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Serviços',
-                                          (select count(ins.cd_instrumento) 
-                                                from tb_instrumento as ins
-                                                    join tb_usuario as u
-                                                        on u.cd_usuario = ins.cd_usuario
-                                                            join tb_carrinho as c
-                                                                on ins.cd_instrumento = c.cd_instrumento
-                                                                    join tb_compra as co
-                                                                        on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Instrumentos'
-                                            from tb_interpretacao as i
-                                                  join tb_usuario as u
-                                                    on u.cd_usuario = i.cd_usuario
-                                                      join tb_carrinho as c
-                                                        on i.cd_interpretacao = c.cd_interpretacao
-                                                          join tb_compra as co
-                                                            on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'");
+                $vendas = $mysqli->query(
+                  "SELECT count(i.cd_interpretacao) as 'Interpretações',
+                    (select count(s.cd_servico)
+                      from tb_servico as s
+                        join tb_usuario as u
+                                on u.cd_usuario = s.cd_usuario
+                                      join tb_carrinho as c
+                                        on s.cd_servico = c.cd_servico
+                                          join tb_compra as co
+                                          on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Serviços',
+                    (select count(ins.cd_instrumento) 
+                        from tb_instrumento as ins
+                            join tb_usuario as u
+                                on u.cd_usuario = ins.cd_usuario
+                                    join tb_carrinho as c
+                                        on ins.cd_instrumento = c.cd_instrumento
+                                          join tb_compra as co
+                                            on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Instrumentos',
+                    count(i.cd_interpretacao) + (select count(s.cd_servico)
+                      from tb_servico as s
+                        join tb_usuario as u
+                                on u.cd_usuario = s.cd_usuario
+                                      join tb_carrinho as c
+                                        on s.cd_servico = c.cd_servico
+                                          join tb_compra as co
+                                          on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') + (select count(ins.cd_instrumento) 
+                          from tb_instrumento as ins
+                              join tb_usuario as u
+                                  on u.cd_usuario = ins.cd_usuario
+                                      join tb_carrinho as c
+                                          on ins.cd_instrumento = c.cd_instrumento
+                                            join tb_compra as co
+                                              on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Total'
+                      from tb_interpretacao as i
+                          join tb_usuario as u
+                              on u.cd_usuario = i.cd_usuario
+                                  join tb_carrinho as c
+                                      on i.cd_interpretacao = c.cd_interpretacao
+                                        join tb_compra as co
+                                              on c.cd_carrinho = co.cd_carrinho
+                                                where u.cd_usuario = '$session'");
 
                 while($dados = $vendas->fetch_array()){
                   $interpretacoes = $dados['Interpretações'];
                   $servicos = $dados['Serviços'];
                   $instrumentos = $dados['Instrumentos'];
+                  $total = $dados['Total'];
               ?>
-              ['Produtos Vendidos' , <?php echo $interpretacoes ?>, <?php echo $servicos ?>, <?php echo $instrumentos ?>],
+              ['Produtos Vendidos' , <?php echo $interpretacoes ?>, <?php echo $servicos ?>, <?php echo $instrumentos ?>, <?php echo $total ?>],
 
               <?php } ?>
             ]);
