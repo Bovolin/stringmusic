@@ -9,7 +9,67 @@
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="css/styleusuarios.css" />
         <script src="js/swal.js"></script>
-        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['bar']});
+          google.charts.setOnLoadCallback(drawChart);
+
+          function drawChart(){
+            var data = google.visualization.arrayToDataTable([
+              ['Produtos', 'Interpretações', 'Serviços', 'Instrumentos'],
+
+              <?php
+                //Vendas do usuário
+                $vendas = $mysqli->query("SELECT count(i.cd_interpretacao) as 'Interpretações', 
+                                          (select count(s.cd_servico)
+                                            from tb_servico as s
+                                                join tb_usuario as u
+                                                    on u.cd_usuario = s.cd_usuario
+                                                        join tb_carrinho as c
+                                                            on s.cd_servico = c.cd_servico
+                                                                join tb_compra as co
+                                                                    on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Serviços',
+                                          (select count(ins.cd_instrumento) 
+                                                from tb_instrumento as ins
+                                                    join tb_usuario as u
+                                                        on u.cd_usuario = ins.cd_usuario
+                                                            join tb_carrinho as c
+                                                                on ins.cd_instrumento = c.cd_instrumento
+                                                                    join tb_compra as co
+                                                                        on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Instrumentos'
+                                            from tb_interpretacao as i
+                                                  join tb_usuario as u
+                                                    on u.cd_usuario = i.cd_usuario
+                                                      join tb_carrinho as c
+                                                        on i.cd_interpretacao = c.cd_interpretacao
+                                                          join tb_compra as co
+                                                            on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'");
+
+                while($dados = $vendas->fetch_array()){
+                  $interpretacoes = $dados['Interpretações'];
+                  $servicos = $dados['Serviços'];
+                  $instrumentos = $dados['Instrumentos'];
+              ?>
+              ['Produtos Vendidos' , <?php echo $interpretacoes ?>, <?php echo $servicos ?>, <?php echo $instrumentos ?>],
+
+              <?php } ?>
+            ]);
+            
+            var options = {
+              backgroundColor: window.getComputedStyle(document.querySelector('.perfil-usuario-avatar')).backgroundColor,
+              chartArea: {
+                backgroundColor: window.getComputedStyle(document.querySelector('.perfil-usuario-avatar')).backgroundColor,
+              },
+              chart: {
+                title: 'Vendas',
+                subtitle: 'Todos os produtos vendidos por você',
+              }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+          }
+        </script>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
         <title>StringMusic</title>
     </head>
@@ -108,14 +168,9 @@
             </div>
             <div class="perfil-usuario-footer">
               <ul class="dados">
-                <li><i class="icono fas fa-map-marked-alt" aria-hidden="true"> Localização: </i></li>
-                <h4><?php echo $cidadeusuario . ', ' . $ufusuario?></h4>
-                <li><i class="icono fas fa-envelope"> Email para contato: </i></li>
-                <h4><?php echo $emailusuario?></h4>
-                <li><i class="icono fa fa-calendar" aria-hidden="true"> Ano de nascimento: </i></li>
-                <h4><?php echo $nascimentousuario?></h4>
-                <li><i class="icono fas fa-music"> Tipo de usuário: </i></li>
-                <h4><?php echo $especialidadeusuario?></h4>
+                <h3>Dashboard</h3>
+                <br>
+                <div id="columnchart_material" style="width: 650px; height: 500px"></div>
               </ul>
             </div>
             <div class="redes-sociais">
@@ -146,6 +201,18 @@
             const trocaMenu = document.querySelector('.menu');
             trocaMenu.classList.toggle('active');
           }
+
+          checkbox.addEventListener("change", ({ target }) => {
+            if(target.checked){
+              changeColors(darkMode)
+              location.reload();
+            }
+            else{
+              changeColors(initialColors)
+              location.reload();
+            }
+            localStorage.setItem('color-mode', target.checked)
+          })
     </script>
         
     
