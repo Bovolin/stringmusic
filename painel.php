@@ -75,14 +75,12 @@
             ]);
             
             var options = {
-              backgroundColor: window.getComputedStyle(document.querySelector('.perfil-usuario-avatar')).backgroundColor,
+              backgroundColor: 'transparent',
               chartArea: {
-                backgroundColor: window.getComputedStyle(document.querySelector('.perfil-usuario-avatar')).backgroundColor,
+                backgroundColor: 'transparent',
               },
-              chart: {
-                title: 'Vendas',
-                subtitle: 'Todos os produtos vendidos por você',
-              }
+              title: 'Vendas',
+              subtitle: 'Todos os produtos vendidos por você',
             };
 
             var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
@@ -220,18 +218,6 @@
             const trocaMenu = document.querySelector('.menu');
             trocaMenu.classList.toggle('active');
           }
-
-          checkbox.addEventListener("change", ({ target }) => {
-            if(target.checked){
-              changeColors(darkMode)
-              location.reload();
-            }
-            else{
-              changeColors(initialColors)
-              location.reload();
-            }
-            localStorage.setItem('color-mode', target.checked)
-          })
     </script>
         
     
