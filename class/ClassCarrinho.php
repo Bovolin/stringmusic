@@ -241,21 +241,21 @@ class ClassCarrinho extends Conexao{
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, i.vl_interpretacao AS vl_interp FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_prod){
                 $qt_car = $quant_prod['qt_car'];
                 $vl_interp = $quant_prod['vl_interp'];
-                $amount += floor(($qt_car * $vl_interp)*100) /100;
+                $amount += floor(($qt_car * $vl_interp) * 100) /100;
             }
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, s.vl_servico AS vl_serv FROM tb_carrinho AS c JOIN tb_servico AS s ON s.cd_servico = c.cd_servico WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_serv){
                 $qt_car = $quant_serv['qt_car'];
                 $vl_serv = $quant_serv['vl_serv'];
                 $amount += floor(($qt_car * $vl_serv) * 100) / 100;
             }
-            foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, ins.vl_instrumento AS vl_inst FROM tb_carrinho AS c JOIN tb_instrumento AS ins ON ins.cd_instrumento = c.cd_instrumento WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_inst){
+            foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, replace(ins.vl_instrumento, ',', '') AS vl_inst FROM tb_carrinho AS c JOIN tb_instrumento AS ins ON ins.cd_instrumento = c.cd_instrumento WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_inst){
                 $qt_car = $quant_inst['qt_car'];
-                $vl_inst = str_replace('.',',',$quant_inst['vl_inst']);
+                $vl_inst = $quant_inst['vl_inst'];
                 $amount += floor(($qt_car * $vl_inst) * 100) / 100;
             }
         }
 
-        return $qt_car * $vl_inst;
+        return $amount;
     }
 }
 

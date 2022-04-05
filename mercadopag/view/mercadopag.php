@@ -15,6 +15,7 @@ include("../../verifica_login.php");
     <title>StringMusic</title>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../../css/stylepagamento.css"/>
+    <link rel="shortcut icon" href="../../favicon/ms-icon-310x310.png" />
     <script src="../../js/script.js"></script>
 </head>
 <body>
