@@ -32,142 +32,137 @@ if(isset($_SESSION['usuario'])){
 }
 
 foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$preview_user'") as $conferefoto){
-  $semfoto = $conferefoto['confere'];
+    $semfoto = $conferefoto['confere'];
 }
 foreach($mysqli->query("SELECT cd_fundo AS confere_fundo FROM tb_usuario WHERE cd_usuario = '$preview_user'") as $conferefundo){
-    $semfundo = $conferefundo['confere_fundo'];
-  }
-
-if(empty($semfoto) && empty($semfundo)){
-  foreach($mysqli->query(
-  "SELECT us.nm_usuario AS nome, 
-  us.nm_email AS email, 
-  us.sg_especialidade AS especialidade, 
-  us.ds_usuario AS descricao, 
-  DATE_FORMAT(us.dt_tempo, '%m/%Y') AS tempo,
-  u.sg_uf AS uf,
-  c.nm_cidade AS cidade
-    FROM tb_usuario AS us JOIN tb_uf AS u
-        ON u.cd_uf = us.cd_uf
-            JOIN tb_cidade AS c
-                ON c.cd_cidade = us.cd_cidade
-                    WHERE us.cd_usuario = '$preview_user'") as $usuarios){
-  $nomeusuario = $usuarios['nome'];
-  $descricaousuario = $usuarios['descricao'];
-  $emailusuario = $usuarios['email'];
-  $tempousuario = $usuarios['tempo'];
-  $cidadeusuario = $usuarios['cidade'];
-  $imgusuario = "imgs/user.jpeg";
-  $imgfundo = ": linear-gradient(45deg, #BC3CFF, #317FFF);";
-
-  if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-  elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-  elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";
-  
-  if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
-  }
+  $semfundo = $conferefundo['confere_fundo'];
 }
-elseif(empty($semfoto)){
+
+  if(empty($semfoto) && empty($semfundo)){
     foreach($mysqli->query(
     "SELECT us.nm_usuario AS nome, 
     us.nm_email AS email, 
-    us.sg_especialidade AS especialidade, 
+    us.sg_especialidade AS especialidade,
     us.ds_usuario AS descricao, 
-    DATE_FORMAT(us.dt_tempo, '%m/%Y') AS tempo,
-    u.sg_uf AS uf,
-    c.nm_cidade AS cidade,
-    (SELECT im.path FROM tb_fundo as f 
-      	JOIN tb_imagem as im
-      	  ON im.cd_imagem = f.cd_imagem
-       		JOIN tb_usuario as us
-       		  ON us.cd_fundo = f.cd_fundo
-      			WHERE us.cd_usuario = '$preview_user') AS fundo
-      FROM tb_usuario AS us JOIN tb_uf AS u
-          ON u.cd_uf = us.cd_uf
-              JOIN tb_cidade AS c
-                  ON c.cd_cidade = us.cd_cidade
-                      WHERE us.cd_usuario = '$preview_user'") as $usuarios){
+    DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
+    e.sg_uf AS uf,
+    e.nm_cidade AS cidade
+    FROM tb_usuario AS us
+      JOIN tb_endereco AS e
+        ON e.cd_endereco = us.cd_endereco
+          WHERE us.cd_usuario = '$preview_user'") as $usuarios){
     $nomeusuario = $usuarios['nome'];
     $descricaousuario = $usuarios['descricao'];
     $emailusuario = $usuarios['email'];
-    $tempousuario = $usuarios['tempo'];
+    $nascimentousuario = $usuarios['nascimento'];
+    $ufusuario = $usuarios['uf'];
     $cidadeusuario = $usuarios['cidade'];
     $imgusuario = "imgs/user.jpeg";
-    $imgfundo = "-image: url(" . $usuarios['fundo'] . ")";
-  
-    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";
-    
-    if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
-    }
-  }
-  elseif(empty($semfundo)){
-    foreach($mysqli->query(
-    "SELECT us.nm_usuario AS nome, 
-    us.nm_email AS email, 
-    us.sg_especialidade AS especialidade, 
-    us.ds_usuario AS descricao, 
-    DATE_FORMAT(us.dt_tempo, '%m/%Y') AS tempo,
-    u.sg_uf AS uf,
-    c.nm_cidade AS cidade
-      FROM tb_usuario AS us JOIN tb_uf AS u
-          ON u.cd_uf = us.cd_uf
-              JOIN tb_cidade AS c
-                  ON c.cd_cidade = us.cd_cidade
-                      WHERE us.cd_usuario = '$preview_user'") as $usuarios){
-    $nomeusuario = $usuarios['nome'];
-    $descricaousuario = $usuarios['descricao'];
-    $emailusuario = $usuarios['email'];
-    $tempousuario = $usuarios['tempo'];
-    $cidadeusuario = $usuarios['cidade'];
-    $imgusuario = $usuarios['path'];
     $imgfundo = ": linear-gradient(45deg, #BC3CFF, #317FFF);";
-  
-    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";
-    
-    if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
-    }
-  }
-else{
-  foreach($mysqli->query(
-    "SELECT us.nm_usuario AS nome, 
-    us.nm_email AS email, 
-    us.sg_especialidade AS especialidade, 
-    us.ds_usuario AS descricao, 
-    DATE_FORMAT(us.dt_tempo, '%m/%Y') AS nascimento,
-    u.sg_uf AS uf,
-    i.path AS path,
-    c.nm_cidade AS cidade,
-    (SELECT im.path FROM tb_fundo as f 
-      	JOIN tb_imagem as im
-      	  ON im.cd_imagem = f.cd_imagem
-       		JOIN tb_usuario as us
-       		  ON us.cd_fundo = f.cd_fundo
-      			WHERE us.cd_usuario = '$preview_user') AS fundo
-        FROM tb_usuario AS us JOIN tb_uf AS u
-            ON u.cd_uf = us.cd_uf
-                JOIN tb_imagem AS i
-                    ON i.cd_imagem = us.cd_imagem
-                        JOIN tb_cidade AS c
-                            ON c.cd_cidade = us.cd_cidade
-                                WHERE us.cd_usuario = '$preview_user'") as $usuarios){
-    $nomeusuario = $usuarios['nome'];
-    $descricaousuario = $usuarios['descricao'];
-    $emailusuario = $usuarios['email'];
-    $tempousuario = $usuarios['nascimento'];
-    $imgusuario = $usuarios['path'];
-    $cidadeusuario = $usuarios['cidade'];
-    $imgfundo = "-image: url(" . $usuarios['fundo'] . ")";
-  
+
     if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
     elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
     elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
     }
+  }
+  elseif (empty($semfoto)){
+    foreach($mysqli->query(
+      "SELECT us.nm_usuario AS nome, 
+      us.nm_email AS email, 
+      us.sg_especialidade AS especialidade,
+      us.ds_usuario AS descricao, 
+      DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
+      e.sg_uf AS uf,
+      e.nm_cidade AS cidade,
+      (SELECT im.path FROM tb_fundo as f 
+      	JOIN tb_imagem as im
+      	  ON im.cd_imagem = f.cd_imagem
+       		JOIN tb_usuario as us
+       		  ON us.cd_fundo = f.cd_fundo
+      			WHERE us.cd_usuario = '$preview_user') AS fundo
+        FROM tb_usuario AS us
+          JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco
+                WHERE us.cd_usuario = '$preview_user'") as $usuarios){
+      $nomeusuario = $usuarios['nome'];
+      $descricaousuario = $usuarios['descricao'];
+      $emailusuario = $usuarios['email'];
+      $nascimentousuario = $usuarios['nascimento'];
+      $ufusuario = $usuarios['uf'];
+      $cidadeusuario = $usuarios['cidade'];
+      $imgusuario = "imgs/user.jpeg";
+      $imgfundo = "-image: url(" . $usuarios['fundo'] . ")";
+  
+      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+      }
+  }
+  elseif(empty($semfundo)){
+    foreach($mysqli->query(
+      "SELECT us.nm_usuario AS nome, 
+      us.nm_email AS email, 
+      us.sg_especialidade AS especialidade, 
+      us.ds_usuario AS descricao, 
+      DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
+      e.sg_uf AS uf,
+      e.nm_cidade AS cidade,
+      i.path AS path
+        FROM tb_usuario AS us
+          JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco
+              JOIN tb_imagem AS i
+              ON i.cd_imagem = us.cd_imagem
+                WHERE us.cd_usuario = '$preview_user'") as $usuarios){
+      $nomeusuario = $usuarios['nome'];
+      $descricaousuario = $usuarios['descricao'];
+      $emailusuario = $usuarios['email'];
+      $nascimentousuario = $usuarios['nascimento'];
+      $ufusuario = $usuarios['uf']; 
+      $cidadeusuario = $usuarios['cidade'];
+      $imgusuario = $usuarios['path'];
+      $imgfundo = ": linear-gradient(45deg, #BC3CFF, #317FFF);";
 
-    if($usuarios['uf'] == "SP") $ufusuario = "São Paulo";
+      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+      }
+  }
+  else{
+    foreach($mysqli->query(
+      "SELECT us.nm_usuario AS nome, 
+      us.nm_email AS email, 
+      us.sg_especialidade AS especialidade, 
+      us.ds_usuario AS descricao, 
+      DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
+      e.sg_uf AS uf,
+      e.nm_cidade AS cidade,
+      i.path AS path,
+      (SELECT im.path FROM tb_fundo as f 
+      	JOIN tb_imagem as im
+      	  ON im.cd_imagem = f.cd_imagem
+       		JOIN tb_usuario as us
+       		  ON us.cd_fundo = f.cd_fundo
+      			WHERE us.cd_usuario = '$preview_user') AS fundo
+        FROM tb_usuario AS us
+          JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco 
+              JOIN tb_imagem AS i
+                ON i.cd_imagem = us.cd_imagem
+                  WHERE us.cd_usuario = '$preview_user'") as $usuarios){
+      $nomeusuario = $usuarios['nome'];
+      $descricaousuario = $usuarios['descricao'];
+      $emailusuario = $usuarios['email'];
+      $nascimentousuario = $usuarios['nascimento'];
+      $ufusuario = $usuarios['uf']; 
+      $cidadeusuario = $usuarios['cidade'];
+      $imgusuario = $usuarios['path'];
+      $imgfundo = "-image: url(" . $usuarios['fundo'] . ")";
+
+      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+    }
 }
 
 
@@ -183,6 +178,83 @@ else{
         <script src="js/swal.js"></script>
         <script src="js/script.js"></script>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['bar']});
+          google.charts.setOnLoadCallback(drawChart);
+
+          function drawChart(){
+            var data = google.visualization.arrayToDataTable([
+              ['Produtos', 'Interpretações', 'Serviços', 'Instrumentos', 'Total'],
+
+              <?php
+                //Vendas do usuário
+                $vendas = $mysqli->query(
+                  "SELECT count(i.cd_interpretacao) as 'Interpretações',
+                    (select count(s.cd_servico)
+                      from tb_servico as s
+                        join tb_usuario as u
+                                on u.cd_usuario = s.cd_usuario
+                                      join tb_carrinho as c
+                                        on s.cd_servico = c.cd_servico
+                                          join tb_compra as co
+                                          on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$preview_user') as 'Serviços',
+                    (select count(ins.cd_instrumento) 
+                        from tb_instrumento as ins
+                            join tb_usuario as u
+                                on u.cd_usuario = ins.cd_usuario
+                                    join tb_carrinho as c
+                                        on ins.cd_instrumento = c.cd_instrumento
+                                          join tb_compra as co
+                                            on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$preview_user') as 'Instrumentos',
+                    count(i.cd_interpretacao) + (select count(s.cd_servico)
+                      from tb_servico as s
+                        join tb_usuario as u
+                                on u.cd_usuario = s.cd_usuario
+                                      join tb_carrinho as c
+                                        on s.cd_servico = c.cd_servico
+                                          join tb_compra as co
+                                          on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$preview_user') + (select count(ins.cd_instrumento) 
+                          from tb_instrumento as ins
+                              join tb_usuario as u
+                                  on u.cd_usuario = ins.cd_usuario
+                                      join tb_carrinho as c
+                                          on ins.cd_instrumento = c.cd_instrumento
+                                            join tb_compra as co
+                                              on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$preview_user') as 'Total'
+                      from tb_interpretacao as i
+                          join tb_usuario as u
+                              on u.cd_usuario = i.cd_usuario
+                                  join tb_carrinho as c
+                                      on i.cd_interpretacao = c.cd_interpretacao
+                                        join tb_compra as co
+                                              on c.cd_carrinho = co.cd_carrinho
+                                                where u.cd_usuario = '$preview_user'");
+
+                while($dados = $vendas->fetch_array()){
+                  $interpretacoes = $dados['Interpretações'];
+                  $servicos = $dados['Serviços'];
+                  $instrumentos = $dados['Instrumentos'];
+                  $total = $dados['Total'];
+              ?>
+              ['Produtos Vendidos' , <?php echo $interpretacoes ?>, <?php echo $servicos ?>, <?php echo $instrumentos ?>, <?php echo $total ?>],
+
+              <?php } ?>
+            ]);
+            
+            var options = {
+              backgroundColor: 'transparent',
+              chartArea: {
+                backgroundColor: 'transparent',
+              },
+              title: 'Vendas',
+              subtitle: 'Todos os produtos vendidos por você',
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+          }
+        </script>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
         <title>StringMusic</title>
     </head>
@@ -200,7 +272,7 @@ else{
         <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
             <option value="loja.php">Loja</option>
             <option value="instrumentos.php">Instrumentos</option>
-            <option value="interpretacoes.php" selected>Partituras</option>
+            <option value="interpretacoes.php">Partituras</option>
             <option value="servico.php">Serviços</option>
         </select>
         <?php
@@ -247,14 +319,9 @@ else{
                 </div>
                 <div class="perfil-usuario-footer">
                     <ul class="dados">
-                        <li><i class="icono fas fa-map-marked-alt" aria-hidden="true"> Localização: </i></li>
-                        <h4><?php echo $cidadeusuario . ', ' . $ufusuario?></h4>
-                        <li><i class="icono fas fa-envelope"> Email para contato: </i></li>
-                        <h4><?php echo $emailusuario?></h4>
-                        <li><i class="icono fa fa-calendar" aria-hidden="true"> No site desde: </i></li>
-                        <h4><?php echo $tempousuario?></h4>
-                        <li><i class="icono fas fa-music"> Tipo de usuário: </i></li>
-                        <h4><?php echo $especialidadeusuario?></h4>
+                        <h3>Dashboard</h3>
+                        <br>
+                        <div id="columnchart_material" style="width: 650px; height: 500px"></div>
                     </ul>
                 </div>
                 <div class="redes-sociais">

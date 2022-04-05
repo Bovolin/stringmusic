@@ -21,21 +21,20 @@ elseif($exception->verifyTransaction()['class'] == 'success') $icone = 'success'
 elseif($exception->verifyTransaction()['class'] == 'alert') $icone = 'info';
 ?>
 <script>
-    function teste(){
+    function Swal(){
         Swal.fire({
             icon: '<?php echo $icone ?>',
-            text: '<?php echo $exception->verifyTransaction()['message'] ?>'
+            text: '<?php echo $exception->verifyTransaction()['message'] ?>',
+            confirmButtonColor: '#32cd32',
+            confirmButtonText: 'Prosseguir'
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location.href= "mercadopag.php";
+            }
         })
     }
 </script>
-<body onload="teste()">
-
-    <!--<div class="result">
-        <?php //$exception->setPayment($_SESSION['payment']); ?>
-        <div class="<?php //echo $exception->verifyTransaction()['class']; ?>">
-            <?php //echo $exception->verifyTransaction()['message']; ?>
-        </div>
-    </div>-->
+<body onload="Swal()">
         
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>
