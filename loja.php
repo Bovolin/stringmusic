@@ -122,7 +122,7 @@ include("foto.php");
 
 <section class="product" id="product">
 
-    <h1 class="heading">Últimos <span>produtos</span></h1>
+    <h1 class="heading">Produtos mais <span>comprados</span></h1>
 
     <div class="box-container">
     
@@ -137,81 +137,96 @@ include("foto.php");
                               limit 4");
 
         while($dados = $sql->fetch_array()){
-
+            $cod_car = $dados['cd_carrinho'];
+            foreach($mysqli->query("SELECT s.nm_interpretacao, s.vl_interpretacao, i.path FROM tb_carrinho AS c JOIN tb_interpretacao AS s on s.cd_interpretacao = c.cd_interpretacao JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
+                echo '<div class="box">
+                    <div class="icons">
+                        <a href="#" class="fas fa-share"></a>
+                        <a href="#" class="fas fa-copy"></a>
+                    </div>
+                    <img src="'; echo $interp['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($interp['nm_interpretacao']) > 14){
+                        echo str_replace(substr($interp['nm_interpretacao'], 11, 13), '...', $interp['nm_interpretacao']);
+                    }
+                    else{
+                        echo $interp['nm_interpretacao'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $interp['vl_interpretacao'];  echo '</div>
+                    <form method="get" action="produto.php" style="display: inline-block;">
+                        <input type="text" name="p" style="display: none;" value="'; echo $interp['nm_interpretacao']; echo '">
+                        <input type="submit" class="btn" value="Comprar">
+                    </form>
+                </div>';
+            }
+            foreach($mysqli->query("SELECT s.nm_servico, s.vl_servico, i.path FROM tb_carrinho AS c JOIN tb_servico AS s on s.cd_servico = c.cd_servico JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
+                echo '<div class="box">
+                    <div class="icons">
+                        <a href="#" class="fas fa-share"></a>
+                        <a href="#" class="fas fa-copy"></a>
+                    </div>
+                    <img src="'; echo $interp['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($interp['nm_servico']) > 14){
+                        echo str_replace(substr($interp['nm_servico'], 11, 13), '...', $interp['nm_servico']);
+                    }
+                    else{
+                        echo $interp['nm_servico'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $interp['vl_servico'];  echo '</div>
+                    <form method="get" action="produto.php" style="display: inline-block;">
+                        <input type="text" name="p" style="display: none;" value="'; echo $interp['nm_servico']; echo '">
+                        <input type="submit" class="btn" value="Comprar">
+                    </form>
+                </div>';
+            }
+            foreach($mysqli->query("SELECT s.nm_instrumento, s.vl_instrumento, i.path FROM tb_carrinho AS c JOIN tb_instrumento AS s on s.cd_instrumento = c.cd_instrumento JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
+                echo '<div class="box">
+                    <div class="icons">
+                        <a href="#" class="fas fa-share"></a>
+                        <a href="#" class="fas fa-copy"></a>
+                    </div>
+                    <img src="'; echo $interp['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($interp['nm_instrumento']) > 14){
+                        echo str_replace(substr($interp['nm_instrumento'], 11, 13), '...', $interp['nm_instrumento']);
+                    }
+                    else{
+                        echo $interp['nm_instrumento'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $interp['vl_instrumento'];  echo '</div>
+                    <form method="get" action="produto.php" style="display: inline-block;">
+                        <input type="text" name="p" style="display: none;" value="'; echo $interp['nm_instrumento']; echo '">
+                        <input type="submit" class="btn" value="Comprar">
+                    </form>
+                </div>';
+            }
         }
     ?>
-        <div class="box">
-            <div class="icons">
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-copy"></a>
-            </div>
-            <img src="img/partitura.jpg" alt="">
-            <h3>Musica 1</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> R$10,50 </div>
-            <a href="#" class="btn">Comprar</a>
-        </div>
-
-        <div class="box">
-            <span class="discount">-45%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-copy"></a>
-            </div>
-            <img src="img/partitura.jpg" alt="">
-            <h3>Musica 2</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"> R$10,50 <span> R$13,20 </span> </div>
-            <a href="#" class="btn">Comprar</a>
-        </div>
-
-        <div class="box">
-            <div class="icons">
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-copy"></a>
-            </div>
-            <img src="img/partitura.jpg" alt="">
-            <h3>Musica 3</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">R$10,50</div>
-            <a href="#" class="btn">Comprar</a>
-        </div>
-
-        <div class="box">
-            <div class="icons">
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-copy"></a>
-            </div>
-            <img src="img/partitura.jpg" alt="">
-            <h3>Musica 4</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">R$10,50</div>
-            <a href="#" class="btn">Comprar</a>
-        </div>
 
     </div>
 
