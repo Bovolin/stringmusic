@@ -92,14 +92,14 @@
     }
     else{
       $_SESSION['produtorecusado'] = true;
-      header("Location: loja.php");
+      header("Location: interpretacoes.php");
       die();
     }
     
   } 
   else{
     $_SESSION['produtorecusado'] = true;
-    header("Location: loja.php");
+    header("Location: interpretacoes.php");
     die();
   }
 ?>

@@ -2,17 +2,17 @@
 session_start();
 include ("conexao.php");
 
-$c = $_GET['s'];
+$c = $_GET['i'];
 
-foreach($mysqli->query("SELECT i.cd_servico AS codigo, i.cd_usuario AS codigousuario, i.nm_servico AS servico, i.ds_servico AS descricao, i.vl_servico AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_servico AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_servico = '$c'") as $servico){
-  $nomeinterpretacao = $servico['servico'];
-  $descricaointerpretacao = $servico['descricao'];
-  $nomedono = $servico['nomeusuario'];
-  $descricaousuario = $servico['descricaousuario'];
-  $valorinterpretacao = $servico['valor'];
-  $path = $servico['pathh'];
-  $codigouser = $servico['codigousuario'];
-  $codigointerpretacao = $servico['codigo'];
+foreach($mysqli->query("SELECT i.cd_instrumento AS codigo, i.cd_usuario AS codigousuario, i.nm_instrumento AS instrumento, i.ds_instrumento AS descricao, i.vl_instrumento AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_instrumento AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_instrumento = '$c'") as $instrumento){
+  $nomeinterpretacao = $instrumento['instrumento'];
+  $descricaointerpretacao = $instrumento['descricao'];
+  $nomedono = $instrumento['nomeusuario'];
+  $descricaousuario = $instrumento['descricaousuario'];
+  $valorinterpretacao = $instrumento['valor'];
+  $path = $instrumento['pathh'];
+  $codigouser = $instrumento['codigousuario'];
+  $codigointerpretacao = $instrumento['codigo'];
 }
 foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
   $dono_sem_foto = $confere_foto_dono['conferefoto'];
@@ -84,9 +84,9 @@ if(isset($_SESSION['usuario'])){
         <a href="index.php">Início</a>
         <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
             <option value="loja.php">Loja</option>
-            <option value="instrumentos.php">Instrumentos</option>
+            <option value="instrumentos.php" selected>Instrumentos</option>
             <option value="interpretacoes.php">Partituras</option>
-            <option value="servico.php" selected>Serviços</option>
+            <option value="servico.php">Serviços</option>
         </select>
         <?php
             if(isset($_SESSION['usuario'])){
@@ -205,7 +205,6 @@ if(isset($_SESSION['usuario'])){
         </form>
       </div>
     </article>';
-
     }
 
     $sql3 = "SELECT s.cd_instrumento, s.nm_instrumento, s.ds_instrumento, s.vl_instrumento, i.path FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";

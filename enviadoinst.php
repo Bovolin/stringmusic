@@ -1,10 +1,10 @@
 <?php
-  session_start();
   include ("conexao.php");
+  include ("verifica_login.php");
 
   if(isset($_SESSION['usuario'])){
     $session = $_SESSION['usuario'];
-  
+
     foreach($mysqli->query("SELECT cd_usuario AS codigo FROM tb_usuario WHERE cd_usuario = '$session'") as $usuarios){
       $codigousuario = $usuarios['codigo'];
     }
@@ -21,7 +21,7 @@
       header('Location: adicionar.prod');
       exit;
     }
-
+ 
     //cria o diretório img/
     $pasta = "img/";
     //armazena o nome original da imagem
@@ -51,53 +51,49 @@
       $sql_img = "INSERT INTO tb_imagem (cd_imagem, nm_imagem, path, dt_imagem) VALUES ('$result', '$nomeoriginal', '$path', NOW())"; 
       $query = $mysqli->query($sql_img); 
     
-      //pega os atributos do serviço pelo método post
+      //pega os atributos do produto pelo método post
       $vnome = $_POST["nome"];
       $vdesc = $_POST["desc"];
       $vprc = str_replace(",", ".", $_POST['prc']);
-      $genero_musical = $_POST['genero_musical'];
-      if($genero_musical == ""){
-        $_SESSION['selecione_genero'];
-        header("Location: adicionarserv.php");
-        exit;
-      }
 
-      //contator de serviços
-      $sql_select_serv = "SELECT COUNT(cd_servico) as s FROM tb_servico";
-      $sql_select_serv = $mysqli->query($sql_select_serv);
-      $sql_select_serv = $sql_select_serv->fetch_assoc();
-      $result_serv = $sql_select_serv['s'] + 1;
+      //contator de produtos
+      $sql_select_prod = "SELECT COUNT(cd_instrumento) as i FROM tb_instrumento";
+      $sql_select_prod = $mysqli->query($sql_select_prod);
+      $sql_select_prod = $sql_select_prod->fetch_assoc();
+      $result_prod = $sql_select_prod['i'] + 1;
 
       //Verificar se há produtos com esse nome
-      $sql_confere_nome = "SELECT COUNT(nm_servico) as nome FROM tb_servico WHERE nm_servico = '$vnome'";
+      $sql_confere_nome = "SELECT COUNT(nm_instrumento) as nome FROM tb_instrumento WHERE nm_instrumento = '$vnome'";
       $sql_confere_nome = $mysqli->query($sql_confere_nome);
       $sql_confere_nome = $sql_confere_nome->fetch_assoc();
       if($sql_confere_nome == 1){
-        $_SESSION['servico_existente'] = true;
-        header("Location: adicionarserv.php");
+        $_SESSION['produto_existente'] = true;
+        header("Location: adicionarinst.php");
         die();
       }
       else{
-        //insere o serviço no banco
-        $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
-        $query = $mysqli->query($sql_prod);
+        //insere o produto no banco
+        $sql_prod = "INSERT INTO tb_instrumento (cd_instrumento, nm_instrumento, ds_instrumento, dt_instrumento, vl_instrumento, cd_imagem, cd_usuario, nm_inativo) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0)";
+        $query_prod = $mysqli->query($sql_prod);
+
         //cria sessão só para confirmar se foi postado
-        $_SESSION['servicoenviado'] = true;
-        //redireciona o cliente para a página de serviços
-        header("Location: adicionarserv.php");
+        $_SESSION['produtoenviado'] = true;
+        
+        //redireciona o cliente para a página de produtos
+        header("Location: adicionarinst.php");
         die();
       }
     }
     else{
-      $_SESSION['servicorecusado'] = true;
-      header("Location: servico.php");
+      $_SESSION['produtorecusado'] = true;
+      header("Location: instrumentos.php");
       die();
     }
-
-  }
+    
+  } 
   else{
-    $_SESSION['servicorecusado'] = true;
-    header("Location: servico.php");
+    $_SESSION['produtorecusado'] = true;
+    header("Location: instrumentos.php");
     die();
   }
 ?>

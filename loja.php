@@ -97,7 +97,7 @@ include("foto.php");
             <h3>Instrumentos</h3>
             <p>Textinho</p>
             <img src="img/partitura.jpg" alt="">
-            <a href="#" class="btn">Acessar</a>
+            <a href="instrumentos.php" class="btn">Acessar</a>
         </div>
         <div class="box">
             <h3>Partituras</h3>

@@ -206,6 +206,24 @@ else{
 
     }
 
+    $sql3 = "SELECT s.cd_instrumento, s.nm_instrumento, s.ds_instrumento, s.vl_instrumento, i.path FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $query3 = $mysqli->query($sql3);
+
+    while($dados = $query3->fetch_array()){
+    echo '<article>
+    <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
+    <div class="text">
+        <h3>';  echo $dados['nm_instrumento']; echo '</h3>
+        <p>'; echo $dados['ds_instrumento']; echo '</p>
+        <p> R$'; echo $dados['vl_instrumento']; echo '</p>
+        <form method="get" action="prodserv.php">
+            <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
+            <input type="submit" class="btnpart" value="Comprar">
+        </form>
+    </div>
+    </article>';
+    }
+
     ?>
   </main>
   </div>
