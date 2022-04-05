@@ -133,7 +133,14 @@ unset($_SESSION['servicorecusado']);
             <a href="#" class="fas fa-copy"></a>
         </div>
         <img src="'; echo $dados['path']; echo '" alt="">
-        <h3>'; echo $dados['nm_servico']; echo '</h3>
+        <h3>'; 
+          if(strlen($dados['nm_servico']) > 14){
+            echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
+          }
+          else{
+            echo $dados['nm_servico'];
+          } 
+          echo '</h3>
         <div class="stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -143,13 +150,7 @@ unset($_SESSION['servicorecusado']);
         </div>
         <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
         <form method="get" action="prodserv.php">
-          <input type="text" name="s" style="display: none;" value="'; 
-          if(strlen($dados['nm_servico']) > 14){
-            echo str_replace(substr($dados['nm_servico'], 11, 13), '...', $dados['nm_servico']);
-          }
-          else{
-            echo $dados['nm_servico'];
-          }  echo '">
+          <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
           <input type="submit" class="btnpart" value="Comprar">
         </form>
     </div>';
