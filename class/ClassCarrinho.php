@@ -29,8 +29,11 @@ class ClassCarrinho extends Conexao{
             	on i.cd_interpretacao = c.cd_interpretacao
                 	left join tb_servico as s
                     	on s.cd_servico = c.cd_servico
-                        	where i.nm_interpretacao = '$desc_prod' AND c.cd_usuario = 2 AND c.nm_inativo = 0
-                OR s.nm_servico = '$desc_prod' AND c.cd_usuario = 2 AND c.nm_inativo = 0") as $verifica_car){
+                            left join tb_instrumento as ins
+                                on ins.cd_instrumento = c.cd_instrumento
+                        	where i.nm_interpretacao = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0
+                            OR s.nm_servico = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0
+                            OR ins.nm_instrumento = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0") as $verifica_car){
             $count_car = $verifica_car['count_car'];
         }
 
@@ -40,8 +43,11 @@ class ClassCarrinho extends Conexao{
                 ON i.cd_interpretacao = c.cd_interpretacao
                     LEFT JOIN tb_servico AS s
                         ON s.cd_servico = c.cd_servico
+                            LEFT JOIN tb_instrumento AS ins
+                                ON ins.cd_instrumento = c.cd_instrumento
             WHERE i.nm_interpretacao = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0
-                OR s.nm_servico = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0") as $verifica_car){
+                OR s.nm_servico = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0
+                OR ins.nm_instrumento = '$desc_prod' AND c.cd_usuario = '$code_user' AND c.nm_inativo = 0") as $verifica_car){
             $cd_car = $verifica_car['cd_car'];
         }
 
@@ -61,6 +67,9 @@ class ClassCarrinho extends Conexao{
             foreach($this->mysqli->query("SELECT COUNT(cd_servico) AS codigo_servico FROM tb_servico WHERE cd_servico = '$code_prod' AND nm_servico = '$desc_prod' AND vl_servico = '$pric_prod'") as $verifica_servic){
                 $cod_verif_serv = $verifica_servic['codigo_servico'];
             }
+            foreach($this->mysqli->query("SELECT COUNT(cd_instrumento) AS codigo_instrumento FROM tb_instrumento WHERE cd_instrumento = '$code_prod' AND nm_instrumento = '$desc_prod' AND vl_instrumento = '$pric_prod'") as $verifica_instru){
+                $cod_verif_inst = $verifica_instru['codigo_instrumento'];
+            }
             
             //Contador carrinho
             $contador_car = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS carrinho FROM tb_carrinho");
@@ -73,6 +82,9 @@ class ClassCarrinho extends Conexao{
             }
             elseif($cod_verif_serv != 0){
                 $insert_car = $this->mysqli->query("INSERT INTO tb_carrinho (cd_carrinho, qt_carrinho, cd_servico, cd_usuario, nm_tipo) VALUES ('$result_car', 1, '$code_prod', '$code_user', 2)");
+            }
+            elseif($cod_verif_inst != 0){
+                $insert_car = $this->mysqli->query("INSERT INTO tb_carrinho (cd_carrinho, qt_carrinho, cd_instrumento, cd_usuario, nm_tipo) VALUES ('$result_car', 1, '$code_prod', '$code_user', 3)");
             }
         }
     }
@@ -106,11 +118,18 @@ class ClassCarrinho extends Conexao{
         $verifica_prod = $this->mysqli->query("SELECT COUNT(cd_carrinho) FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = $code_user");
 
         if($verifica_prod != 0){
+            //Partituras
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $pega_quant){
                 $quantity += $pega_quant['qt_car'];
             }
 
+            //Serviços
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car FROM tb_carrinho AS c JOIN tb_servico AS s ON s.cd_servico = c.cd_servico WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $pega_quant){
+                $quantity += $pega_quant['qt_car'];
+            }
+
+            //Instrumentos
+            foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car FROM tb_carrinho AS c JOIN tb_instrumento AS ins ON ins.cd_instrumento = c.cd_instrumento WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $pega_quant){
                 $quantity += $pega_quant['qt_car'];
             }
         }
@@ -174,6 +193,33 @@ class ClassCarrinho extends Conexao{
                 $html.="</tr>";
             }
         }
+
+        //Mostrar Instrumentos
+        $confere_inst = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS cd_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user' AND cd_instrumento != 0");
+        if($confere_inst != 0){
+            foreach($this->mysqli->query("SELECT ins.nm_instrumento AS nm_inst, c.qt_carrinho AS qt_car, ins.vl_instrumento AS vl_inst, im.path AS pathh 
+            FROM tb_carrinho AS c 
+                JOIN tb_instrumento AS ins 
+                    ON ins.cd_instrumento = c.cd_instrumento 
+                        JOIN tb_imagem AS im 
+                            ON im.cd_imagem = ins.cd_imagem 
+                                WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user' AND c.nm_tipo = 3") as $product){
+                $html.="<tr>";
+                $html.="<td>";
+                $html.="<img src='../../" . $product['pathh'] . "' class='full-width'>";
+                $html.="</td>";
+                $html.="<td>";
+                $html.="<br> <strong><span class='thin'>" . $product['nm_inst'] . "</span></strong>";
+                $html.="<br> <span class='thin small'> Quantidade: " . $product['qt_car'] . "<br><br></span>";
+                $html.="</td>";
+                $html.="</tr>";
+                $html.="<tr>";
+                $html.="<td>";
+                $html.="<div class='price'>R$" . $product['vl_inst'] . "</div>";
+                $html.="</td>";
+                $html.="</tr>";
+            }
+        }
         
         return $html;
     }
@@ -202,9 +248,14 @@ class ClassCarrinho extends Conexao{
                 $vl_serv = $quant_serv['vl_serv'];
                 $amount += floor(($qt_car * $vl_serv) * 100) / 100;
             }
+            foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, ins.vl_instrumento AS vl_inst FROM tb_carrinho AS c JOIN tb_instrumento AS ins ON ins.cd_instrumento = c.cd_instrumento WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_inst){
+                $qt_car = $quant_inst['qt_car'];
+                $vl_inst = str_replace('.',',',$quant_inst['vl_inst']);
+                $amount += floor(($qt_car * $vl_inst) * 100) / 100;
+            }
         }
 
-        return $amount;
+        return $qt_car * $vl_inst;
     }
 }
 
