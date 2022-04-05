@@ -78,17 +78,17 @@
     <h1 class="heading"> Destaques da plataforma </h1>
     <div class="box-container">
         <div class="box">
-            <img src="imgs/Powerwolf.jpg" alt="">
+            <img src="imgs/prods/Powerwolf.jpg" alt="">
             <h3>Divulgue aqui seu trabalho!</i></h3>
             <p>E encontre lugares para apresentá-lo!</p>
         </div>
         <div class="box">
-            <img src="imgs/Powerwolf.jpg" alt="">
+            <img src="imgs/prods/Powerwolf.jpg" alt="">
             <h3>Contrate os melhores!</h3>
             <p>Encontre aqui o músico ideal para seu evento!</p>
         </div>
         <div class="box">
-            <img src="imgs/Powerwolf.jpg" alt="">
+            <img src="imgs/prods/Powerwolf.jpg" alt="">
             <h3>Anuncie aqui seu produto!</h3>
             <p>Ir para página de adicionar produtos! <a href="adicionarprod.php"><i class="fas fa-sign-in-alt"></a></i></p>
         </div>
@@ -106,7 +106,7 @@
     <div class="column">
 
         <div class="image">
-            <img src="imgs/Guitarra.jpg" alt="">
+            <img src="imgs/prods/Guitarra.jpg" alt="">
         </div>
 
         <div class="content">
