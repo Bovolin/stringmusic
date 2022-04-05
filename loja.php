@@ -125,7 +125,21 @@ include("foto.php");
     <h1 class="heading">Últimos <span>produtos</span></h1>
 
     <div class="box-container">
+    
+    <?php
+        $sql = $mysqli->query("SELECT c.cd_carrinho
+        from tb_carrinho as c
+            join tb_compra as co
+                on c.cd_carrinho = co.cd_carrinho
+                    where c.nm_inativo = 1
+                          group by c.cd_interpretacao, c.cd_interpretacao, c.cd_servico
+                          order by sum(c.qt_carrinho) desc
+                              limit 4");
 
+        while($dados = $sql->fetch_array()){
+
+        }
+    ?>
         <div class="box">
             <div class="icons">
                 <a href="#" class="fas fa-share"></a>
@@ -196,43 +210,6 @@ include("foto.php");
                 <i class="fas fa-star-half-alt"></i>
             </div>
             <div class="price">R$10,50</div>
-            <a href="#" class="btn">Comprar</a>
-        </div>
-
-        <div class="box">
-            <div class="icons">
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-copy"></a>
-            </div>
-            <img src="img/partitura.jpg" alt="">
-            <h3>Musica 5</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">R$10,50</div>
-            <a href="#" class="btn">Comprar</a>
-        </div>
-
-        <div class="box">
-            <span class="discount">-29%</span>
-            <div class="icons">
-                <a href="#" class="fas fa-share"></a>
-                <a href="#" class="fas fa-copy"></a>
-            </div>
-            <img src="img/partitura.jpg" alt="">
-            <h3>Musica 6</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price">R$10,50 <span> R$13,20 </span> </div>
             <a href="#" class="btn">Comprar</a>
         </div>
 

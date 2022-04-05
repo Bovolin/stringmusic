@@ -2,16 +2,16 @@
     session_start();
     include ("conexao.php");
 
-    $c = $_GET['p'];
+    $c = $_GET['s'];
 
-    foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_interpretacao = '$c'") as $interpretacao){
-    $nomeinterpretacao = $interpretacao['interpretacao'];
-    $descricaointerpretacao = $interpretacao['descricao'];
-    $nomedono = $interpretacao['nomeusuario'];
-    $descricaousuario = $interpretacao['descricaousuario'];
-    $valorinterpretacao = $interpretacao['valor'];
-    $path = $interpretacao['pathh'];
-    $codigouser = $interpretacao['codigousuario'];
+    foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.nm_instrumento AS instrumento, i.ds_instrumento AS descricao, i.vl_instrumento AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_instrumento AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.cd_instrumento = '$c'") as $instrumento){
+    $nome_servico = $instrumento['instrumento'];
+    $descricao_servico = $instrumento['descricao'];
+    $nomedono = $instrumento['nomeusuario'];
+    $descricaousuario = $instrumento['descricaousuario'];
+    $valor_servico = $instrumento['valor'];
+    $path = $instrumento['pathh'];
+    $codigouser = $instrumento['codigousuario'];
     }
     foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
     $dono_sem_foto = $confere_foto_dono['conferefoto'];
@@ -85,8 +85,8 @@
         <a href="index.php">Início</a>
         <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
             <option value="loja.php">Loja</option>
-            <option value="instrumentos.php">Instrumentos</option>
-            <option value="interpretacoes.php" selected>Partituras</option>
+            <option value="instrumentos.php" selected>Instrumentos</option>
+            <option value="interpretacoes.php">Partituras</option>
             <option value="servico.php">Serviços</option>
         </select>
         <?php
@@ -118,7 +118,7 @@
 
 </header>
 
-    <form action="altera_prod.php" method="post">
+    <form action="altera_inst.php" method="post">
         <div class="container">
             <div class="contact-box">
                 <div class="left">
@@ -129,9 +129,8 @@
                 <div class="right">
                     <div class="info-produto">
                     <div class="espec-produto">
-                        <h1 style="color: var(--color-headings)"><?php echo $nomeinterpretacao?></h1>
-                        
-                        <input type="text" value="<?php echo $valorinterpretacao ?>" name="prc" onkeypress="return Only(event)" placeholder="Digite o preço do produto" class="field" id="valor" onkeyup="formatarMoeda()" required>
+                        <h1 style="color: var(--color-headings)"><?php echo $nome_servico?></h1>
+                        <input type="text" value="<?php echo $valor_servico ?>" name="prc" onkeypress="return Only(event)" placeholder="Digite o preço do produto" class="field" id="valor" onkeyup="formatarMoeda()" required>
                         <h4>
                         <a href="#popup1" style="color: var(--color-headings)" style="color: black;">
                             <?php echo $nomedono ?>
@@ -142,22 +141,21 @@
                         <!-- em breve: rate por estrela -->
                     </div>
                     <h4 style="color: var(--color-text)">Descrição:</h4>
-                    <input type="text" name="desc" value="<?php echo $descricaointerpretacao ?>" class="field" placeholder="Digite o que seu produto é" id="descricao" required>
-                        <input type="text" value="<?php echo $c ?>" name="codigo" style="display: none;">
-                        <button type="submit" name="alterar" value="a" class="btnpart" style="width: 200px;">
-                            Modificar <i class="fas fa-arrow-alt-circle-right"></i>
-                        </button>
-                        <br>
-                        <button type="submit" name="remover" value="r" class="btnpart" style="width: 200px;">
-                            Remover <i class="fas fa-trash"></i>
-                        </button>
-                        <br>
-                        <button type="submit" class="btnpart2" name="cancelar" style="width: 200px">
-                            Cancelar
-                        </button>
+                    <input type="text" name="desc" value="<?php echo $descricao_servico ?>" class="field" placeholder="Digite o que seu produto é" id="descricao" required>
+                    <input type="text" value="<?php echo $c ?>" name="codigo" style="display: none;">
+                    <button type="submit" name="alterar" value="a" class="btnpart" style="width: 200px;">
+                        Modificar <i class="fas fa-arrow-alt-circle-right"></i>
+                    </button>
+                    <br>
+                    <button type="submit" name="remover" class="btnpart" style="width: 200px;">
+                        Remover <i class="fas fa-trash"></i>
+                    </button> 
+                    <br>
+                    <button type="submit" class="btnpart2" name="cancelar" style="width: 200px">
+                        Cancelar
+                    </button>
                 </div>
             </div>  
-          
           </form>    
           <div id="popup1" class="overlay">
             <div class="popup" style="background-color: var(--bg-panel)">
@@ -377,6 +375,5 @@
         }
 
   </style>
-
 </body>
 </html>

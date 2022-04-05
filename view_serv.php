@@ -148,10 +148,13 @@
                             Modificar <i class="fas fa-arrow-alt-circle-right"></i>
                         </button>
                         <br>
-                        <br>
                         <button type="submit" name="remover" value="r" class="btnpart" style="width: 200px;">
                             Remover <i class="fas fa-trash"></i>
-                        </button> 
+                        </button>
+                        <br>
+                        <button type="submit" class="btnpart2" name="cancelar" style="width: 200px">
+                            Cancelar
+                        </button>
                 </div>
             </div>  
           

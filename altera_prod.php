@@ -6,10 +6,7 @@ include("verifica_login.php");
 
 $codigo = $_POST['codigo'];
 
-echo $altera;
-echo $remove;
-
-if($_POST['alterar']){
+if(isset($_POST['alterar'])){
     $valor = $_POST['prc'];
     $descricao = $_POST['desc'];
 
@@ -19,10 +16,14 @@ if($_POST['alterar']){
     header("Location: meusprodutos.php");
     exit;
 }
-elseif($_POST['remover']){
+elseif(isset($_POST['remover'])){
     $dlt = $mysqli->query("UPDATE tb_interpretacao SET nm_inativo = 1 WHERE cd_interpretacao = '$codigo'");
 
     $_SESSION['removido'] = true;
+    header("Location: meusprodutos.php");
+    exit;
+}
+elseif(isset($_POST['cancelar'])){
     header("Location: meusprodutos.php");
     exit;
 }
