@@ -14,7 +14,7 @@ session_start();
     <title>StringMusic</title>
   </head>
 
-  <?php
+<?php
   if(isset($_SESSION['status_cadastro'])) $onload = 'cadastroFeito';
   elseif(isset($_SESSION['email_enviado'])) $onload = 'email_enviado';
   elseif(isset($_SESSION['email_recusado'])) $onload = 'email_recusado';
@@ -60,7 +60,7 @@ session_start();
   <?php
   endif;
   unset($_SESSION['email_recusado']);
-  ?>
+?>
 
   <body onload="<?php echo $onload?>()">
     <div class="container">
@@ -110,20 +110,20 @@ session_start();
 
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" name="nome" placeholder="Nome Completo" required/>
+              <input type="text" name="nome-registro" placeholder="Nome Completo" required/>
             </div>
 
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" name="email" placeholder="Email" required/>
+              <input type="email" name="email-registro" placeholder="Email" required/>
             </div>
             
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" name="senha" minLegth="8" maxlength="16" placeholder="Senha" required/>
+              <input type="password" name="senha-registro" minLength="8" maxlength="16" placeholder="Senha" required/>
             </div>
+            <input type="submit" id="registro" class="btn" value="Registrar"/>
 
-            <input type="submit" class="btn" value="Registrar" />
 
             <p class="social-text">Ou registre-se com as redes sociais!</p>
             <div class="social-media">

@@ -1,8 +1,8 @@
 <?php
-if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['senha'])){
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+if(isset($_POST['nome-registro']) && isset($_POST['email-registro']) && isset($_POST['senha-registro'])){
+    $nome = $_POST['nome-registro'];
+    $email = $_POST['email-registro'];
+    $senha = $_POST['senha-registro'];
 }
 else{
     $nome = '';
@@ -97,6 +97,7 @@ session_start();
         if(isset($_SESSION['cpf_invalido'])) $swal = 'cpf_invalido';
         elseif(isset($_SESSION['usuario_existe'])) $swal = 'usuario_existe';
         elseif(isset($_SESSION['cpf_cadastrado'])) $swal = 'cpf_cadastrado';
+        elseif(isset($_SESSION['data_incoerente'])) $swal = 'data_incoerente';
 
         if(isset($_SESSION['usuario_existe'])):
     ?>
@@ -140,7 +141,21 @@ session_start();
         </script>
     <?php
         endif;
-        unset($_SESSION['cpf_cadastrado'])
+        unset($_SESSION['cpf_cadastrado']);
+
+        if(isset($_SESSION['data_incoerente'])):
+    ?>
+        <script>
+            function data_incoerente(){
+                Swal.fire({
+                    icon:'error',
+                    title: 'Insira uma data válida'
+                })
+            }
+        </script>
+    <?php
+        endif;
+        unset($_SESSION['data_incoerente']);
     ?>
 
     <body onload="<?php echo $swal?>()">
@@ -202,15 +217,15 @@ session_start();
                         <h3>Deseja alterar alguma informação?</h3>
                         <div class="input-field">
                             <i class="fas fa-user"></i>
-                            <input type="text" name="nome" placeholder="Insira seu nome completo" value="<?=$nome?>" required>
+                            <input type="text" name="nome" placeholder="Insira seu nome completo" value="<?php echo $nome?>" required>
                         </div>
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="senha" placeholder="Insira sua senha" value="<?=$senha?>" required>
+                            <input type="password" name="senha" minLength="8" maxlength="16" placeholder="Insira sua senha" value="<?php echo $senha?>" required>
                         </div>
                         <div class="input-field">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" name="email" placeholder="Insira seu email" value="<?=$email?>" required>
+                            <input type="email" name="email" placeholder="Insira seu email" value="<?php echo $email?>" required>
                         </div>
                     </div>
                 </div>
@@ -220,8 +235,9 @@ session_start();
         
         
 
-<!--Máscara de CPF-->
+
 <script>
+    //Máscara de CPF
     function mascara(i){
    
         var v = i.value;

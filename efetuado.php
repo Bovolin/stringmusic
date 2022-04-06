@@ -19,6 +19,19 @@ $bairro = mysqli_real_escape_string($mysqli, $_POST['bairro']);
 $genero = mysqli_real_escape_string($mysqli, $_POST['genero']);
 $especialidade = mysqli_real_escape_string($mysqli, $_POST['especialidade']);
 
+//Verificação de data
+$data_atual = date('Y-m-d');
+$data_limite = new DateTime($data_atual);
+$data_user = new DateTime($data);
+$intervalo = $data_limite->diff($data_user);
+$erro_date = $intervalo->days;
+if($erro_date <= 5840){
+    $_SESSION['data_incoerente'] = true;
+    header('Location: concluir.php');
+    exit;
+}
+
+//Criptografia da senha
 $frase_array = str_split(str_replace(' ', '',$senha));
 $frase_count = strlen(str_replace(' ', '',$senha));
 $j = 2;
