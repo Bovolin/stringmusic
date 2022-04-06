@@ -18,7 +18,7 @@
 <body>
     <!-- HEADER -->
 <header>
-    <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
+    <a href="index.php" class="logo"><img src="logo/padrão.png" id="logo" class="nav-logo" alt="Logo"></a>
 
     <input type="checkbox" id="menu-bar">
     <label for="menu-bar" class="fas fa-bars"></label>
@@ -66,7 +66,7 @@
         <a href="loja.php" class="btnpart">Acessar Loja</a>
     </div>
     <div class="image">
-        <img src="logo/padrão.png" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
+        <img src="imgs/S_disco4.png" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
     </div>
 </section>
 

@@ -156,7 +156,7 @@ section{
       top:0;
       left:0;
       width:100%;
-      background:#fff;
+      background:var(--bg-panel);
       height: 100px;
       box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
       padding:2rem 9%;
@@ -173,7 +173,6 @@ section{
   }
 
   header .logo{
-      font-size: 3rem;
       color: #5995fd;
   }
 
@@ -186,7 +185,7 @@ section{
       margin-left: 2rem ;
       color: #5995fd;
   }
-
+  
   header .navbar a:hover{
       color: #5995fd;
   }

@@ -185,7 +185,7 @@
             </div>
             <div class="perfil-usuario-footer">
               <ul class="dados">
-                <h3>Dashboard</h3>
+                <h3>Gráficos</h3>
                 <br>
                 <div id="columnchart_material" style="width: 650px; height: 500px"></div>
               </ul>
