@@ -169,8 +169,8 @@ session_start();
                             <input type="date" name="data" placeholder="Data de Nascimento" required>
                         </div>
                         <div class="input-field">
-                            <i class="fa fa-address-card" aria-hidden="true"></i>
-                            <input type="text" name="cpf" oninput="mascara(this)" placeholder="Insira seu CPF" required>
+                            <i class="fa fa-address-card" aria-hidden="true"></i> 
+                            <input type="text" name="cpf" id="cpf" onkeyup="mascara_cpf()" placeholder="Insira seu CPF" maxlength="14" required>
                         </div>
                         <div class="input-field">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -238,19 +238,10 @@ session_start();
 
 <script>
     //Máscara de CPF
-    function mascara(i){
-   
-        var v = i.value;
-        
-        if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
-            i.value = v.substring(0, v.length-1);
-            return;
-        }
-        
-        i.setAttribute("maxlength", "14");
-        if (v.length == 3 || v.length == 7) i.value += ".";
-        if (v.length == 11) i.value += "-";
-
+    function mascara_cpf(){
+        var cpf = document.getElementById("cpf");
+        if(cpf.value.length == 3 || cpf.value.length == 7) cpf.value += "."
+        else if(cpf.value.length == 11) cpf.value += "-"
     }
 </script>
 
