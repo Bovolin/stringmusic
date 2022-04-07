@@ -240,6 +240,7 @@ section{
   width:4.5rem;
   line-height: 4.5rem;
   font-size: 1.7rem;
+  cursor: pointer;
   color: black;
   background:rgba(0,0,0,.05);
   border-radius: 50%;

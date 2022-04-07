@@ -16,7 +16,7 @@ include("foto.php");
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styleloja.css">
-
+    <script src="js/clipboard.min.js"></script>
 </head>
 <body>
 
@@ -73,13 +73,13 @@ include("foto.php");
 <section class="banner-container">
     <div class="banner">
         <a href="">
-            <img src="img/1.jpg" alt="">
+            <img src="imgs/banner_dois.png" alt="">
         </a>
     </div>
 
     <div class="banner">
         <a href="">
-            <img src="img/2.jpg" alt="">
+            <img src="imgs/banner_um.png" alt="">
         </a>
     </div>
 </section>
@@ -141,8 +141,8 @@ include("foto.php");
             foreach($mysqli->query("SELECT s.nm_interpretacao, s.vl_interpretacao, i.path FROM tb_carrinho AS c JOIN tb_interpretacao AS s on s.cd_interpretacao = c.cd_interpretacao JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
                 echo '<div class="box">
                     <div class="icons">
-                        <a href="#" class="fas fa-share"></a>
-                        <a href="#" class="fas fa-copy"></a>
+                        <a class="fas fa-share"></a>
+                        <a class="fas fa-copy"></a>
                     </div>
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
@@ -232,7 +232,7 @@ include("foto.php");
 
 </section>
 
-<!-- PRODUTOS FIM -->
+
     
 </body>
 </html>
