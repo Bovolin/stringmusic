@@ -176,7 +176,7 @@ include("foto.php");
                 echo '<div class="box">
                         <div class="icons">
                         <a class="fas fa-share"></a>
-                        <button class="btn'; echo $interp['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $interp['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+                        <button class="btn'; echo $interp['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $interp['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
                         </div>';
                         ?>
                         <script>
@@ -211,7 +211,7 @@ include("foto.php");
                 echo '<div class="box">
                         <div class="icons">
                         <a class="fas fa-share"></a>
-                        <button class="btn'; echo $interp['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $interp['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
+                        <button class="btn'; echo $interp['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/prodinst.php?i='; echo $interp['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
                         </div>';
                         ?>
                         <script>
