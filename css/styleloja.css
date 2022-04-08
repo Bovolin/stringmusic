@@ -252,6 +252,16 @@ section{
   color:#fff;
 }
 
+.product .box-container .box .icons button{
+  background: none;
+  border: none;
+}
+
+.product .box-container .box .icons button:hover{
+  background: none;
+  border: none;
+}
+
 .product .box-container .box h3{
   color:var(--color-headings);
   font-size: 2.5rem;

@@ -19,7 +19,6 @@ include("foto.php");
     <script src="js/clipboard.min.js"></script>
 </head>
 <body>
-
 <!-- HEADER -->
 <header>
     <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
@@ -142,8 +141,14 @@ include("foto.php");
                 echo '<div class="box">
                     <div class="icons">
                         <a class="fas fa-share"></a>
-                        <a class="fas fa-copy"></a>
-                    </div>
+                        <button class="btn'; echo $interp['nm_interpretacao']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $interp['nm_interpretacao']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $interp['nm_interpretacao']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($interp['nm_interpretacao']) > 14){
@@ -169,10 +174,16 @@ include("foto.php");
             }
             foreach($mysqli->query("SELECT s.nm_servico, s.vl_servico, i.path FROM tb_carrinho AS c JOIN tb_servico AS s on s.cd_servico = c.cd_servico JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
                 echo '<div class="box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-share"></a>
-                        <a href="#" class="fas fa-copy"></a>
-                    </div>
+                        <div class="icons">
+                        <a class="fas fa-share"></a>
+                        <button class="btn'; echo $interp['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $interp['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $interp['nm_servico']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($interp['nm_servico']) > 14){
@@ -198,10 +209,16 @@ include("foto.php");
             }
             foreach($mysqli->query("SELECT s.nm_instrumento, s.vl_instrumento, i.path FROM tb_carrinho AS c JOIN tb_instrumento AS s on s.cd_instrumento = c.cd_instrumento JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
                 echo '<div class="box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-share"></a>
-                        <a href="#" class="fas fa-copy"></a>
-                    </div>
+                        <div class="icons">
+                        <a class="fas fa-share"></a>
+                        <button class="btn'; echo $interp['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $interp['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $interp['nm_instrumento']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($interp['nm_instrumento']) > 14){
@@ -232,14 +249,6 @@ include("foto.php");
 
 </section>
 
-<script>
-    function copy(){
-        var btn = document.getElementsByClassName("copy");
-        var text = document.getElementsByClassName("text");
-        text.select();
-        document.execCommand('copy');
-    }
-</script>
     
 </body>
 </html>
