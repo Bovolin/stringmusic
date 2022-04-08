@@ -132,9 +132,9 @@ include("foto.php");
             join tb_compra as co
                 on c.cd_carrinho = co.cd_carrinho
                     where c.nm_inativo = 1
-                          group by c.cd_interpretacao, c.cd_interpretacao, c.cd_servico
-                          order by sum(c.qt_carrinho) desc
-                              limit 4");
+                          group by c.cd_interpretacao, c.cd_instrumento, c.cd_servico
+                            order by sum(c.qt_carrinho) desc
+                                limit 4");
 
         while($dados = $sql->fetch_array()){
             $cod_car = $dados['cd_carrinho'];
@@ -232,7 +232,14 @@ include("foto.php");
 
 </section>
 
-
+<script>
+    function copy(){
+        var btn = document.getElementsByClassName("copy");
+        var text = document.getElementsByClassName("text");
+        text.select();
+        document.execCommand('copy');
+    }
+</script>
     
 </body>
 </html>
