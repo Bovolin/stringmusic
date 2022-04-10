@@ -185,15 +185,37 @@ function payment(event){
 }
 
 function visivel(){
-  var post = document.getElementById("div-post")
   var star = document.getElementById("div-start-widget")
 
-  if(post.style.display == "none" & star.style.display == "none"){
-    post.style.display = "block"
+  if(star.style.display == "none"){
     star.style.display = "block"
   }
-  else if(post.style.display == "block" & star.style.display == "block"){
-    post.style.display = "none"
+  else if(star.style.display == "block"){
     star.style.display = "none"
   }
+}
+
+function star(){
+  var s5 = document.getElementById("rate-5")
+  var s4 = document.getElementById("rate-4")
+  var s3 = document.getElementById("rate-3")
+  var s2 = document.getElementById("rate-2")
+  var s1 = document.getElementById("rate-1")
+  var star_input = document.getElementById("input-star")
+  if(s5.checked){
+    star_input.value = s5.value
+  }
+  else if(s4.checked){
+    star_input.value = s4.value
+  }
+  else if(s3.checked){
+    star_input.value = s3.value
+  }
+  else if(s2.checked){
+    star_input.value = s2.value
+  }
+  else if(s1.checked){
+    star_input.value = s1.value
+  }
+
 }

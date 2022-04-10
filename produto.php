@@ -72,7 +72,23 @@ else{
     <script src="js/swal.js"></script>
 
 </head>
-<body>
+<?php
+  if(isset($_SESSION['inserir_feedback'])) $swal = 'inserir_feedback';
+  if(isset($_SESSION['inserir_feedback'])):
+?>
+<script>
+  function inserir_feedback(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Obrigado pelo feedback!'
+    })
+  }
+</script>
+<?php
+  endif;
+  unset($_SESSION['inserir_feedback']);
+?>
+<body onload="<?php echo $swal?>()">
 <header>
     <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
 
@@ -242,27 +258,25 @@ else{
           if($comprado != '0'){
           ?>
           <button type="button" class="btnpart" onclick="visivel()"> Dar opinião </button>
-          <div class="post" id="div-post" style="display:none">
-            <div class="text">Obrigado pelo seu feedback</div>
-            <div class="edit">Editar</div>
-          </div>
           <div class="star-widget" id="div-start-widget" style="display:none">
-            <input type="radio" name="rate" id="rate-5">
+            <input type="radio" name="rate" value="5" id="rate-5" onclick="star()">
             <label for="rate-5" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-4">
+            <input type="radio" name="rate" value="4" id="rate-4" onclick="star()">
             <label for="rate-4" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-3">
+            <input type="radio" name="rate" value="3" id="rate-3" onclick="star()">
             <label for="rate-3" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-2">
+            <input type="radio" name="rate" value="2"  id="rate-2" onclick="star()">
             <label for="rate-2" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-1">
+            <input type="radio" name="rate" value="1"  id="rate-1" onclick="star()">
             <label for="rate-1" class="fas fa-star"></label>
-            <form action="#" class="form_feedback">
+            <form action="feedback.php" method="post" class="form_feedback">
               <header></header>
               <div class="textarea">
-                <textarea cols="30" placeholder="Deixe seu feedback sobre o produto!!"></textarea>
+                <textarea cols="30" name="comment" placeholder="Deixe seu feedback sobre o produto!!"></textarea>
               </div>
-              <div id="btn_opinion">
+              <div id="btn_opinion">,
+                <input type="hidden" name="nm_prod" value="<?php echo $nomeinterpretacao ?>">
+                <input type="hidden" name="input-star" id="input-star">
                 <button class="btnpart" type="submit">Enviar</button>
               </div>
             </form>
@@ -272,66 +286,91 @@ else{
         
 
         <div class="comments-box-container">
-          <!-- caixa 1-->
-          <div class="comments-box">
-              <!-- topo-->
-              <div class="box-top">
-                    <!--perfil-->
-                    <div class="profile">
-                        <!-- img-->
-                        <div class="profile-img">
-                            <img src="imgs/user.jpeg" alt="foto de usuário">
-                        </div>
-                        <!-- nome e username-->
-                        <div class="name-user">
-                            <strong>Singed</strong> <!-- nome de quem comentou-->
-                            <span>Químico Louco</span> <!--ocupação (musico visitante etc)-->
-                        </div>
-                    </div>
-                    <!-- review-->
-                    <div class="reviews">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i> <!-- FAS preenche-->
-                        <i class="far fa-star"></i> <!-- FAR não preenche-->
-                    </div>
-                </div>
-                <!-- comentário-->
-                <div class="user-comment">
-                    <p>To shake or not to shake, on my way, how'd taste?</p> <!-- comentário-->
-                </div>
-            </div>
-            <!-- caixa 2-->
-            <div class="comments-box">
+          <?php
+            //Comentários
+            $sql_feedback ="SELECT f.nm_feedback as feedback, f.qt_feedback as estrelas, u.nm_usuario as usuario, u.sg_especialidade as especialidade, i.path as imagem from tb_feedback as f join tb_usuario as u on u.cd_usuario = f.cd_usuario join tb_imagem as i on i.cd_imagem = u.cd_imagem where f.cd_interpretacao = '$codigointerpretacao'";
+            $query_feedback = $mysqli->query($sql_feedback);
+            
+            while($dados_fb = $query_feedback->fetch_array()){
+              echo 
+              '<!-- caixa 1-->
+              <div class="comments-box">
                 <!-- topo-->
                 <div class="box-top">
-                    <!--perfil-->
-                    <div class="profile">
-                        <!-- img-->
-                        <div class="profile-img">
-                            <img src="imgs/user.jpeg" alt="foto de usuário">
-                        </div>
-                        <!-- nome e username-->
-                        <div class="name-user">
-                            <strong>Singed</strong> <!-- nome de quem comentou-->
-                            <span>Químico Louco</span> <!--ocupação (musico visitante etc)-->
-                        </div>
-                    </div>
-                    <!-- review-->
-                    <div class="reviews">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i> <!-- FAS preenche-->
-                        <i class="far fa-star"></i> <!-- FAR não preenche-->
-                    </div>
-                </div>
-                <!-- comentário-->
-                <div class="user-comment">
-                    <p>To shake or not to shake, on my way, how'd taste?</p> <!-- comentário-->
-                </div>
-            </div>
+                      <!--perfil-->
+                      <div class="profile">
+                          <!-- img-->
+                          <div class="profile-img">
+                              <img src="'; echo $dados_fb['imagem']; echo '" alt="foto de usuário">
+                          </div>
+                          <!-- nome e username-->
+                          <div class="name-user">
+                              <strong>'; 
+                              if(strlen($dados_fb['usuario']) > 14){
+                                echo str_replace(substr($dados_fb['usuario'], 11), '...', $dados_fb['usuario']);
+                              }
+                              else{
+                                echo $dados['nm_interpretacao'];
+                              } 
+                              echo '</strong> <!-- nome de quem comentou-->
+                              <span>'; 
+                              if($dados_fb['especialidade'] == 'v') echo 'Visitante';
+                              elseif($dados_fb['especialidade'] == 'm') echo 'Músico';
+                              elseif($dados_fb['especialidade'] == 'c') echo 'Compositor';
+                              echo '</span> <!--ocupação (musico visitante etc)-->
+                          </div>
+                      </div>
+                      <!-- review-->
+                      <div class="reviews">';
+                        if($dados_fb['estrelas'] == 1){
+                          echo 
+                          '<i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <i class="far fa-star"></i>';
+                        }
+                        elseif($dados_fb['estrelas'] == 2){
+                          echo 
+                          '<i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <i class="far fa-star"></i>';
+                        }
+                        elseif($dados_fb['estrelas'] == 3){
+                          echo 
+                          '<i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                          <i class="far fa-star"></i>';
+                        }
+                        elseif($dados_fb['estrelas'] == 4){
+                          echo 
+                          '<i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>';
+                        }
+                        if($dados_fb['estrelas'] == 5){
+                          echo 
+                          '<i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>';
+                        }
+                      echo '</div>
+                  </div> <!-- FAS preenche e FAR não preenche-->
+                  <!-- comentário-->
+                  <div class="user-comment">
+                      <p>'; echo $dados_fb['feedback']; echo '</p> <!-- comentário-->
+                  </div>
+              </div>';
+            }
+          ?>
   </section>
 
 </body>

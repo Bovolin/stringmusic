@@ -818,7 +818,7 @@ input#rate-5:checked ~ label{
   text-shadow: 0 0 20px rgb(0, 0, 0);
 }
 #rate-1:checked ~ .form_feedback header:before{
-  content: "Horrível";
+  content: "Muito ruim";
 }
 #rate-2:checked ~ .form_feedback header:before{
   content: "Ruim";
