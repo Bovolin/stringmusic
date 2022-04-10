@@ -209,7 +209,7 @@ else{
                     <div class="perfil-usuario-descricao">
                         <h3 class="titulo"><?php echo $nomeusuario?></h3>
                         <form action="editar.php" method="post">
-                        <input placeholder="Insira uma descrição sobre você:" type="text" name="descricao" style="width: 345px;" value="<?php echo $descricaousuario?>" class="field">
+                        <input placeholder="Insira uma descrição sobre você:" type="text" name="descricao" style="width: 345px;" value="<?php echo $descricaousuario?>" class="field" maxlength="150">
                     </div>
                     <div class="perfil-usuario-footer">
                         <ul class="dados">

@@ -773,3 +773,117 @@ header nav .action{
         text-align: center;
     }
   }
+
+/* FEEDBACK */
+.post{
+  display: none;
+}
+.text{
+  font-size: 25px;
+  color: black;
+  font-weight: 500;
+}
+.edit{
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px;
+  color: black;
+  font-weight: 500;
+  cursor: pointer;
+}
+.edit:hover{
+  text-decoration: underline;
+}
+.star-widget{
+  text-align: center;
+}
+.star-widget input{
+  display: none;
+}
+.star-widget label{
+  font-size: 40px;
+  color: black;
+  transition: all 0.2s ease;
+}
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~ label{
+  color: #fd4;
+}
+input:checked ~ label{
+  color: #fd4;
+}
+input#rate-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 20px rgb(0, 0, 0);
+}
+#rate-1:checked ~ .form_feedback header:before{
+  content: "Horrível";
+}
+#rate-2:checked ~ .form_feedback header:before{
+  content: "Ruim";
+}
+#rate-3:checked ~ .form_feedback header:before{
+  content: "Regular";
+}
+#rate-4:checked ~ .form_feedback header:before{
+  content: "Bom";
+}
+#rate-5:checked ~ .form_feedback header:before{
+  content: "Muito bom";
+}
+.container .form_feedback{
+  display: none;
+}
+input:checked ~ .form_feedback{
+  display: block;
+}
+.form_feedback header{
+  width: 100%;
+  font-size: 25px;
+  color: black;
+  font-weight: 500;
+  margin: 5px 0 20px 0;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+.form_feedback .textarea{
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+.form_feedback .textarea textarea{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: black;
+  border: 1px solid black;
+  background: #fff;
+  padding: 10px;
+  font-size: 17px;
+  resize: none;
+}
+.textarea textarea:focus{
+  border-color: #032a74;
+}
+.form_feedback #btn-opinion{
+  height: 45px;
+  width: 100%;
+  margin: 15px 0;
+}
+.form_feedback #btn-opinion button{
+  height: 100%;
+  width: 100%;
+  border: 1px solid #1063fd;
+  outline: none;
+  background: #fff;
+  color: black;
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.form_feedback #btn-opinion button:hover{
+  background: #1063fd;
+}

@@ -234,11 +234,48 @@ else{
             <h1>Compradores avaliaram:</h1>
         </div>
 
+        <?php
+        if(isset($session)){
+          foreach($mysqli->query("SELECT count(co.cd_compra) as comprado from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_usuario as u on u.cd_usuario = c.cd_usuario join tb_interpretacao as i on i.cd_interpretacao = c.cd_interpretacao where u.cd_usuario = '$session' and c.nm_inativo = 1 and i.nm_interpretacao = '$nomeinterpretacao'") as $compra){
+            $comprado = $compra['comprado'];
+          }
+          if($comprado != '0'){
+          ?>
+          <button type="button" class="btnpart" onclick="visivel()"> Dar opinião </button>
+          <div class="post" id="div-post" style="display:none">
+            <div class="text">Obrigado pelo seu feedback</div>
+            <div class="edit">Editar</div>
+          </div>
+          <div class="star-widget" id="div-start-widget" style="display:none">
+            <input type="radio" name="rate" id="rate-5">
+            <label for="rate-5" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-4">
+            <label for="rate-4" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-3">
+            <label for="rate-3" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-2">
+            <label for="rate-2" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-1">
+            <label for="rate-1" class="fas fa-star"></label>
+            <form action="#" class="form_feedback">
+              <header></header>
+              <div class="textarea">
+                <textarea cols="30" placeholder="Deixe seu feedback sobre o produto!!"></textarea>
+              </div>
+              <div id="btn_opinion">
+                <button class="btnpart" type="submit">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <?php } } ?>
+        
+
         <div class="comments-box-container">
-            <!-- caixa 1-->
-            <div class="comments-box">
-                <!-- topo-->
-                <div class="box-top">
+          <!-- caixa 1-->
+          <div class="comments-box">
+              <!-- topo-->
+              <div class="box-top">
                     <!--perfil-->
                     <div class="profile">
                         <!-- img-->

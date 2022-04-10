@@ -162,8 +162,6 @@ function abreJanela(URL) {
   location.href = URL; // se for popup utiliza o window.open
 }
 
-
-
 function payment(event){
   const valor = event.value;
   const cartao = document.querySelector("#payment-cartao");
@@ -183,5 +181,19 @@ function payment(event){
     pix.classList.add('selecionado');
     boleto.classList.remove('selecionado');
     cartao.classList.remove('selecionado')
+  }
+}
+
+function visivel(){
+  var post = document.getElementById("div-post")
+  var star = document.getElementById("div-start-widget")
+
+  if(post.style.display == "none" & star.style.display == "none"){
+    post.style.display = "block"
+    star.style.display = "block"
+  }
+  else if(post.style.display == "block" & star.style.display == "block"){
+    post.style.display = "none"
+    star.style.display = "none"
   }
 }

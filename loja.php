@@ -152,7 +152,7 @@ include("foto.php");
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($interp['nm_interpretacao']) > 14){
-                        echo str_replace(substr($interp['nm_interpretacao'], 11, 13), '...', $interp['nm_interpretacao']);
+                        echo str_replace(substr($interp['nm_interpretacao'], 11), '...', $interp['nm_interpretacao']);
                     }
                     else{
                         echo $interp['nm_interpretacao'];
