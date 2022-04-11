@@ -6,7 +6,6 @@
   box-sizing: border-box;
   outline: none; border:none;
   text-decoration: none;
-  text-transform: capitalize;
   transition: all .2s linear;
   }
 
@@ -603,10 +602,11 @@ footer .social-icon {
     top: 70px;
     right: 10%;
     padding: 15px 25px;
-    background-color: rgb(228, 228, 228);
+    background-color: #f2f2f2;
     width: 200px;
     box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-    border-radius: 15px;
+    border-radius: 40px;
+    border: 0.5px solid #d1d1d1;
     transition: 0.5s;
     visibility: hidden;
     opacity: 0;
@@ -668,7 +668,7 @@ footer .social-icon {
     right: 28px;
     width: 20px;
     height: 20px;
-    background-color: rgb(197, 197, 197);
+    background-color: #4d84e2;
     transform: rotate(45deg);
   }
 
@@ -771,7 +771,7 @@ footer .social-icon {
     width: 100%;
     border: 2px solid #ccc;
     outline: none;
-    border-radius: 5px;
+    border-radius: 49px;
     background-color: var(--bg-panel);
     padding: 0.5rem 1rem;
     font-size: 1.7rem;

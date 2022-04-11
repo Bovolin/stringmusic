@@ -128,18 +128,6 @@ h2{
     color: var(--color-headings);
 }
 
-h2:after{
-	content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    height: 4px;
-    width: 50px;
-    border-radius: 2px;
-    background: linear-gradient(120deg,#358CFD, rgb(1, 44, 100));
-}
-
 
 textarea{
 	min-height: 100px;
@@ -431,10 +419,11 @@ textarea{
     top: 120px;
     right: 8%;
     padding: 15px 25px;
-    background-color: rgb(228, 228, 228);
+    background-color: #f2f2f2;
     width: 200px;
     box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-    border-radius: 15px;
+    border-radius: 40px;
+    border: 0.5px solid #d1d1d1;
     transition: 0.5s;
     visibility: hidden;
     opacity: 0;
@@ -454,7 +443,7 @@ textarea{
     right: 28px;
     width: 20px;
     height: 20px;
-    background-color: rgb(197, 197, 197);
+    background-color: #4d84e2;
     transform: rotate(45deg);
   }
 
@@ -546,7 +535,7 @@ textarea{
     width: 150px;
     height: 50px;
     border: none;
-    border-radius: 10px;
+    border-radius: 49px;
     font-size: 20px;
     -webkit-appearance: button;
     outline: none;
@@ -729,7 +718,7 @@ header nav .action{
     border: none;
     outline: none;
     height: 49px;
-    border-radius: 49px;
+    border-radius: 49px !important;
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
@@ -749,7 +738,7 @@ header nav .action{
     border: none;
     outline: none;
     height: 49px;
-    border-radius: 49px;
+    border-radius: 49px !important;
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
