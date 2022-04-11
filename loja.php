@@ -121,7 +121,7 @@ include("foto.php");
 
 <section class="product" id="product">
 
-    <h1 class="heading">Produtos mais <span>comprados</span></h1>
+    <h3 class="heading">Produtos mais <span>comprados</span></h3>
 
     <div class="box-container">
     

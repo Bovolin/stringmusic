@@ -167,67 +167,273 @@ if(isset($_SESSION['usuario'])){
         </div>   
     </div>
 
-  <h3>Produtos do mesmo autor</h3>
-  <main class="grid">
+    <section class="product" id="product">
+    <h1 class="heading">Produtos do <span>mesmo autor</span></h1>
+    <div class="box-container">
   <?php
 
-    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query = $mysqli->query($sql);
 
     while($dados = $query->fetch_array()){
-      echo '<article>
-        <img src="'; echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-        <div class="text">
-            <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
-            <p>'; echo $dados['ds_interpretacao']; echo '</p>
-            <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-            <form method="get" action="produto.php">
-            <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-            </form>
-        </div>
-      </article>';
+      echo '<div class="boxx">
+                    <div class="icons">
+                        <a class="fas fa-share"></a>
+                        <button class="btn'; echo $dados['nm_interpretacao']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $dados['nm_interpretacao']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $dados['nm_interpretacao']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
+                    <img src="'; echo $dados['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($dados['nm_interpretacao']) > 14){
+                        echo str_replace(substr($dados['nm_interpretacao'], 11), '...', $dados['nm_interpretacao']);
+                    }
+                    else{
+                        echo $dados['nm_interpretacao'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $dados['vl_interpretacao'];  echo '</div>
+                    <form method="get" action="produto.php" style="display: inline-block;">
+                        <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
+                        <input type="submit" class="btnpart" value="Comprar">
+                    </form>
+                </div>';
     }
 
-    $sql2 = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql2 = "SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query2 = $mysqli->query($sql2);
 
     while ($dados = $query2->fetch_array()){ 
-      echo '<article>
-      <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-      <div class="text">
-        <h3>';  echo $dados['nm_servico']; echo '</h3>
-        <p>'; echo $dados['ds_servico']; echo '</p>
-        <p> R$'; echo $dados['vl_servico']; echo '</p>
-        <form method="get" action="prodserv.php">
-            <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-        </form>
-      </div>
-    </article>';
+      echo '<div class="boxx">
+                        <div class="icons">
+                        <a class="fas fa-share"></a>
+                        <button class="btn'; echo $dados['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $dados['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $dados['nm_servico']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
+                    <img src="'; echo $dados['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($dados['nm_servico']) > 14){
+                        echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
+                    }
+                    else{
+                        echo $dados['nm_servico'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
+                    <form method="get" action="produto.php" style="display: inline-block;">
+                        <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
+                        <input type="submit" class="btnpart" value="Comprar">
+                    </form>
+                </div>';
 
     }
 
-    $sql3 = "SELECT s.cd_instrumento, s.nm_instrumento, s.ds_instrumento, s.vl_instrumento, i.path FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql3 = "SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query3 = $mysqli->query($sql3);
 
     while($dados = $query3->fetch_array()){
-    echo '<article>
-    <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-    <div class="text">
-        <h3>';  echo $dados['nm_instrumento']; echo '</h3>
-        <p>'; echo $dados['ds_instrumento']; echo '</p>
-        <p> R$'; echo $dados['vl_instrumento']; echo '</p>
-        <form method="get" action="prodserv.php">
-            <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-        </form>
-    </div>
-    </article>';
+      echo '<div class="boxx">
+      <div class="icons">
+      <a class="fas fa-share"></a>
+      <button class="btn'; echo $dados['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/prodinst.php?i='; echo $dados['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
+      </div>';
+      ?>
+      <script>
+          var button = document.getElementsByClassName("btn<?php echo $dados['nm_instrumento']?>");
+          new ClipboardJS(button);
+      </script>
+      <?php echo '
+      <img src="'; echo $dados['path']; echo '" alt="">
+      <h3>'; 
+      if(strlen($dados['nm_instrumento']) > 14){
+          echo str_replace(substr($dados['nm_instrumento'], 11), '...', $dados['nm_instrumento']);
+      }
+      else{
+          echo $dados['nm_instrumento'];
+      } 
+      echo '</h3>
+      <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+      </div>
+      <div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
+      <form method="get" action="produto.php" style="display: inline-block;">
+          <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
+          <input type="submit" class="btnpart" value="Comprar">
+      </form>
+    </div>';
     }
 
     ?>
-  </main>
+    </div>
+  </section>
+
+  <section id="comments">
+        <div class="comments-heading">
+            <span>Análises</span>
+            <h1>Compradores avaliaram:</h1>
+        </div>
+
+        <?php
+        if(isset($session)){
+          foreach($mysqli->query("SELECT count(co.cd_compra) as comprado from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_usuario as u on u.cd_usuario = c.cd_usuario join tb_interpretacao as i on i.cd_interpretacao = c.cd_interpretacao where u.cd_usuario = '$session' and c.nm_inativo = 1 and i.nm_interpretacao = '$nomeinterpretacao'") as $compra){
+            $comprado = $compra['comprado'];
+          }
+          if($comprado != '0'){
+          ?>
+          <button type="button" class="btnpart" onclick="visivel()"> Dar opinião </button>
+          <div class="star-widget" id="div-start-widget" style="display:none">
+            <input type="radio" name="rate" value="5" id="rate-5" onclick="star()">
+            <label for="rate-5" class="fas fa-star"></label>
+            <input type="radio" name="rate" value="4" id="rate-4" onclick="star()">
+            <label for="rate-4" class="fas fa-star"></label>
+            <input type="radio" name="rate" value="3" id="rate-3" onclick="star()">
+            <label for="rate-3" class="fas fa-star"></label>
+            <input type="radio" name="rate" value="2"  id="rate-2" onclick="star()">
+            <label for="rate-2" class="fas fa-star"></label>
+            <input type="radio" name="rate" value="1"  id="rate-1" onclick="star()">
+            <label for="rate-1" class="fas fa-star"></label>
+            <form action="feedback.php" method="post" class="form_feedback">
+              <header></header>
+              <div class="textarea">
+                <textarea cols="30" name="comment" placeholder="Deixe seu feedback sobre o produto!!"></textarea>
+              </div>
+              <div id="btn_opinion">,
+                <input type="hidden" name="nm_prod" value="<?php echo $nomeinterpretacao ?>">
+                <input type="hidden" name="input-star" id="input-star">
+                <button class="btnpart" type="submit">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <?php } } ?>
+        
+
+        <div class="comments-box-container">
+          <?php
+            foreach($mysqli->query("SELECT COUNT(cd_feedback) AS feedback FROM tb_feedback WHERE cd_servico = '$codigointerpretacao'") as $feedback){
+              $count_feedback = $feedback['feedback'];
+            }
+            if($count_feedback != 0){
+              //Comentários
+              $sql_feedback ="SELECT f.nm_feedback as feedback, f.qt_feedback as estrelas, u.nm_usuario as usuario, u.sg_especialidade as especialidade, i.path as imagem from tb_feedback as f join tb_usuario as u on u.cd_usuario = f.cd_usuario join tb_imagem as i on i.cd_imagem = u.cd_imagem where f.cd_servico = '$codigointerpretacao'";
+              $query_feedback = $mysqli->query($sql_feedback);
+              
+              while($dados_fb = $query_feedback->fetch_array()){
+                echo 
+                '<!-- caixa 1-->
+                <div class="comments-box">
+                  <!-- topo-->
+                  <div class="box-top">
+                        <!--perfil-->
+                        <div class="profile">
+                            <!-- img-->
+                            <div class="profile-img">
+                                <img src="'; echo $dados_fb['imagem']; echo '" alt="foto de usuário">
+                            </div>
+                            <!-- nome e username-->
+                            <div class="name-user">
+                                <strong>'; 
+                                if(strlen($dados_fb['usuario']) > 14){
+                                  echo str_replace(substr($dados_fb['usuario'], 11), '...', $dados_fb['usuario']);
+                                }
+                                else{
+                                  echo $dados['nm_interpretacao'];
+                                } 
+                                echo '</strong> <!-- nome de quem comentou-->
+                                <span>'; 
+                                if($dados_fb['especialidade'] == 'v') echo 'Visitante';
+                                elseif($dados_fb['especialidade'] == 'm') echo 'Músico';
+                                elseif($dados_fb['especialidade'] == 'c') echo 'Compositor';
+                                echo '</span> <!--ocupação (musico visitante etc)-->
+                            </div>
+                        </div>
+                        <!-- review-->
+                        <div class="reviews">';
+                          if($dados_fb['estrelas'] == 1){
+                            echo 
+                            '<i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>';
+                          }
+                          elseif($dados_fb['estrelas'] == 2){
+                            echo 
+                            '<i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>';
+                          }
+                          elseif($dados_fb['estrelas'] == 3){
+                            echo 
+                            '<i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>';
+                          }
+                          elseif($dados_fb['estrelas'] == 4){
+                            echo 
+                            '<i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>';
+                          }
+                          if($dados_fb['estrelas'] == 5){
+                            echo 
+                            '<i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>';
+                          }
+                        echo '</div>
+                    </div> <!-- FAS preenche e FAR não preenche-->
+                    <!-- comentário-->
+                    <div class="user-comment">
+                        <p>'; echo $dados_fb['feedback']; echo '</p> <!-- comentário-->
+                    </div>
+                </div>';
+              }
+            }
+            else{
+              echo'
+              <div class="comments-heading">
+                <span>Este produto não possue avaliações</span>
+              </div>';
+            }
+            
+          ?>
+  </section>
 
   <!-- Menu navbar -> script interno -->
   <script>

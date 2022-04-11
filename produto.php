@@ -1,58 +1,58 @@
 <?php
-session_start();
-include ("conexao.php");
+  session_start();
+  include ("conexao.php");
 
-$produto = $_GET['p'];
+  $produto = $_GET['p'];
 
-foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$produto'") as $interpretacao){
-  $nomeinterpretacao = $interpretacao['interpretacao'];
-  $descricaointerpretacao = $interpretacao['descricao'];
-  $nomedono = $interpretacao['nomeusuario'];
-  $descricaousuario = $interpretacao['descricaousuario'];
-  $valorinterpretacao = $interpretacao['valor'];
-  $path = $interpretacao['pathh'];
-  $codigouser = $interpretacao['codigousuario'];
-  $codigointerpretacao = $interpretacao['codigo'];
-}
-foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
-  $dono_sem_foto = $confere_foto_dono['conferefoto'];
-}
-if(empty($dono_sem_foto)){
-  $imagemdono = "imgs/user.jpeg";
-}
-else{
-  foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
-    $imagemdono = $pegaimagem['path'];
+  foreach($mysqli->query("SELECT i.cd_usuario AS codigousuario, i.cd_interpretacao AS codigo, i.nm_interpretacao AS interpretacao, i.ds_interpretacao AS descricao, i.vl_interpretacao AS valor, u.nm_usuario AS nomeusuario, u.ds_usuario AS descricaousuario, im.path AS pathh FROM tb_interpretacao AS i JOIN tb_usuario AS u ON u.cd_usuario = i.cd_usuario JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE i.nm_interpretacao = '$produto'") as $interpretacao){
+    $nomeinterpretacao = $interpretacao['interpretacao'];
+    $descricaointerpretacao = $interpretacao['descricao'];
+    $nomedono = $interpretacao['nomeusuario'];
+    $descricaousuario = $interpretacao['descricaousuario'];
+    $valorinterpretacao = $interpretacao['valor'];
+    $path = $interpretacao['pathh'];
+    $codigouser = $interpretacao['codigousuario'];
+    $codigointerpretacao = $interpretacao['codigo'];
   }
-}
-
-
-  if(isset($_SESSION['usuario'])){
-    $session = $_SESSION['usuario'];
-
-    foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-      $semfoto = $conferefoto['confere'];
-    }
-
-    if(empty($semfoto)){
-      foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
-        $nomeusuario = $usuarios['nome'];
-        $imagemusuario = "imgs/user.jpeg";
-        if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-        elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-        elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-      }
-    }
-    else{
-      foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
-        $nomeusuario = $usuarios['nome'];
-        $imagemusuario = $usuarios['path'];
-        if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-        elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-        elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-      }
+  foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
+    $dono_sem_foto = $confere_foto_dono['conferefoto'];
+  }
+  if(empty($dono_sem_foto)){
+    $imagemdono = "imgs/user.jpeg";
+  }
+  else{
+    foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
+      $imagemdono = $pegaimagem['path'];
     }
   }
+
+
+    if(isset($_SESSION['usuario'])){
+      $session = $_SESSION['usuario'];
+
+      foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
+        $semfoto = $conferefoto['confere'];
+      }
+
+      if(empty($semfoto)){
+        foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
+          $nomeusuario = $usuarios['nome'];
+          $imagemusuario = "imgs/user.jpeg";
+          if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+          elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+          elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+        }
+      }
+      else{
+        foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
+          $nomeusuario = $usuarios['nome'];
+          $imagemusuario = $usuarios['path'];
+          if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+          elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+          elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
+        }
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +70,7 @@ else{
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <!--SWAL-->
     <script src="js/swal.js"></script>
+    <script src="js/clipboard.min.js"></script>
 
 </head>
 <?php
@@ -161,7 +162,7 @@ else{
                       <h4><?php echo $descricaousuario ?></h4>
                       <form action="userpreview.php" method="get">
                         <input type="text" style="display: none;" name="u" value="<?php echo $codigouser?>">
-                        <input type="submit" class="btnpart" value="Visualizar Perfil"></input>
+                        <input type="submit" class="btn" value="Visualizar Perfil"></input>
                       </form>
                     </div>
                   </div>
@@ -179,70 +180,135 @@ else{
             </div>
           </div>      
        </div>   
+      </div>
     </div>
 
-  <h3>Produtos do mesmo autor</h3>
-  <main class="grid">
+  <section class="product" id="product">
+    <h1 class="heading">Produtos do <span>mesmo autor</span></h1>
+    <div class="box-container">
   <?php
 
-    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.ds_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.vl_interpretacao, i.path FROM tb_interpretacao AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query = $mysqli->query($sql);
 
     while($dados = $query->fetch_array()){
-      echo '<article>
-        <img src="'; echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-        <div class="text">
-            <h3>'; echo $dados['nm_interpretacao']; echo '</h3>
-            <p>'; echo $dados['ds_interpretacao']; echo '</p>
-            <p>R$'; echo $dados['vl_interpretacao']; echo '</p>
-            <form method="get" action="produto.php">
-            <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-            </form>
-        </div>
-      </article>';
+      echo '<div class="boxx">
+                    <div class="icons">
+                        <a class="fas fa-share"></a>
+                        <button class="btn'; echo $dados['nm_interpretacao']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $dados['nm_interpretacao']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $dados['nm_interpretacao']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
+                    <img src="'; echo $dados['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($dados['nm_interpretacao']) > 14){
+                        echo str_replace(substr($dados['nm_interpretacao'], 11), '...', $dados['nm_interpretacao']);
+                    }
+                    else{
+                        echo $dados['nm_interpretacao'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $dados['vl_interpretacao'];  echo '</div>
+                    <form method="get" action="produto.php" style="display: inline-block;">
+                        <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_interpretacao']; echo '">
+                        <input type="submit" class="btnpart" value="Comprar">
+                    </form>
+                </div>';
     }
 
-    $sql2 = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql2 = "SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query2 = $mysqli->query($sql2);
 
     while ($dados = $query2->fetch_array()){ 
-      echo '<article>
-      <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-      <div class="text">
-        <h3>';  echo $dados['nm_servico']; echo '</h3>
-        <p>'; echo $dados['ds_servico']; echo '</p>
-        <p> R$'; echo $dados['vl_servico']; echo '</p>
-        <form method="get" action="prodserv.php">
-            <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-          </form>
-      </div>
-    </article>';
+      echo '<div class="boxx">
+                        <div class="icons">
+                        <a class="fas fa-share"></a>
+                        <button class="btn'; echo $dados['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $dados['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';
+                        ?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $dados['nm_servico']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo '
+                    <img src="'; echo $dados['path']; echo '" alt="">
+                    <h3>'; 
+                    if(strlen($dados['nm_servico']) > 14){
+                        echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
+                    }
+                    else{
+                        echo $dados['nm_servico'];
+                    } 
+                    echo '</h3>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
+                    <form method="get" action="prodserv.php" style="display: inline-block;">
+                        <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
+                        <input type="submit" class="btnpart" value="Comprar">
+                    </form>
+                </div>';
 
     }
 
-    $sql3 = "SELECT s.cd_instrumento, s.nm_instrumento, s.ds_instrumento, s.vl_instrumento, i.path FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
+    $sql3 = "SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigouser'";
     $query3 = $mysqli->query($sql3);
 
     while($dados = $query3->fetch_array()){
-    echo '<article>
-    <img src="';  echo $dados['path']; echo '" alt="" style="width: 130px; height: 175px;">
-    <div class="text">
-        <h3>';  echo $dados['nm_instrumento']; echo '</h3>
-        <p>'; echo $dados['ds_instrumento']; echo '</p>
-        <p> R$'; echo $dados['vl_instrumento']; echo '</p>
-        <form method="get" action="prodserv.php">
-            <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
-            <input type="submit" class="btnpart" value="Comprar">
-        </form>
-    </div>
-    </article>';
+      echo '<div class="boxx">
+      <div class="icons">
+      <a class="fas fa-share"></a>
+      <button class="btn'; echo $dados['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/prodinst.php?i='; echo $dados['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
+      </div>';
+      ?>
+      <script>
+          var button = document.getElementsByClassName("btn<?php echo $dados['nm_instrumento']?>");
+          new ClipboardJS(button);
+      </script>
+      <?php echo '
+      <img src="'; echo $dados['path']; echo '" alt="">
+      <h3>'; 
+      if(strlen($dados['nm_instrumento']) > 14){
+          echo str_replace(substr($dados['nm_instrumento'], 11), '...', $dados['nm_instrumento']);
+      }
+      else{
+          echo $dados['nm_instrumento'];
+      } 
+      echo '</h3>
+      <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+      </div>
+      <div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
+      <form method="get" action="prodinst.php" style="display: inline-block;">
+          <input type="text" name="i" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
+          <input type="submit" class="btnpart" value="Comprar">
+      </form>
+    </div>';
     }
 
     ?>
-  </main>
-  </div>
+    </div>
+  </section>
 
   <section id="comments">
         <div class="comments-heading">
@@ -287,6 +353,10 @@ else{
 
         <div class="comments-box-container">
           <?php
+          foreach($mysqli->query("SELECT COUNT(cd_feedback) AS feedback FROM tb_feedback WHERE cd_interpretacao = '$codigointerpretacao'") as $feedback){
+            $count_feedback = $feedback['feedback'];
+          }
+          if($count_feedback != 0){
             //Comentários
             $sql_feedback ="SELECT f.nm_feedback as feedback, f.qt_feedback as estrelas, u.nm_usuario as usuario, u.sg_especialidade as especialidade, i.path as imagem from tb_feedback as f join tb_usuario as u on u.cd_usuario = f.cd_usuario join tb_imagem as i on i.cd_imagem = u.cd_imagem where f.cd_interpretacao = '$codigointerpretacao'";
             $query_feedback = $mysqli->query($sql_feedback);
@@ -370,6 +440,14 @@ else{
                   </div>
               </div>';
             }
+          }
+          else{
+            echo'
+            <div class="comments-heading">
+              <span>Este produto não possue avaliações</span>
+            </div>';
+          }
+            
           ?>
   </section>
 
