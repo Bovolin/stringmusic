@@ -1,16 +1,21 @@
 <?php
+session_start();
+
 if(isset($_POST['nome-registro']) && isset($_POST['email-registro']) && isset($_POST['senha-registro'])){
     $nome = $_POST['nome-registro'];
     $email = $_POST['email-registro'];
     $senha = $_POST['senha-registro'];
+}
+elseif(isset($_SESSION['user_email']) && isset($_SESSION['user_name'])){
+    $nome = $_SESSION['user_name'];
+    $email = $_SESSION['user_email'];
+    $senha = '';
 }
 else{
     $nome = '';
     $email = '';
     $senha = '';
 }
-
-session_start();
 
 ?>
 <!DOCTYPE html>
@@ -207,7 +212,10 @@ session_start();
                             </select>
                         </div>
 
-                        <input type="submit" value="Concluir cadastro" class="btn">
+                        <div class="botoes">
+                            <input type="submit" value="Concluir cadastro" class="btn">
+                            <a href="cancelar.php" class="btn2" style="padding-top: 12px; padding-bottom: 12px; padding-left: 30px; padding-right: 30px">Cancelar</a>
+                        </div>
                 </div>
             </div>
 

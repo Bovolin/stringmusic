@@ -1,6 +1,7 @@
 <?php
 session_start();
-?>
+include("face.php");
+?> 
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -127,14 +128,8 @@ session_start();
 
             <p class="social-text">Ou registre-se com as redes sociais!</p>
             <div class="social-media">
-              <a href="#" class="social-icon">
+              <a href="<?php echo $loginUrl; ?>" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
               </a>
               <a href="#" class="social-icon">
                 <i class="fab fa-linkedin-in"></i>

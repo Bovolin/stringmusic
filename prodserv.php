@@ -428,7 +428,7 @@ if(isset($_SESSION['usuario'])){
             else{
               echo'
               <div class="comments-heading">
-                <span>Este produto não possue avaliações</span>
+                <span>Este produto não possui avaliações</span>
               </div>';
             }
             

@@ -150,6 +150,25 @@ form.sign-in-form {
 .btn:hover {
   background-color: #4d84e2;
 }
+.btn2 {
+  text-decoration: none;
+  width: 150px;
+  background-color: #fd5959;
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.btn2:hover {
+  background-color: #e24d4d;
+}
 .panels-container {
   position: absolute;
   height: 100%;
