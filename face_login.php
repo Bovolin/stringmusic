@@ -1,6 +1,6 @@
 <?php
 
-require_once('lib/Facebook/autoload.php');
+require_once('facebook/Facebook/autoload.php');
 //unset($_SESSION['face_access_token']);
 //Conexão ao SDK
 $fb = new \Facebook\Facebook([
@@ -43,7 +43,7 @@ else{
         $_SESSION['face_access_token'] = (string) $accessToken;
         $oAuth2Client = $fb->getOAuth2Client();
         $_SESSION['face_access_token'] = (string) $oAuth2Client->getLongLivedAccessToken($_SESSION['face_access_token']);
-		    $fb->setDefaultAccessToken($_SESSION['face_access_token']);	
+		$fb->setDefaultAccessToken($_SESSION['face_access_token']);	
     }
     //Requisição das infos do usuário
     try{

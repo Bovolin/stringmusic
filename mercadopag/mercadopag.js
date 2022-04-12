@@ -26,7 +26,7 @@
     //Pegar cartão e bandeira
     function setPaymentMethodInfo(status, response){
         if(status == 200){
-            const paymentMethodElement = doc.querySelector('input[name=paymentMethodId');
+            const paymentMethodElement = document.querySelector('input[name=paymentMethodId');
             paymentMethodElement.value = response[0].id;
             doc.querySelector('.brand').innerHTML="<img src='" + response[0].thumbnail +"' alt='Bandeira do Cartão'>";
             if(response[0].thumbnail == "http://img.mlstatic.com/org-img/MP3/API/logos/visa.gif"){

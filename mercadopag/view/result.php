@@ -21,7 +21,7 @@ elseif($exception->verifyTransaction()['class'] == 'success') $icone = 'success'
 elseif($exception->verifyTransaction()['class'] == 'alert') $icone = 'info';
 ?>
 <script>
-    function Swal(){
+    function swal(){
         Swal.fire({
             icon: '<?php echo $icone ?>',
             text: '<?php echo $exception->verifyTransaction()['message'] ?>',
@@ -34,7 +34,7 @@ elseif($exception->verifyTransaction()['class'] == 'alert') $icone = 'info';
         })
     }
 </script>
-<body onload="Swal()">
+<body onload="swal()">
         
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>

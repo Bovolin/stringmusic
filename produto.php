@@ -14,36 +14,14 @@
     $codigouser = $interpretacao['codigousuario'];
     $codigointerpretacao = $interpretacao['codigo'];
   }
-  foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
-    $dono_sem_foto = $confere_foto_dono['conferefoto'];
-  }
-  if(empty($dono_sem_foto)){
-    $imagemdono = "imgs/user.jpeg";
-  }
-  else{
-    foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
-      $imagemdono = $pegaimagem['path'];
-    }
+  foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
+    $imagemdono = $pegaimagem['path'];
   }
 
 
     if(isset($_SESSION['usuario'])){
       $session = $_SESSION['usuario'];
 
-      foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-        $semfoto = $conferefoto['confere'];
-      }
-
-      if(empty($semfoto)){
-        foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
-          $nomeusuario = $usuarios['nome'];
-          $imagemusuario = "imgs/user.jpeg";
-          if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-          elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-          elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-        }
-      }
-      else{
         foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
           $nomeusuario = $usuarios['nome'];
           $imagemusuario = $usuarios['path'];
@@ -51,7 +29,6 @@
           elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
           elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
         }
-      }
     }
 ?>
 
@@ -382,7 +359,7 @@
                                 echo str_replace(substr($dados_fb['usuario'], 11), '...', $dados_fb['usuario']);
                               }
                               else{
-                                echo $dados['nm_interpretacao'];
+                                echo $dados_fb['usuario'];
                               } 
                               echo '</strong> <!-- nome de quem comentou-->
                               <span>'; 

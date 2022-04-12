@@ -14,42 +14,19 @@ foreach($mysqli->query("SELECT i.cd_instrumento AS codigo, i.cd_usuario AS codig
   $codigouser = $instrumento['codigousuario'];
   $codigointerpretacao = $instrumento['codigo'];
 }
-foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
-  $dono_sem_foto = $confere_foto_dono['conferefoto'];
-}
-if(empty($dono_sem_foto)){
-  $imagemdono = "imgs/user.jpeg";
-}
-else{
-  foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
-    $imagemdono = $pegaimagem['path'];
-  }
+foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
+  $imagemdono = $pegaimagem['path'];
 }
 
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
 
-  foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-    $semfoto = $conferefoto['confere'];
-  }
-
-  if(empty($semfoto)){
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.jpeg";
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
-  }
-  else{
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = $usuarios['path'];
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
+  foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
+    $nomeusuario = $usuarios['nome'];
+    $imagemusuario = $usuarios['path'];
+    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
   }
 }
 
@@ -302,7 +279,7 @@ if(isset($_SESSION['usuario'])){
 
         <?php
         if(isset($session)){
-          foreach($mysqli->query("SELECT count(co.cd_compra) as comprado from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_usuario as u on u.cd_usuario = c.cd_usuario join tb_interpretacao as i on i.cd_interpretacao = c.cd_interpretacao where u.cd_usuario = '$session' and c.nm_inativo = 1 and i.nm_interpretacao = '$nomeinterpretacao'") as $compra){
+          foreach($mysqli->query("SELECT count(co.cd_compra) as comprado from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_usuario as u on u.cd_usuario = c.cd_usuario join tb_instrumento as i on i.cd_instrumento = c.cd_instrumento where u.cd_usuario = '$session' and c.nm_inativo = 1 and i.nm_instrumento = '$nomeinterpretacao'") as $compra){
             $comprado = $compra['comprado'];
           }
           if($comprado != '0'){
@@ -344,7 +321,7 @@ if(isset($_SESSION['usuario'])){
           }
           if($count_feedback != 0){
             //Comentários
-            $sql_feedback ="SELECT f.nm_feedback as feedback, f.qt_feedback as estrelas, u.nm_usuario as usuario, u.sg_especialidade as especialidade, i.path as imagem from tb_feedback as f join tb_usuario as u on u.cd_usuario = f.cd_usuario join tb_imagem as i on i.cd_imagem = u.cd_imagem where f.cd_interpretacao = '$codigointerpretacao'";
+            $sql_feedback ="SELECT f.nm_feedback as feedback, f.qt_feedback as estrelas, u.nm_usuario as usuario, u.sg_especialidade as especialidade, i.path as imagem from tb_feedback as f join tb_usuario as u on u.cd_usuario = f.cd_usuario join tb_imagem as i on i.cd_imagem = u.cd_imagem where f.cd_instrumento = '$codigointerpretacao'";
             $query_feedback = $mysqli->query($sql_feedback);
             
             while($dados_fb = $query_feedback->fetch_array()){
@@ -366,7 +343,7 @@ if(isset($_SESSION['usuario'])){
                                 echo str_replace(substr($dados_fb['usuario'], 11), '...', $dados_fb['usuario']);
                               }
                               else{
-                                echo $dados['nm_interpretacao'];
+                                echo $dados_fb['usuario'];
                               } 
                               echo '</strong> <!-- nome de quem comentou-->
                               <span>'; 

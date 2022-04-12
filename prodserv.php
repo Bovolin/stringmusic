@@ -14,42 +14,19 @@ foreach($mysqli->query("SELECT i.cd_servico AS codigo, i.cd_usuario AS codigousu
   $codigouser = $servico['codigousuario'];
   $codigointerpretacao = $servico['codigo'];
 }
-foreach($mysqli->query("SELECT cd_imagem AS conferefoto FROM tb_usuario WHERE cd_usuario = '$codigouser'") as $confere_foto_dono){
-  $dono_sem_foto = $confere_foto_dono['conferefoto'];
-}
-if(empty($dono_sem_foto)){
-  $imagemdono = "imgs/user.jpeg";
-}
-else{
-  foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
-    $imagemdono = $pegaimagem['path'];
-  }
+foreach($mysqli->query("SELECT i.path AS path FROM tb_imagem AS i JOIN tb_usuario AS u ON i.cd_imagem = u.cd_imagem WHERE u.cd_usuario = '$codigouser'") as $pegaimagem){
+  $imagemdono = $pegaimagem['path'];
 }
 
 if(isset($_SESSION['usuario'])){
   $session = $_SESSION['usuario'];
 
-  foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-    $semfoto = $conferefoto['confere'];
-  }
-
-  if(empty($semfoto)){
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade FROM tb_usuario AS u WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = "imgs/user.jpeg";
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
-  }
-  else{
-    foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
-      $nomeusuario = $usuarios['nome'];
-      $imagemusuario = $usuarios['path'];
-      if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-      elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-      elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
+  foreach($mysqli->query("SELECT u.nm_usuario AS nome, u.sg_especialidade AS especialidade, i.path AS path FROM tb_usuario AS u JOIN tb_imagem AS i ON i.cd_imagem = u.cd_imagem WHERE cd_usuario = '$session'") as $usuarios){
+    $nomeusuario = $usuarios['nome'];
+    $imagemusuario = $usuarios['path'];
+    if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
+    elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
+    elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
   }
 }
 
@@ -243,8 +220,8 @@ if(isset($_SESSION['usuario'])){
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                     <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
-                    <form method="get" action="produto.php" style="display: inline-block;">
-                        <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
+                    <form method="get" action="prodserv.php" style="display: inline-block;">
+                        <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
                         <input type="submit" class="btnpart" value="Comprar">
                     </form>
                 </div>';
@@ -283,8 +260,8 @@ if(isset($_SESSION['usuario'])){
           <i class="fas fa-star-half-alt"></i>
       </div>
       <div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
-      <form method="get" action="produto.php" style="display: inline-block;">
-          <input type="text" name="p" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
+      <form method="get" action="prodinst.php" style="display: inline-block;">
+          <input type="text" name="i" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
           <input type="submit" class="btnpart" value="Comprar">
       </form>
     </div>';
@@ -302,7 +279,7 @@ if(isset($_SESSION['usuario'])){
 
         <?php
         if(isset($session)){
-          foreach($mysqli->query("SELECT count(co.cd_compra) as comprado from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_usuario as u on u.cd_usuario = c.cd_usuario join tb_interpretacao as i on i.cd_interpretacao = c.cd_interpretacao where u.cd_usuario = '$session' and c.nm_inativo = 1 and i.nm_interpretacao = '$nomeinterpretacao'") as $compra){
+          foreach($mysqli->query("SELECT count(co.cd_compra) as comprado from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_usuario as u on u.cd_usuario = c.cd_usuario join tb_servico as i on i.cd_servico = c.cd_servico where u.cd_usuario = '$session' and c.nm_inativo = 1 and i.nm_servico = '$nomeinterpretacao'") as $compra){
             $comprado = $compra['comprado'];
           }
           if($comprado != '0'){
@@ -366,7 +343,7 @@ if(isset($_SESSION['usuario'])){
                                   echo str_replace(substr($dados_fb['usuario'], 11), '...', $dados_fb['usuario']);
                                 }
                                 else{
-                                  echo $dados['nm_interpretacao'];
+                                  echo $dados_fb['usuario'];
                                 } 
                                 echo '</strong> <!-- nome de quem comentou-->
                                 <span>'; 

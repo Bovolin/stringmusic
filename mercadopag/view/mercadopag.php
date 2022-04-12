@@ -13,7 +13,7 @@ include("../../verifica_login.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>StringMusic</title>
-    <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="../../css/stylepagamento.css"/>
     <link rel="shortcut icon" href="../../favicon/ms-icon-310x310.png" />
     <script src="../../js/script.js"></script>
@@ -23,6 +23,7 @@ include("../../verifica_login.php");
         <div class='window'>
           <div class='order-info'>
             <div class='order-info-content'>
+              <a href="../../loja.php" style="color: black;"><i class='bx bx-arrow-back' style="width: 250px; margin-top: 10px;"></i></a>
               <h2>Carrinho</h2>
               <?php if($carrinho->getQuantity() != 0) echo "<div class='line'></div>"; ?>
               <table class='order-table'>

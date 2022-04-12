@@ -1,6 +1,6 @@
 <?php
 
-require_once('lib/Facebook/autoload.php');
+require_once('facebook/Facebook/autoload.php');
 //unset($_SESSION['face_access_token']);
 //Conexão ao SDK
 $fb = new \Facebook\Facebook([

@@ -3,76 +3,38 @@ include ("fundo_foto.php");
 
 $session = $_SESSION['usuario'];
 
-foreach($mysqli->query("SELECT cd_imagem AS confere FROM tb_usuario WHERE cd_usuario = '$session'") as $conferefoto){
-  $semfoto = $conferefoto['confere'];
-}
-
-if(empty($semfoto)){
-    foreach($mysqli->query(
+foreach($mysqli->query(
     "SELECT us.nm_usuario AS nome, 
     us.nm_email AS email,
     e.nm_cep AS cep,
-    e.nm_endereco AS rua,
-    us.sg_especialidade AS especialidade,
+    e.nm_rua AS rua,
+    us.sg_especialidade AS especialidade, 
     us.ds_usuario AS descricao, 
     DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
     e.sg_uf AS uf,
     e.nm_bairro AS bairro,
-    e.nm_cidade AS cidade
-        FROM tb_usuario AS us
-            JOIN tb_endereco AS e
-                ON e.cd_endereco = us.cd_endereco
-                    WHERE us.cd_usuario = '$session'") as $usuarios){
+    e.nm_cidade AS cidade,
+    i.path AS path
+    FROM tb_usuario AS us 
+        JOIN tb_endereco AS e
+            ON e.cd_endereco = us.cd_endereco
+                JOIN tb_imagem AS i
+                    ON i.cd_imagem = us.cd_imagem
+                        WHERE us.cd_usuario = '$session'") as $usuarios){
     $nomeusuario = $usuarios['nome'];
     $descricaousuario = $usuarios['descricao'];
     $emailusuario = $usuarios['email'];
+    $ruausuario = $usuarios['rua'];
+    $cepusuario = $usuarios['cep'];
     $nascimentousuario = $usuarios['nascimento'];
     $ufusuario = $usuarios['uf'];
-    $ruausuario = $usuarios['rua'];
     $bairrousuario = $usuarios['bairro'];
-    $cepusuario = $usuarios['cep'];
     $cidadeusuario = $usuarios['cidade'];
-    $imgusuario = "imgs/user.jpeg";
+    $imgusuario = $usuarios['path'];
 
     if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
     elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
     elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-    }
-}
-else{
-    foreach($mysqli->query(
-        "SELECT us.nm_usuario AS nome, 
-        us.nm_email AS email,
-        e.nm_cep AS cep,
-        e.nm_rua AS rua,
-        us.sg_especialidade AS especialidade, 
-        us.ds_usuario AS descricao, 
-        DATE_FORMAT(us.dt_nascimento, '%d/%m/%Y') AS nascimento,
-        e.sg_uf AS uf,
-        e.nm_bairro AS bairro,
-        e.nm_cidade AS cidade,
-        i.path AS path
-        FROM tb_usuario AS us 
-            JOIN tb_endereco AS e
-                ON e.cd_endereco = us.cd_endereco
-                    JOIN tb_imagem AS i
-                        ON i.cd_imagem = us.cd_imagem
-                            WHERE us.cd_usuario = '$session'") as $usuarios){
-        $nomeusuario = $usuarios['nome'];
-        $descricaousuario = $usuarios['descricao'];
-        $emailusuario = $usuarios['email'];
-        $ruausuario = $usuarios['rua'];
-        $cepusuario = $usuarios['cep'];
-        $nascimentousuario = $usuarios['nascimento'];
-        $ufusuario = $usuarios['uf'];
-        $bairrousuario = $usuarios['bairro'];
-        $cidadeusuario = $usuarios['cidade'];
-        $imgusuario = $usuarios['path'];
-    
-        if($usuarios['especialidade'] == "m") $especialidadeusuario = "Músico";
-        elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
-        elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
-        }
 }
 
 
