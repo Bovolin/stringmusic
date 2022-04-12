@@ -187,7 +187,7 @@ include("foto.php");
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($interp['nm_servico']) > 14){
-                        echo str_replace(substr($interp['nm_servico'], 11, 13), '...', $interp['nm_servico']);
+                        echo str_replace(substr($interp['nm_servico'], 11), '...', $interp['nm_servico']);
                     }
                     else{
                         echo $interp['nm_servico'];
@@ -222,7 +222,7 @@ include("foto.php");
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($interp['nm_instrumento']) > 14){
-                        echo str_replace(substr($interp['nm_instrumento'], 11, 13), '...', $interp['nm_instrumento']);
+                        echo str_replace(substr($interp['nm_instrumento'], 11), '...', $interp['nm_instrumento']);
                     }
                     else{
                         echo $interp['nm_instrumento'];

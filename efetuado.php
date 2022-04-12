@@ -102,7 +102,7 @@ else{
             $users = $select_user['codigo'] + 1;
 
             //Inserção do cadastro
-            $insert = "INSERT INTO tb_usuario (cd_usuario, nm_usuario, nm_senha, nm_email, dt_nascimento, nm_cpf, sg_genero, sg_especialidade, dt_tempo, cd_endereco) VALUES ('$users', '$nome', '$crip', '$email', '$data', '$cpf_string', '$genero', '$especialidade', NOW(), '$result_end')";
+            $insert = "INSERT INTO tb_usuario (cd_usuario, nm_usuario, nm_senha, nm_email, dt_nascimento, nm_cpf, sg_genero, sg_especialidade, dt_tempo, cd_endereco, cd_imagem) VALUES ('$users', '$nome', '$crip', '$email', '$data', '$cpf_string', '$genero', '$especialidade', NOW(), '$result_end', 19)";
             $inserir = $mysqli->query($insert);
 
             if ($inserir === TRUE){ 

@@ -117,7 +117,7 @@ if(isset($_SESSION['usuario'])){
           <img src="'; echo $dados['path']; echo '" alt="">
           <h3>'; 
           if(strlen($dados['nm_instrumento']) > 14){
-            echo str_replace(substr($dados['nm_instrumento'], 11, 13), '...', $dados['nm_instrumento']);
+            echo str_replace(substr($dados['nm_instrumento'], 11), '...', $dados['nm_instrumento']);
           }
           else{
             echo $dados['nm_instrumento'];

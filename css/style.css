@@ -97,13 +97,6 @@ body{
     background: var(--bg) !important;
 }
 
-section{
-    min-height: 100vh;
-    padding:0 9%;
-    padding-top: 7.5rem;
-    padding-bottom: 2rem;
-}
-
 .btnpart{
     display: inline-block;
     margin-top: 1rem;
@@ -824,6 +817,22 @@ footer .social-icon {
       font-size: 15px;
       color: var(--color-text);
   }*/
+  .heading{
+    text-align: center;
+    color: var(--color-headings);
+    text-transform: uppercase;
+    padding:1rem;
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+  }
+  
+  .heading span{
+    color:#4d84e2;
+    text-transform: uppercase;
+  }
+  .product{
+    padding: 10px 100px;
+   }
 
   .product .box-container{
     display: flex;
@@ -841,7 +850,7 @@ footer .social-icon {
     overflow: hidden;
     position: relative;
   }
-  
+
   .product .box-container .box img{
     height: 20rem;
   }
