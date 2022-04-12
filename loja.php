@@ -201,8 +201,8 @@ include("foto.php");
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                     <div class="price"> R$'; echo $interp['vl_servico'];  echo '</div>
-                    <form method="get" action="produto.php" style="display: inline-block;">
-                        <input type="text" name="p" style="display: none;" value="'; echo $interp['nm_servico']; echo '">
+                    <form method="get" action="prodserv.php" style="display: inline-block;">
+                        <input type="text" name="s" style="display: none;" value="'; echo $interp['nm_servico']; echo '">
                         <input type="submit" class="btn" value="Comprar">
                     </form>
                 </div>';

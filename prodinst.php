@@ -309,16 +309,18 @@ if(isset($_SESSION['usuario'])){
           ?>
           <button type="button" class="btnpart" onclick="visivel()"> Dar opinião </button>
           <div class="star-widget" id="div-start-widget" style="display:none">
-            <input type="radio" name="rate" value="5" id="rate-5" onclick="star()">
-            <label for="rate-5" class="fas fa-star"></label>
-            <input type="radio" name="rate" value="4" id="rate-4" onclick="star()">
-            <label for="rate-4" class="fas fa-star"></label>
-            <input type="radio" name="rate" value="3" id="rate-3" onclick="star()">
-            <label for="rate-3" class="fas fa-star"></label>
-            <input type="radio" name="rate" value="2"  id="rate-2" onclick="star()">
-            <label for="rate-2" class="fas fa-star"></label>
-            <input type="radio" name="rate" value="1"  id="rate-1" onclick="star()">
-            <label for="rate-1" class="fas fa-star"></label>
+            <div class="star-review">
+                <input type="radio" name="rate" value="5" id="rate-5" onclick="star()">
+                <label for="rate-5" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="4" id="rate-4" onclick="star()">
+                <label for="rate-4" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="3" id="rate-3" onclick="star()">
+                <label for="rate-3" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="2"  id="rate-2" onclick="star()">
+                <label for="rate-2" class="fas fa-star"></label>
+                <input type="radio" name="rate" value="1"  id="rate-1" onclick="star()">
+                <label for="rate-1" class="fas fa-star"></label>
+              </div>
             <form action="feedback.php" method="post" class="form_feedback">
               <header></header>
               <div class="textarea">

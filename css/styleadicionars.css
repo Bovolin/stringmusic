@@ -819,6 +819,18 @@ input:checked ~ .form_feedback{
   width: 100%;
   overflow: hidden;
 }
+.star-review{
+  position: relative;
+  width: 520px;
+  background: #3770db;
+  padding: 20px 30px;
+  border: 1px solid #1062fa;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
 .form_feedback .textarea textarea{
   height: 100%;
   width: 100%;
