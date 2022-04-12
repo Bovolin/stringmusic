@@ -31,6 +31,7 @@ if(isset($_SESSION['usuario'])){
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <!--SWAL-->
     <script src="js/swal.js"></script>
+    <script src="js/clipboard.min.js"></script>
 
 </head>
 
@@ -113,10 +114,15 @@ unset($_SESSION['servicorecusado']);
       
     while($dados = $query->fetch_array()){
       echo '<div class="box">
-        <div class="icons">
-            <a href="#" class="fas fa-share"></a>
-            <a href="#" class="fas fa-copy"></a>
-        </div>
+          <div class="icons">
+              <a href="#" class="fas fa-share"></a>
+              <button class="btn'; echo $dados['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $dados['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+          </div>';?>
+          <script>
+              var button = document.getElementsByClassName("btn<?php echo $dados['nm_servico']?>");
+              new ClipboardJS(button);
+          </script>
+          <?php echo'
         <img src="'; echo $dados['path']; echo '" alt="">
         <h3>'; 
           if(strlen($dados['nm_servico']) > 14){

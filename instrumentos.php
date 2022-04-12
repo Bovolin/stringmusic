@@ -31,6 +31,7 @@ if(isset($_SESSION['usuario'])){
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <!--SWAL-->
     <script src="js/swal.js"></script>
+    <script src="js/clipboard.min.js"></script>
 
 </head>
 <body onload="produtorecusado()">
@@ -112,8 +113,13 @@ if(isset($_SESSION['usuario'])){
         echo '<div class="box">
           <div class="icons">
               <a href="#" class="fas fa-share"></a>
-              <a href="#" class="fas fa-copy"></a>
-          </div>
+              <button class="btn'; echo $dados['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/prodinst.php?i='; echo $dados['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
+          </div>';?>
+          <script>
+              var button = document.getElementsByClassName("btn<?php echo $dados['nm_instrumento']?>");
+              new ClipboardJS(button);
+          </script>
+          <?php echo'
           <img src="'; echo $dados['path']; echo '" alt="">
           <h3>'; 
           if(strlen($dados['nm_instrumento']) > 14){

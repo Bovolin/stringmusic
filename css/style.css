@@ -97,6 +97,16 @@ body{
     background: var(--bg) !important;
 }
 
+.btn{
+  border: none;
+  background: none;
+}
+
+.btn:hover{
+  border: none;
+  background: none;
+}
+
 .btnpart{
     display: inline-block;
     margin-top: 1rem;
