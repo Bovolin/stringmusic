@@ -94,20 +94,17 @@ include("foto.php");
 
         <div class="box">
             <h3>Instrumentos</h3>
-            <p>Textinho</p>
-            <img src="img/partitura.jpg" alt="">
+            <img src="imgs/instrumentos.png" alt="">
             <a href="instrumentos.php" class="btn">Acessar</a>
         </div>
         <div class="box">
             <h3>Partituras</h3>
-            <p>Textinho</p>
-            <img src="img/partitura.jpg" alt="">
+            <img src="imgs/partituras.png" alt="">
             <a href="interpretacoes.php" class="btn">Acessar</a>
         </div>
         <div class="box">
             <h3>Serviços</h3>
-            <p>Textinho</p>
-            <img src="img/partitura.jpg" alt="">
+            <img src="imgs/serviços.png" alt="">
             <a href="servico.php" class="btn">Acessar</a>
         </div>
 
