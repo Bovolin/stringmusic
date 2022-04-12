@@ -106,6 +106,10 @@ else{
             $inserir = $mysqli->query($insert);
 
             if ($inserir === TRUE){ 
+                unset($_SESSION['face_access_token']);
+                unset($_SESSION['user_name']);
+                unset($_SESSION['user_email']);
+                
                 $_SESSION['status_cadastro'] = true;
                 header('Location: login.php');
                 exit;

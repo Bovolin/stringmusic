@@ -49,10 +49,21 @@ else{
     try{
         $response = $fb->get('/me?fields=name, email');
         $user = $response->getGraphUser();
-        //var_dump($user);
-        $_SESSION['user_email'] = $user['email'];
-        $_SESSION['user_name'] = $user['name'];
-        header("Location: concluir.php");
+
+        foreach($mysqli->query("SELECT cd_usuario AS codigo, nm_senha FROM tb_usuario WHERE nm_email = '". $user['email'] ."'") as $username){
+            $codigo = $username['codigo'];
+        }
+        if($row == 1){
+            $_SESSION['usuario'] = $codigo;
+            header ('Location: painel.php');
+            exit;
+        }
+        else{
+            unset($_SESSION['face_access_token']);
+            $_SESSION['nao_usuario'] = true;
+            header ('Location: login.php');
+            exit;
+        }
     } 
     catch(Facebook\Exceptions\FacebookResponseException $e){
         echo $e->getMessage();

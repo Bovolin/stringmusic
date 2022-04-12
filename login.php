@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("face.php");
+include("face_registro.php");
+include("face_login.php");
 ?> 
 
 <!DOCTYPE html>
@@ -91,17 +92,8 @@ include("face.php");
             <input type="submit" value="Login" class="btn solid" />
             <p class="social-text">Ou entre através das redes sociais</p>
             <div class="social-media">
-              <a href="#" class="social-icon">
+              <a href="<?php echo $loginUrl ?>" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
               </a>
             </div>
           </form>
@@ -128,11 +120,8 @@ include("face.php");
 
             <p class="social-text">Ou registre-se com as redes sociais!</p>
             <div class="social-media">
-              <a href="<?php echo $loginUrl; ?>" class="social-icon">
+              <a href="<?php echo $registUrl; ?>" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
               </a>
             </div>
           </form>
