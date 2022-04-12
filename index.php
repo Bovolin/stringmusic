@@ -59,7 +59,7 @@
 
 <!-- HOME  -->
 
-<section class="home" id="home">
+<section class="home" id="home" style="min-height: 80vh">
     <div class="content">
         <h3>A plataforma própria para<span> músicos</span></h3>
         <p>Já pensou em algum lugar onde você possa comprar tudo relacionado a música? Acesse nossa loja!</p>
@@ -74,21 +74,21 @@
 
 <!-- DESTAQUES  -->
 
-<section class="features" id="features">
-    <h1 class="heading"> Destaques da plataforma </h1>
+<section class="features" id="features" style="min-height: 50vh">
+    <h1 class="heading"> Destaques da <span> plataforma </span> </h1>
     <div class="box-container">
         <div class="box">
-            <img src="imgs/prods/Powerwolf.jpg" alt="">
+            <img src="imgs/Sem-Titulo-2.jpg" style="width: 250px" alt="">
             <h3>Divulgue aqui seu trabalho!</i></h3>
             <p>E encontre lugares para apresentá-lo!</p>
         </div>
         <div class="box">
-            <img src="imgs/prods/Powerwolf.jpg" alt="">
+            <img src="imgs/Sem-Título-5.png" style="width: 250px" alt="">
             <h3>Contrate os melhores!</h3>
             <p>Encontre aqui o músico ideal para seu evento!</p>
         </div>
         <div class="box">
-            <img src="imgs/prods/Powerwolf.jpg" alt="">
+            <img src="imgs/banner_treix.png" style="width: 250px" alt="">
             <h3>Anuncie aqui seu produto!</h3>
             <p>Ir para página de adicionar produtos! <a href="adicionarprod.php"><i class="fas fa-sign-in-alt"></a></i></p>
         </div>
@@ -98,7 +98,7 @@
 <!-- FEATURES FIM -->
 
 <!-- SOBRE  -->
-
+<!--
 <section class="about" id="about">
 
     <h1 class="heading"> Sobre a plataforma </h1>
@@ -116,7 +116,7 @@
 
     </div>
 
-</section>
+</section>-->
 
 <!-- SOBRE FIM -->
 
