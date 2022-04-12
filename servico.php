@@ -95,7 +95,7 @@ unset($_SESSION['servicorecusado']);
 </header>
 
 <section class="product" id="product">
-  <h1 style="font-size: 25px;display: inline; color: var(--color-headings);">Partituras</h1>
+  <h1 style="font-size: 25px;display: inline; color: var(--color-headings);">Serviços</h1>
   <?php
   if(isset($_SESSION['usuario']))
     echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';

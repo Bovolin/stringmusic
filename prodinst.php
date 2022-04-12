@@ -49,8 +49,23 @@ if(isset($_SESSION['usuario'])){
     <script src="js/swal.js"></script>
 
 </head>
-<body>
-  
+<?php
+  if(isset($_SESSION['inserir_feedback'])) $swal = 'inserir_feedback';
+  if(isset($_SESSION['inserir_feedback'])):
+?>
+<script>
+  function inserir_feedback(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Obrigado pelo feedback!'
+    })
+  }
+</script>
+<?php
+  endif;
+  unset($_SESSION['inserir_feedback']);
+?>
+<body onload="<?php echo $swal?>()">
 <header>
     <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
 
