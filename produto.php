@@ -315,7 +315,8 @@
               <label for="rate-1" class="fas fa-star"></label>
             </div>
             <form action="feedback.php" method="post" class="form_feedback">
-              <header></header>
+              <br>
+              <header style="display: none;"></header>
               <div class="textarea">
                 <textarea cols="30" name="comment" placeholder="Deixe seu feedback sobre o produto!!"></textarea>
               </div>

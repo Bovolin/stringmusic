@@ -17,8 +17,26 @@ include("../../verifica_login.php");
     <link rel="stylesheet" type="text/css" href="../../css/stylepagamento.css"/>
     <link rel="shortcut icon" href="../../favicon/ms-icon-310x310.png" />
     <script src="../../js/script.js"></script>
+    <script src="../../js/swal.js"></script>
 </head>
-<body>
+<?php
+  if(isset($_SESSION['transaction_error'])) $onload = 'onload()';
+
+  if(isset($_SESSION['transaction_error'])):
+?>
+<script>
+  function onload(){
+    Swal.fire({
+      icon: 'error',
+      title: 'Ocorreu um erro interno. Tente novamente!'
+    })
+  }
+</script>
+<?php
+  endif;
+  unset($_SESSION['transaction_error']);
+?>
+<body onload="<?php echo $onload ?>">
     <div class='container'>
         <div class='window'>
           <div class='order-info'>

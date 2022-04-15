@@ -32,42 +32,49 @@ $payment->payment_method_id = $paymentMethodId;
 $payment->payer = array(
     "email" => $email
 );
-$payment->save();
+$save = $payment->save();
+if($save == FALSE){
+    $_SESSION['transaction_error'] = true;
+    header("Location: ../view/mercadopag.php");
+}
+else{
+    //Variáveis - compra
+    //Selecionar codigo comprador
+    $code_user = $_SESSION['usuario'];
+    $forma_payment = "c";
 
-//Variáveis - compra
-//Selecionar codigo comprador
-$code_user = $_SESSION['usuario'];
-$forma_payment = "c";
+    //Criptografar token
+    $frase_array = str_split(str_replace(' ', '',$token));
+    $frase_count = strlen(str_replace(' ', '',$token));
+    $j = 2;
+    $token_livre = 0;
+    for($i = 0; $i < $frase_count; $i++){
+        $conta = pow($j, ord($frase_array[$i]) + 12);
+        $j +=  5;
+        $token_livre += $conta;
+    }
 
-//Criptografar token
-$frase_array = str_split(str_replace(' ', '',$token));
-$frase_count = strlen(str_replace(' ', '',$token));
-$j = 2;
-$token_livre = 0;
-for($i = 0; $i < $frase_count; $i++){
-    $conta = pow($j, ord($frase_array[$i]) + 12);
-    $j +=  5;
-    $token_livre += $conta;
+
+    //Insert na tabela compra 
+    $cod =$mysqli->query("SELECT cd_carrinho AS cod_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
+
+    while($codigo_car = $cod->fetch_assoc()){
+        //Contador de compra
+        $contador_compra = $mysqli->query("SELECT COUNT(cd_compra) AS cod_comp FROM tb_compra");
+        $contador_compra = $contador_compra->fetch_assoc();
+        $result_compr = $contador_compra['cod_comp'] + 1;
+
+        $cd_car = $codigo_car["cod_car"];
+        $mysqli->query("INSERT INTO tb_compra (cd_compra, dt_compra, vl_compra, cd_usuario, cd_carrinho, nm_pagamento, nm_pagante, nm_email, nm_token) VALUES ('$result_compr', NOW(), '$amount', '$code_user', '$cd_car', '$forma_payment', '$nome', '$email', '$token_livre')");
+    }
+
+    //Desativar carrinho
+    $upd = $mysqli->query("UPDATE tb_carrinho SET nm_inativo = 1 WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
+
+    $_SESSION['payment'] = $payment;
+    header("Location: ../view/result.php");
 }
 
 
-//Insert na tabela compra 
-$cod =$mysqli->query("SELECT cd_carrinho AS cod_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
-
-while($codigo_car = $cod->fetch_assoc()){
-    //Contador de compra
-    $contador_compra = $mysqli->query("SELECT COUNT(cd_compra) AS cod_comp FROM tb_compra");
-    $contador_compra = $contador_compra->fetch_assoc();
-    $result_compr = $contador_compra['cod_comp'] + 1;
-
-    $cd_car = $codigo_car["cod_car"];
-    $mysqli->query("INSERT INTO tb_compra (cd_compra, dt_compra, vl_compra, cd_usuario, cd_carrinho, nm_pagamento, nm_pagante, nm_email, nm_token) VALUES ('$result_compr', NOW(), '$amount', '$code_user', '$cd_car', '$forma_payment', '$nome', '$email', '$token_livre')");
-}
-
-//Desativar carrinho
-$upd = $mysqli->query("UPDATE tb_carrinho SET nm_inativo = 1 WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
-
-$_SESSION['payment'] = $payment;
-header("Location: ../view/result.php");
 
 ?>
