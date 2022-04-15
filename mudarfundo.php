@@ -13,8 +13,16 @@ if(isset($_SESSION['usuario'])){
 if(isset($_FILES['fundo'])){
     $foto = $_FILES['fundo'];
     
-    if($foto['error']) die("Falha ao enviar foto!");
-    if($foto['size'] > 2097152) die("O arquivo excedeu 2MB. Tamanho máximo: 2MB.");
+    if($foto['error']){
+        $_SESSION['pic_error'] = true;
+        header("Location: painel.php");
+        die();
+    }
+    if($foto['size'] > 2097152){
+        $_SESSION['pic_error_size'] = true;
+        header("Location: painel.php");
+        die();
+    }
     $pasta = "img/";
     $nomeoriginal = $foto['name'];
     $novonome = uniqid();

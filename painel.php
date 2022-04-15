@@ -93,6 +93,8 @@
 
     <?php
     if(isset($_SESSION['cred_alterada'])) $onload = "cred_alterada()";
+    elseif(isset($_SESSION['pic_error'])) $onload = "pic_error()";
+    elseif(isset($_SESSION['pic_error_size'])) $onload = "pic_error_size()";
 
     if(isset($_SESSION['cred_alterada'])):
     ?>
@@ -100,13 +102,41 @@
       function cred_alterada(){
         Swal.fire({
           icon: 'success',
-          text: 'Credenciais alteradas com sucesso!'
+          title: 'Credenciais alteradas com sucesso!'
         })
       }
     </script>
     <?php
     endif;
     unset($_SESSION['cred_alterada']);
+
+    if(isset($_SESSION['pic_error'])):
+    ?>
+    <script>
+      function pic_error(){
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocorreu um erro ao enviar sua foto. Tente novamente!'
+        })
+      }
+    </script>
+    <?php
+    endif;
+    unset($_SESSION['pic_error']);
+
+    if(isset($_SESSION['pic_error_size'])):
+    ?>
+    <script>
+      function pic_error_size(){
+        Swal.fire({
+          icon: 'info',
+          title: 'Sua imagem excedeu o tamanho máximo de 2MB. Por favor, insira uma imagem menor.'
+        })
+      }
+    </script>
+    <?php
+    endif;
+    unset($_SESSION['pic_error_size']);
     ?>
     <body onload="<?php echo $onload ?>">
     <header>
@@ -150,21 +180,6 @@
                 <img src="<?php echo $imgusuario ?>" alt="">
                 <button type="button" class="button-avatar" id="loadFileXml" onclick="document.getElementById('file').click();">
                   <i class="fas fa-camera"></i>
-                  <?php
-                    if(isset($_SESSION['fotoinserida'])):
-                  ?>
-                  <script>
-                    function fotoenviada(){
-                      Swal.fire({
-                        icon: 'success',
-                        title: 'Foto enviada com sucesso!'
-                      })
-                    }
-                  </script>
-                  <?php
-                    endif;
-                    unset($_SESSION['fotoinserida']);
-                  ?>
                   <form action="mudarfoto.php" method="post" id="form" onsubmit="fotoenviada()" enctype="multipart/form-data">
                     <input type="file" style="display:none;" id="file" name="file" accept="image/png, image/jpg, image/jpeg">
                   </form>
