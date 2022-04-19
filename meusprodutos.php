@@ -31,6 +31,7 @@ if(isset($_SESSION['usuario'])){
     <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
     <!--SWAL-->
     <script src="js/swal.js"></script>
+    <script src="js/clipboard.min.js"></script>
 </head>
 <?php
 if(isset($_SESSION['alterado'])) $onload = "alterado";
@@ -106,7 +107,7 @@ unset($_SESSION['removido']);
 
 <section class="product" id="product">
   <?php
-    $busca_prod = "SELECT COUNT(s.cd_interpretacao) AS codigo FROM tb_interpretacao AS s JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
+        $busca_prod = "SELECT COUNT(s.cd_interpretacao) AS codigo FROM tb_interpretacao AS s JOIN tb_usuario AS u ON u.cd_usuario = s.cd_usuario WHERE s.cd_usuario = '$codigousuario' AND s.nm_inativo = 0";
         $busca_prod = $mysqli->query($busca_prod);
         $busca_prod = $busca_prod->fetch_assoc();
         $confirma_prod = $busca_prod['codigo'];
@@ -131,8 +132,13 @@ unset($_SESSION['removido']);
                     echo '<div class="box">
                     <div class="icons">
                         <a href="#" class="fas fa-share"></a>
-                        <a href="#" class="fas fa-copy"></a>
-                    </div>
+                        <button class="btn'; echo $dados['nm_interpretacao']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $dados['nm_interpretacao']; echo '"><a class="fas fa-copy"></a></button>
+                    </div>';?>
+                    <script>
+                        var button = document.getElementsByClassName("btn<?php echo $dados['nm_interpretacao']?>");
+                        new ClipboardJS(button);
+                    </script>
+                    <?php echo'
                     <img src="'; echo $dados['path']; echo '" alt="">
                     <h3>'; 
                     if(strlen($dados['nm_interpretacao']) > 14){
@@ -276,12 +282,12 @@ unset($_SESSION['removido']);
 
 
     <!-- Menu navbar -> script interno -->
-  <script>
-            function menuAlterna(){
-              const trocaMenu = document.querySelector('.menu');
-              trocaMenu.classList.toggle('active');
-            }
-  </script>
+    <script>
+      function menuAlterna(){
+        const trocaMenu = document.querySelector('.menu');
+        trocaMenu.classList.toggle('active');
+      }
+    </script>
           
   
 

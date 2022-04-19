@@ -29,7 +29,7 @@ elseif($exception->verifyTransaction()['class'] == 'alert') $icone = 'info';
             confirmButtonText: 'Prosseguir'
         }).then((result) => {
             if(result.isConfirmed){
-                window.location.href= "mercadopag.php";
+                window.location.href= "../../prodcomprados.php";
             }
         })
     }

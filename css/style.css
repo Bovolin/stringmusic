@@ -899,6 +899,16 @@ footer .social-icon {
     background: #5995fd;
     color:#fff;
   }
+
+  .product .box-container .box .icons button{
+    background: none;
+    cursor: pointer;
+  }
+  
+  .product .box-container .box .icons button:hover{
+    background: none;
+    cursor: pointer;
+  }
   
   .product .box-container .box h3{
     color:var(--color-headings);
