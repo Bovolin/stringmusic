@@ -613,3 +613,52 @@ display: inline-flex;
 .action .menu .un .sair:hover a{
   color: red;
 }
+
+.payment-ticket-img{
+  width: 50%;
+  line-height: 24px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.payment-group{
+  position: fixed;
+  width: 100%;
+  max-width: 400px;
+  padding: 48px 30px;
+  background-color: #fff;
+  border-radius: 49px;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-50%,0);
+  text-align: center;
+  transition: 0.3s all ease;
+}
+
+.payment-group h2{
+  color: #4994FC;
+  font-weight: bold;
+  line-height: 32px;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.payment-ticket p{
+  color: #4994FC;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.payment-info p{
+  font-size: 16px;
+}
+
+.payment-info a{
+  text-decoration: none;
+  color: #4994FC;
+}
+
+.payment-btn{
+  width: 100%;
+  display: flex;
+}
