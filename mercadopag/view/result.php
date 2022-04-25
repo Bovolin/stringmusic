@@ -55,8 +55,8 @@ foreach($mysqli->query("SELECT dt_compra as data_compra from tb_compra where nm_
         </div>
         <div class="payment-btn">
             <form action="../../destruirsession.php" method="post">
-                <input type="submit" class="btn" value="continuar">
-                <input type="submit" class="btn" value="ver">
+                <input type="submit" class="btn" name="c" value="Continuar">
+                <input type="submit" class="btn" name="v" value="Ver Produto">
             </form>
         </div>
     </div>
