@@ -79,6 +79,7 @@ if(isset($_SESSION['usuario'])){
                         <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
                         <li class="info"><i class="bx bx-cart"></i><a href="mercadopag/view/mercadopag.php">Carrinho</a></li>
                         <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
+                        <li class="info"><i class="bx bx-notepad"></i><a href="minhascompras.php">Minhas Compras</a></li>
                         <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
                         <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
                         <label for="switch" class="toggle">Toggle</label>
