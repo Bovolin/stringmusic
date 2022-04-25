@@ -73,7 +73,7 @@ else{
     $upd = $mysqli->query("UPDATE tb_carrinho SET nm_inativo = 1 WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
 
     $_SESSION['payment'] = $payment;
-    $_SESSION['token'] = $token_livre;
+    $_SESSION['token'] = $token;
     header("Location: ../view/result.php");
     die();
 }

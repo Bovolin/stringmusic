@@ -30,7 +30,6 @@ class ClassException{
                 'message'=>$this->getErrors()
             ];
         }
-        unset($_SESSION);
         return $html;
     }
 

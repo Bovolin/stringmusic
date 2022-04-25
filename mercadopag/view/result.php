@@ -1,7 +1,8 @@
 <?php
 require("../../lib/vendor/autoload.php");
-session_start();
+include("../../conexao.php");
 $exception = new \Classes\ClassException();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -10,31 +11,55 @@ $exception = new \Classes\ClassException();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../../js/swal.js"></script>
-    <title>Mercado Pago</title>
+    <link rel="stylesheet" href="../../css/styleloja.css">
+    <title>StringMusic</title>
 </head>
-<?php 
+<?php
 $exception->setPayment($_SESSION['payment']);
 
 if($exception->verifyTransaction()['class'] == 'error') $icone = 'error';
 elseif($exception->verifyTransaction()['class'] == 'success') $icone = 'success';
 elseif($exception->verifyTransaction()['class'] == 'alert') $icone = 'info';
+
+$token_compra = $_SESSION['token'];
+
+//Criptografar token
+$frase_array = str_split(str_replace(' ', '',$token_compra));
+$frase_count = strlen(str_replace(' ', '',$token_compra));
+$j = 2;
+$token_livre = 0;
+for($i = 0; $i < $frase_count; $i++){
+    $conta = pow($j, ord($frase_array[$i]) + 12);
+    $j +=  5;
+    $token_livre += $conta;
+}
+
+foreach($mysqli->query("SELECT dt_compra as data_compra from tb_compra where nm_token = '$token_livre' limit 1") as $infos_compra){
+    $data = $infos_compra['data_compra'];
+}
+
 ?>
-<script>
-    function swal(){
-        Swal.fire({
-            icon: '<?php echo $icone ?>',
-            text: '<?php echo $exception->verifyTransaction()['message'] ?>',
-            confirmButtonColor: '#32cd32',
-            confirmButtonText: 'Prosseguir'
-        }).then((result) => {
-            if(result.isConfirmed){
-                window.location.href= "../../prodcomprados.php";
-            }
-        })
-    }
-</script>
-<body onload="swal()">
+<body>
+    <div class="payment-group">
+        <?php
+        if($icone == 'error') echo '<img class="payment-ticket-img" src="../../imgs/ticket-error.png" alt="imagem com um X">';
+        elseif($icone == 'success') echo '<img class="payment-ticket-img" src="../../imgs/ticket.png" alt="imagem com um correto">';
+        elseif($icone == 'info') echo '<img class="payment-ticket-img" src="../../imgs/ticket-error.png" alt="imagem com um X">';
+        ?>
+            <h2><?php echo $exception->verifyTransaction()['message'] ?></h2>
+            <div class="payment-ticket">
+                <p>Código da compra: <?php echo $token_compra ?></p>
+            </div>  
+        <div class="payment-info">
+            <p>Data da compra: <?php echo $data ?></p>
+        </div>
+        <div class="payment-btn">
+            <form action="../../destruirsession.php" method="post">
+                <input type="submit" class="btn" value="continuar">
+                <input type="submit" class="btn" value="ver">
+            </form>
+        </div>
+    </div>
         
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>
