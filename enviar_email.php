@@ -7,48 +7,24 @@ $gmail_email = $_POST['email'];
 $telefone_email = $_POST['telefone'];
 $titulo_email = $_POST['titulo'];
 $mensagem_email = $_POST['mensagem'];
+$data = date("d/m/Y");
+$hora = date("H:i:s");
 
-require_once('email/PHPMailer.php');
-require_once('email/SMTP.php');
-require_once('email/Exception.php');
+$arquivo = "
+    <html>
+        <p><b>Nome: </b>$nome_email</p>
+        <p><b>Email: </b>$gmail_email</p>
+        <p><b>Mensagem: </b>$mensagem_email</p>
+        <p>Este email foi enviado em $data às $hora</p>
+    </html>
+";
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+$destino = "stringmsc7@gmail.com";
+$assunto = "$titulo_email";
 
-$mail = new PHPMailer(true);
+$headers = "MIME-Version: 1.0\n";
+$headers .= "Content-type: text/html; charset=iso-8859-1\n";
+$headers .= "From: $nome_email <$gmail_email>";
 
-try{
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true; // Alterar para true
-    $mail->Username = '#@gmail.com'; //Substituir pelo email
-    $mail->Password = '#'; //Substituir pela senha do email
-    $mail->Port = 587;
-
-    $mail->setFrom('#@gmail.com');
-    $mail->addAddress('#@gmail.com');
-
-    $mail->isHTML(true);
-    $mail->Subject = $titulo_email;
-    $mail->Body = 'Enviado de: ' . $nome_email . '<br>' . 'Email: ' . $gmail_email . '<br>' . 'Telefone: ' . $telefone_email . '<br>' . 'Mensagem: ' . $mensagem_email;
-
-    if($mail->send()){
-        $_SESSION['email_enviado'] = true;
-        header ("Location: contato.php");
-        die();
-    }
-    else{
-        $_SESSION['email_recusado'] = true;
-        header ("Location: contato.php");
-        die(); 
-    }
-}
-catch (Exception $e){
-    $_SESSION['email_recusado'] = true;
-    header ("Location: contato.php");
-    die(); 
-}
-
+mail($destino, $assunto, $arquivo, $headers);
 ?>

@@ -128,26 +128,26 @@
     <div class="image">
         <img src="logo/padrão.png" alt="">
     </div>
-    <form action="">
+    <form action="enviar_email.php" method="post">
         <h1 class="heading">Contato</h1>
         <div class="inputBox">
-            <input type="text" required>
+            <input type="text" name="nome" required>
             <p class="lbl_index">Nome</p>
         </div>
         <div class="inputBox">
-            <input type="email" required>
+            <input type="email" name="email" required>
             <p class="lbl_index">Email</p>
         </div>
         <div class="inputBox">
-            <input type="text" required>
+            <input type="text" name="telefone" required>
             <p class="lbl_index" onkeypress="return Onlynumbers(this)">Telefone</p>
         </div>
         <div class="inputBox">
-            <input type="text" required>
+            <input type="text" name="titulo" required>
             <p class="lbl_index">Título</p>
         </div>
         <div class="inputBox">
-            <textarea required name="" id="" cols="30" rows="10"></textarea>
+            <textarea required name="mensagem" cols="30" rows="10"></textarea>
             <p class="lbl_index">Mensagem</p>
         </div>
         <input type="submit" class="btnpart" value="Enviar">
