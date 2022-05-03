@@ -45,7 +45,7 @@ if(isset($_SESSION['usuario'])){
         
     <section class="product" id="product">
     <?php
-        $busca_prod = "SELECT count(s.cd_interpretacao) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_carrinho join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+        $busca_prod = "SELECT count(s.cd_interpretacao) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
         $busca_prod = $mysqli->query($busca_prod);
         $busca_prod = $busca_prod->fetch_assoc();
         $confirma_prod = $busca_prod['codigo'];
@@ -55,7 +55,7 @@ if(isset($_SESSION['usuario'])){
         else{?>
         <div class="box-container">
             <?php
-            $meusprods = "SELECT s.cd_interpretacao, s.nm_interpretacao, s.vl_interpretacao, i.path from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_carrinho join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+            $meusprods = "SELECT s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
                 $query = $mysqli->query($meusprods);
                 while($dados = $query->fetch_array()){
                     echo '<div class="box">
@@ -93,7 +93,8 @@ if(isset($_SESSION['usuario'])){
                         Swal.fire({
                             imageUrl: '<?php echo $dados['path'] ?>',
                             imageHeight: 300,
-                            title: '<?php echo $dados['nm_interpretacao'] ?>'
+                            title: '<?php echo $dados['nm_interpretacao'] ?>',
+                            html: 'Ticket de compra: <?php echo $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?>'
                         })
                     }
                 </script>
@@ -109,7 +110,7 @@ if(isset($_SESSION['usuario'])){
       
         <section class="product" id="product">
         <?php
-            $busca_prod = "SELECT count(s.cd_instrumento) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_instrumento as s on s.cd_instrumento = c.cd_carrinho join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+            $busca_prod = "SELECT count(s.cd_instrumento) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_instrumento as s on s.cd_instrumento = c.cd_instrumento join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
             $busca_prod = $mysqli->query($busca_prod);
             $busca_prod = $busca_prod->fetch_assoc();
             $confirma_prod = $busca_prod['codigo'];
@@ -119,7 +120,7 @@ if(isset($_SESSION['usuario'])){
             else{?>
             <div class="box-container">
                 <?php
-                $meusprods = "SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_instrumento as s on s.cd_instrumento = c.cd_carrinho join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+                $meusprods = "SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path, co.nm_token, co.dt_entrega from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_instrumento as s on s.cd_instrumento = c.cd_instrumento join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
                     $query = $mysqli->query($meusprods);
                     while($dados = $query->fetch_array()){
                         echo '<div class="box">
@@ -149,16 +150,23 @@ if(isset($_SESSION['usuario'])){
                             <i class="fas fa-star-half-alt"></i>
                         </div>
                         <div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
-                        <form method="get" action="view_prod.php">
-                        <input type="text" name="p" style="display: none;" value="'; echo $dados['cd_instrumento']; echo '">
-                        <input type="submit" class="btnpart" value="Visualizar">
-                        </form>
-                    </div>';
-                    }
-                ?>
-            </div>
+                        <button class="btnpart" onclick="viewinst'. $dados['cd_instrumento'] .'()">Visualizar</button>
+                        </div>';
+                        ?>
+                        <script>
+                            function viewinst<?php echo $dados['cd_instrumento']?>(){
+                                Swal.fire({
+                                    imageUrl: '<?php echo $dados['path'] ?>',
+                                    imageHeight: 300,
+                                    title: '<?php echo $dados['nm_instrumento'] ?>',
+                                    html: 'Ticket de compra: <?php echo $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?>'
+                                })
+                            }
+                        </script>
+                        <?php }?>
+                </div>
                 
-            <?php }?>
+                <?php }?>
         </section>
 
     </div>
@@ -167,7 +175,7 @@ if(isset($_SESSION['usuario'])){
       
         <section class="product" id="product">
             <?php
-                $busca_prod = "SELECT count(s.cd_servico) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_servico as s on s.cd_servico = c.cd_carrinho join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+                $busca_prod = "SELECT count(s.cd_servico) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_servico as s on s.cd_servico = c.cd_servico join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
                 $busca_prod = $mysqli->query($busca_prod);
                 $busca_prod = $busca_prod->fetch_assoc();
                 $confirma_prod = $busca_prod['codigo'];
@@ -177,7 +185,7 @@ if(isset($_SESSION['usuario'])){
                 else{?>
                 <div class="box-container">
                     <?php
-                    $meusprods = "SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_servico as s on s.cd_servico = c.cd_carrinho join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+                    $meusprods = "SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path, co.nm_token, co.dt_entrega from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_servico as s on s.cd_servico = c.cd_servico join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
                         $query = $mysqli->query($meusprods);
                         while($dados = $query->fetch_array()){
                             echo '<div class="box">
@@ -207,17 +215,24 @@ if(isset($_SESSION['usuario'])){
                                 <i class="fas fa-star-half-alt"></i>
                             </div>
                             <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
-                            <form method="get" action="view_prod.php">
-                            <input type="text" name="p" style="display: none;" value="'; echo $dados['cd_servico']; echo '">
-                            <input type="submit" class="btnpart" value="Visualizar">
-                            </form>
+                            <button class="btnpart" onclick="viewserv'. $dados['cd_servico'] .'()">Visualizar</button>
                         </div>';
-                        }
-                    ?>
+                        ?>
+                        <script>
+                            function viewserv<?php echo $dados['cd_servico']?>(){
+                                Swal.fire({
+                                    imageUrl: '<?php echo $dados['path'] ?>',
+                                    imageHeight: 300,
+                                    title: '<?php echo $dados['nm_servico'] ?>',
+                                    html: 'Ticket de compra: <?php echo $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?>'
+                                })
+                            }
+                        </script>
+                        <?php }?>
                 </div>
-                    
+                
                 <?php }?>
-            </section>
+        </section>
 
     </div>
     
