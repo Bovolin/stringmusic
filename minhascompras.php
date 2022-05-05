@@ -34,7 +34,44 @@ if(isset($_SESSION['usuario'])){
     <script src="js/clipboard.min.js"></script>
 </head>
 <body>
+    <header>
+        <a href="index.php" class="logo"><img src="logo/padrão.png" id="logo" class="nav-logo" alt="Logo"></a>
 
+        <input type="checkbox" id="menu-bar">
+        <label for="menu-bar" class="fas fa-bars"></label>
+
+        <nav class="navbar">
+            <a href="index.php">Início</a>
+            <a href="loja.php">Loja</a>
+            <?php
+                if(isset($_SESSION['usuario'])){
+                echo
+                '<div class="action">
+                    <div class="profile" onclick="menuAlterna();">
+                        <img src="'; echo $imagemusuario; echo'">
+                    </div>
+                    <div class="menu" style="top: 90px !important; right: 8.5% !important">
+                        <h3>'; echo $nomeusuario; echo '<br><span>'; echo $especialidadeusuario; echo '</span></h3>
+                        <ul class="un">
+                            <li class="info"><i class="bx bx-user-circle"></i><a href="painel.php">Meu Perfil</a></li>
+                            <li class="info"><i class="bx bx-cart"></i><a href="mercadopag/view/mercadopag.php">Carrinho</a></li>
+                            <li class="info"><i class="bx bx-envelope"></i><a href="meusprodutos.php">Meus Produtos</a></li>
+                            <li class="info"><i class="bx bx-notepad"></i><a href="minhascompras.php">Minhas Compras</a></li>
+                            <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
+                            <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
+                            <label for="switch" class="toggle">Toggle</label>
+                            <script src="js/script_dark.js"></script></li>
+                        </ul>
+                    </div>
+                    </div>';
+                }
+                else{
+                echo '<a href="login.php">Login</a>';
+                }
+                ?>
+        </nav>
+
+    </header>
     <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'Part')">Partituras</button>
       <button class="tablinks" onclick="openTab(event, 'Inst')">Instrumentos</button>
@@ -43,66 +80,154 @@ if(isset($_SESSION['usuario'])){
     
     <div id="Part" class="tabcontent">
         
-    <section class="product" id="product">
-    <?php
-        $busca_prod = "SELECT count(s.cd_interpretacao) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
-        $busca_prod = $mysqli->query($busca_prod);
-        $busca_prod = $busca_prod->fetch_assoc();
-        $confirma_prod = $busca_prod['codigo'];
-        if($confirma_prod == 0){
-            echo '<h3 class="heading">Você não <span>possui compras de interpretações</span></h3>';
-        }
-        else{?>
-        <div class="box-container">
-            <?php
-            $meusprods = "SELECT s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
-                $query = $mysqli->query($meusprods);
-                while($dados = $query->fetch_array()){
-                    echo '<div class="box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-share"></a>
-                        <button class="btn'; echo $dados['nm_interpretacao']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $dados['nm_interpretacao']; echo '"><a class="fas fa-copy"></a></button>
-                    </div>';?>
+        <section class="product" id="product">
+        <?php
+            $busca_prod = "SELECT count(s.cd_interpretacao) as codigo from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+            $busca_prod = $mysqli->query($busca_prod);
+            $busca_prod = $busca_prod->fetch_assoc();
+            $confirma_prod = $busca_prod['codigo'];
+            if($confirma_prod == 0){
+                echo '<h3 class="heading">Você não <span>possui compras de interpretações</span></h3>';
+            }
+            else{?>
+            <div class="box-container">
+                <?php
+                $meusprods = "SELECT s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token, 
+                (SELECT format(avg(f.qt_feedback), 1) as feedback from tb_feedback as f where f.cd_interpretacao = s.cd_interpretacao) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
+                    $query = $mysqli->query($meusprods);
+                    while($dados = $query->fetch_array()){
+                        echo '<div class="box">
+                        <div class="icons">
+                            <a href="#" class="fas fa-share"></a>
+                            <button class="btn'; echo $dados['nm_interpretacao']; echo'" data-clipboard-text="https://localhost/stringmusic/produto.php?p='; echo $dados['nm_interpretacao']; echo '"><a class="fas fa-copy"></a></button>
+                        </div>';?>
+                        <script>
+                            var button = document.getElementsByClassName("btn<?php echo $dados['nm_interpretacao']?>");
+                            new ClipboardJS(button);
+                        </script>
+                        <?php echo'
+                        <img src="'; echo $dados['path']; echo '" alt="">
+                        <h3>'; 
+                        if(strlen($dados['nm_interpretacao']) > 14){
+                            echo str_replace(substr($dados['nm_interpretacao'], 11), '...', $dados['nm_interpretacao']);
+                        }
+                        else{
+                            echo $dados['nm_interpretacao'];
+                        } 
+                        echo '</h3>';
+                        echo $dados['feedback'];
+                        if($dados['feedback'] = null)
+                            echo '
+                            <div class="stars">
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] = 1)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] > 1 && $dados['feedback'] < 2)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] = 2)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] > 2 && $dados['feedback'] < 3)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] = 3)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] > 3 && $dados['feedback'] < 4)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star-half-alt"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] = 4)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif($dados['feedback'] > 4 && $dados['feedback'] < 5)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star-half-alt"></i>
+                            </div>';
+                        elseif($dados['feedback'] = 5)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i> 
+                            </div>';
+                        //<i class="far fa-star-half-alt"></i>
+                        //<i class="far fa-star"></i>
+                        //<i class="fas fa-star"></i>
+                        echo '<div class="price"> R$'; echo $dados['vl_interpretacao'];  echo '</div>
+                        <button class="btnpart" onclick="viewprod'. $dados['cd_interpretacao'] .'()">Visualizar</button>
+                    </div>';
+                    ?>
                     <script>
-                        var button = document.getElementsByClassName("btn<?php echo $dados['nm_interpretacao']?>");
-                        new ClipboardJS(button);
+                        function viewprod<?php echo $dados['cd_interpretacao']?>(){
+                            Swal.fire({
+                                imageUrl: '<?php echo $dados['path'] ?>',
+                                imageHeight: 300,
+                                title: '<?php echo $dados['nm_interpretacao'] ?>',
+                                html: 'Ticket de compra: <?php echo $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?>'
+                            })
+                        }
                     </script>
-                    <?php echo'
-                    <img src="'; echo $dados['path']; echo '" alt="">
-                    <h3>'; 
-                    if(strlen($dados['nm_interpretacao']) > 14){
-                    echo str_replace(substr($dados['nm_interpretacao'], 11), '...', $dados['nm_interpretacao']);
-                    }
-                    else{
-                    echo $dados['nm_interpretacao'];
-                    } 
-                    echo '</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <div class="price"> R$'; echo $dados['vl_interpretacao'];  echo '</div>
-                    <button class="btnpart" onclick="viewprod'. $dados['cd_interpretacao'] .'()">Visualizar</button>
-                </div>';
-                ?>
-                <script>
-                    function viewprod<?php echo $dados['cd_interpretacao']?>(){
-                        Swal.fire({
-                            imageUrl: '<?php echo $dados['path'] ?>',
-                            imageHeight: 300,
-                            title: '<?php echo $dados['nm_interpretacao'] ?>',
-                            html: 'Ticket de compra: <?php echo $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?>'
-                        })
-                    }
-                </script>
-                <?php }?>
-        </div>
-        
-        <?php }?>
-    </section>
+                    <?php }?>
+            </div>
+            
+            <?php }?>
+        </section>
 
     </div>
     

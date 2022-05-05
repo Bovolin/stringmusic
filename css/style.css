@@ -938,12 +938,13 @@ section{
 
 .tab {
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f2f2f2;
+  border: 1px solid var(--bg-panel);
+  background-color: var(--bg);
+  margin-top: 1.5rem;
 }
 
 .tab button {
-  background-color: #f2f2f2;
+  background-color: var(--bg);
   font-family: 'Poppins', sans-serif;
   float: left;
   border: none;
@@ -954,18 +955,18 @@ section{
   font-size: 17px;
   width: 33.33%;
   height: 100%;
-
+  color: var(--color-headings);
 }
 
 .tab button:hover {
   background-color: #5995fd;
-  color: #f8f8f8;
+  color: var(--color-headings);
   transition: ease 0.2s;
 }
 
 .tab button.active {
   background-color: #5995fd;
-  color: #f8f8f8;
+  color: var(--color-headings);
 }
 
 .tabcontent {
