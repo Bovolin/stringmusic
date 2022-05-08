@@ -67,7 +67,7 @@
         <a href="loja.php" class="btnpart">Acessar Loja</a>
     </div>
     <div class="image">
-        <img src="imgs/S_disco4.png" alt=""> <!-- NECESSITO DO FAV ICON GRANDE NA MINHA MESA JÁ !!-->
+        <img src="imgs/S_disco4.png"+>
     </div>
 </section>
 

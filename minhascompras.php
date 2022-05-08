@@ -92,10 +92,7 @@ if(isset($_SESSION['usuario'])){
             else{?>
             <div class="box-container">
                 <?php
-                $meusprods = "SELECT s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token, 
-                (SELECT format(avg(f.qt_feedback), 1) as feedback from tb_feedback as f where f.cd_interpretacao = s.cd_interpretacao) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
-                    $query = $mysqli->query($meusprods);
-                    while($dados = $query->fetch_array()){
+                    foreach($mysqli->query("SELECT s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_interpretacao = s.cd_interpretacao) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario' order by co.dt_compra asc") as $dados){
                         echo '<div class="box">
                         <div class="icons">
                             <a href="#" class="fas fa-share"></a>
@@ -108,15 +105,12 @@ if(isset($_SESSION['usuario'])){
                         <?php echo'
                         <img src="'; echo $dados['path']; echo '" alt="">
                         <h3>'; 
-                        if(strlen($dados['nm_interpretacao']) > 14){
+                        if(strlen($dados['nm_interpretacao']) > 14)
                             echo str_replace(substr($dados['nm_interpretacao'], 11), '...', $dados['nm_interpretacao']);
-                        }
-                        else{
+                        else
                             echo $dados['nm_interpretacao'];
-                        } 
                         echo '</h3>';
-                        echo $dados['feedback'];
-                        if($dados['feedback'] = null)
+                        if($dados['feedback'] == NULL)
                             echo '
                             <div class="stars">
                                 <i class="far fa-star"></i>
@@ -125,7 +119,16 @@ if(isset($_SESSION['usuario'])){
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] = 1)
+                        elseif(floatval($dados['feedback']) < 1 && floatval($dados['feedback']) != NULL)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) == 1)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
@@ -134,16 +137,16 @@ if(isset($_SESSION['usuario'])){
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] > 1 && $dados['feedback'] < 2)
+                        elseif(floatval($dados['feedback']) > 1 && floatval($dados['feedback']) < 2)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
-                                <i class="far fa-star-half-alt"></i>
+                                <i class="fas fa-star-half-alt"></i>
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] = 2)
+                        elseif(floatval($dados['feedback']) == 2)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
@@ -152,16 +155,16 @@ if(isset($_SESSION['usuario'])){
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] > 2 && $dados['feedback'] < 3)
+                        elseif(floatval($dados['feedback']) > 2 && floatval($dados['feedback']) < 3)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <i class="far fa-star-half-alt"></i>
+                                <i class="fas fa-star-half-alt"></i>
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] = 3)
+                        elseif(floatval($dados['feedback']) == 3)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
@@ -170,16 +173,16 @@ if(isset($_SESSION['usuario'])){
                                 <i class="far fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] > 3 && $dados['feedback'] < 4)
+                        elseif(floatval($dados['feedback']) > 3 && floatval($dados['feedback']) < 4)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <i class="far fa-star-half-alt"></i>
+                                <i class="fas fa-star-half-alt"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] = 4)
+                        elseif(floatval($dados['feedback']) == 4)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
@@ -188,16 +191,16 @@ if(isset($_SESSION['usuario'])){
                                 <i class="fas fa-star"></i>
                                 <i class="far fa-star"></i> 
                             </div>';
-                        elseif($dados['feedback'] > 4 && $dados['feedback'] < 5)
+                        elseif(floatval($dados['feedback']) > 4 && floatval($dados['feedback']) < 5)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <i class="far fa-star-half-alt"></i>
+                                <i class="fas fa-star-half-alt"></i>
                             </div>';
-                        elseif($dados['feedback'] = 5)
+                        elseif(floatval($dados['feedback']) == 5)
                             echo '
                             <div class="stars">
                                 <i class="fas fa-star"></i>
@@ -206,9 +209,7 @@ if(isset($_SESSION['usuario'])){
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i> 
                             </div>';
-                        //<i class="far fa-star-half-alt"></i>
-                        //<i class="far fa-star"></i>
-                        //<i class="fas fa-star"></i>
+
                         echo '<div class="price"> R$'; echo $dados['vl_interpretacao'];  echo '</div>
                         <button class="btnpart" onclick="viewprod'. $dados['cd_interpretacao'] .'()">Visualizar</button>
                     </div>';
@@ -245,9 +246,7 @@ if(isset($_SESSION['usuario'])){
             else{?>
             <div class="box-container">
                 <?php
-                $meusprods = "SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path, co.nm_token, co.dt_entrega from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_instrumento as s on s.cd_instrumento = c.cd_instrumento join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
-                    $query = $mysqli->query($meusprods);
-                    while($dados = $query->fetch_array()){
+                foreach($mysqli->query("SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path, co.nm_token, co.dt_entrega, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_instrumento = s.cd_instrumento) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_instrumento as s on s.cd_instrumento = c.cd_instrumento join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario' order by co.dt_compra asc") as $dados){
                         echo '<div class="box">
                         <div class="icons">
                             <a href="#" class="fas fa-share"></a>
@@ -260,21 +259,111 @@ if(isset($_SESSION['usuario'])){
                         <?php echo'
                         <img src="'; echo $dados['path']; echo '" alt="">
                         <h3>'; 
-                        if(strlen($dados['nm_instrumento']) > 14){
-                        echo str_replace(substr($dados['nm_instrumento'], 11), '...', $dados['nm_instrumento']);
-                        }
-                        else{
-                        echo $dados['nm_instrumento'];
-                        } 
-                        echo '</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
+                        if(strlen($dados['nm_instrumento']) > 14)
+                            echo str_replace(substr($dados['nm_instrumento'], 11), '...', $dados['nm_instrumento']);
+                        else
+                            echo $dados['nm_instrumento'];
+                        echo '</h3>';
+                        if($dados['feedback'] == NULL)
+                            echo '
+                            <div class="stars">
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) < 1 && floatval($dados['feedback']) != NULL)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) == 1)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) > 1 && floatval($dados['feedback']) < 2)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) == 2)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) > 2 && floatval($dados['feedback']) < 3)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) == 3)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) > 3 && floatval($dados['feedback']) < 4)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) == 4)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i> 
+                            </div>';
+                        elseif(floatval($dados['feedback']) > 4 && floatval($dados['feedback']) < 5)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>';
+                        elseif(floatval($dados['feedback']) == 5)
+                            echo '
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i> 
+                            </div>';
+                        echo '<div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
                         <button class="btnpart" onclick="viewinst'. $dados['cd_instrumento'] .'()">Visualizar</button>
                         </div>';
                         ?>
@@ -310,9 +399,7 @@ if(isset($_SESSION['usuario'])){
                 else{?>
                 <div class="box-container">
                     <?php
-                    $meusprods = "SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path, co.nm_token, co.dt_entrega from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_servico as s on s.cd_servico = c.cd_servico join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'";
-                        $query = $mysqli->query($meusprods);
-                        while($dados = $query->fetch_array()){
+                        foreach($mysqli->query("SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path, co.nm_token, co.dt_entrega, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_servico = s.cd_servico) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_servico as s on s.cd_servico = c.cd_servico join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario'") as $dados){
                             echo '<div class="box">
                             <div class="icons">
                                 <a href="#" class="fas fa-share"></a>
@@ -325,21 +412,111 @@ if(isset($_SESSION['usuario'])){
                             <?php echo'
                             <img src="'; echo $dados['path']; echo '" alt="">
                             <h3>'; 
-                            if(strlen($dados['nm_servico']) > 14){
-                            echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
-                            }
-                            else{
-                            echo $dados['nm_servico'];
-                            } 
-                            echo '</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
+                            if(strlen($dados['nm_servico']) > 14)
+                                echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
+                            else
+                                echo $dados['nm_servico'];
+                            echo '</h3>';
+                            if($dados['feedback'] == NULL)
+                                echo '
+                                <div class="stars">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) < 1 && floatval($dados['feedback']) != NULL)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) == 1)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) > 1 && floatval($dados['feedback']) < 2)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) == 2)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) > 2 && floatval($dados['feedback']) < 3)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) == 3)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) > 3 && floatval($dados['feedback']) < 4)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) == 4)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i> 
+                                </div>';
+                            elseif(floatval($dados['feedback']) > 4 && floatval($dados['feedback']) < 5)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>';
+                            elseif(floatval($dados['feedback']) == 5)
+                                echo '
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i> 
+                                </div>';
+                            echo '<div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
                             <button class="btnpart" onclick="viewserv'. $dados['cd_servico'] .'()">Visualizar</button>
                         </div>';
                         ?>
@@ -360,26 +537,6 @@ if(isset($_SESSION['usuario'])){
         </section>
 
     </div>
-    
-    <!--
-	<section class="item-container">
-		<div class="item-img-section">
-			<img class="item-img-LG" src="img/partitura.jpg" />
-		</div>
-
-		<div class="item-desc-section">
-			<h2>Produto</h2>
-			<h3>Nome do vendedor</h3>    
-			<p class="description">Descrição sobre o produto</p>
-
-			<div class="type">
-				<button class="type-item">Descrição</button>
-				<button class="type-item">Ticket da venda</button>
-				<button class="type-item">Entrega</button>
-			</div>
-		</div>
-
-	</section>-->
 
     <script>
         function openTab(evt, jobName) {
@@ -395,7 +552,7 @@ if(isset($_SESSION['usuario'])){
           document.getElementById(jobName).style.display = "block";
           evt.currentTarget.className += " active";
         }
-        </script>
+    </script>
 
 </body>
 </html>

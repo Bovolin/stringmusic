@@ -110,7 +110,7 @@ unset($_SESSION['servicorecusado']);
     <br><br><br>
     <div class="box-container">
     <?php 
-    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
+    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_servico = s.cd_servico) as feedback FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
     $query = $mysqli->query($sql);
       
     while($dados = $query->fetch_array()){
@@ -126,21 +126,111 @@ unset($_SESSION['servicorecusado']);
           <?php echo'
         <img src="'; echo $dados['path']; echo '" alt="">
         <h3>'; 
-          if(strlen($dados['nm_servico']) > 14){
+          if(strlen($dados['nm_servico']) > 14)
             echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
-          }
-          else{
+          else
             echo $dados['nm_servico'];
-          } 
-          echo '</h3>
-        <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-        </div>
-        <div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
+          echo '</h3>';
+          if($dados['feedback'] == NULL)
+              echo '
+              <div class="stars">
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) < 1 && floatval($dados['feedback']) != NULL)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star-half-alt"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) == 1)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) > 1 && floatval($dados['feedback']) < 2)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) == 2)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) > 2 && floatval($dados['feedback']) < 3)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) == 3)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) > 3 && floatval($dados['feedback']) < 4)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) == 4)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i> 
+              </div>';
+          elseif(floatval($dados['feedback']) > 4 && floatval($dados['feedback']) < 5)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+              </div>';
+          elseif(floatval($dados['feedback']) == 5)
+              echo '
+              <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i> 
+              </div>';
+          echo '<div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
         <form method="get" action="prodserv.php">
           <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
           <input type="submit" class="btnpart" value="Comprar">
@@ -170,10 +260,10 @@ unset($_SESSION['servicorecusado']);
 
   <!-- Menu navbar -> script interno -->
   <script>
-            function menuAlterna(){
-              const trocaMenu = document.querySelector('.menu');
-              trocaMenu.classList.toggle('active');
-            }
+    function menuAlterna(){
+      const trocaMenu = document.querySelector('.menu');
+      trocaMenu.classList.toggle('active');
+    }
   </script>
   
 </body>

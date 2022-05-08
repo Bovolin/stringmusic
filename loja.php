@@ -135,7 +135,7 @@ include("foto.php");
 
         while($dados = $sql->fetch_array()){
             $cod_car = $dados['cd_carrinho'];
-            foreach($mysqli->query("SELECT s.nm_interpretacao, s.vl_interpretacao, i.path FROM tb_carrinho AS c JOIN tb_interpretacao AS s on s.cd_interpretacao = c.cd_interpretacao JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
+            foreach($mysqli->query("SELECT s.cd_interpretacao, s.nm_interpretacao, s.vl_interpretacao, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_interpretacao = s.cd_interpretacao) as feedback FROM tb_carrinho AS c JOIN tb_interpretacao AS s on s.cd_interpretacao = c.cd_interpretacao JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
                 echo '<div class="box">
                     <div class="icons">
                         <a class="fas fa-share"></a>
@@ -149,28 +149,118 @@ include("foto.php");
                         <?php echo '
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
-                    if(strlen($interp['nm_interpretacao']) > 14){
+                    if(strlen($interp['nm_interpretacao']) > 14)
                         echo str_replace(substr($interp['nm_interpretacao'], 11), '...', $interp['nm_interpretacao']);
-                    }
-                    else{
+                    else
                         echo $interp['nm_interpretacao'];
-                    } 
-                    echo '</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <div class="price"> R$'; echo $interp['vl_interpretacao'];  echo '</div>
+                    echo '</h3>';
+                    if($interp['feedback'] == NULL)
+                        echo '
+                        <div class="stars">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) < 1 && floatval($interp['feedback']) != NULL)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 1)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 1 && floatval($interp['feedback']) < 2)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 2)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 2 && floatval($interp['feedback']) < 3)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 3)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 3 && floatval($interp['feedback']) < 4)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 4)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 4 && floatval($interp['feedback']) < 5)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 5)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i> 
+                        </div>';
+                    echo '<div class="price"> R$'; echo $interp['vl_interpretacao'];  echo '</div>
                     <form method="get" action="produto.php" style="display: inline-block;">
                         <input type="text" name="p" style="display: none;" value="'; echo $interp['nm_interpretacao']; echo '">
                         <input type="submit" class="btn" value="Comprar">
                     </form>
                 </div>';
             }
-            foreach($mysqli->query("SELECT s.nm_servico, s.vl_servico, i.path FROM tb_carrinho AS c JOIN tb_servico AS s on s.cd_servico = c.cd_servico JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
+            foreach($mysqli->query("SELECT s.cd_servico, s.nm_servico, s.vl_servico, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_servico = s.cd_servico) as feedback FROM tb_carrinho AS c JOIN tb_servico AS s on s.cd_servico = c.cd_servico JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
                 echo '<div class="box">
                         <div class="icons">
                         <a class="fas fa-share"></a>
@@ -184,28 +274,118 @@ include("foto.php");
                         <?php echo '
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
-                    if(strlen($interp['nm_servico']) > 14){
+                    if(strlen($interp['nm_servico']) > 14)
                         echo str_replace(substr($interp['nm_servico'], 11), '...', $interp['nm_servico']);
-                    }
-                    else{
+                    else
                         echo $interp['nm_servico'];
-                    } 
-                    echo '</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <div class="price"> R$'; echo $interp['vl_servico'];  echo '</div>
+                    echo '</h3>';
+                    if($interp['feedback'] == NULL)
+                        echo '
+                        <div class="stars">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) < 1 && floatval($interp['feedback']) != NULL)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 1)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 1 && floatval($interp['feedback']) < 2)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 2)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 2 && floatval($interp['feedback']) < 3)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 3)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 3 && floatval($interp['feedback']) < 4)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 4)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 4 && floatval($interp['feedback']) < 5)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 5)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i> 
+                        </div>';
+                    echo '<div class="price"> R$'; echo $interp['vl_servico'];  echo '</div>
                     <form method="get" action="prodserv.php" style="display: inline-block;">
                         <input type="text" name="s" style="display: none;" value="'; echo $interp['nm_servico']; echo '">
                         <input type="submit" class="btn" value="Comprar">
                     </form>
                 </div>';
             }
-            foreach($mysqli->query("SELECT s.nm_instrumento, s.vl_instrumento, i.path FROM tb_carrinho AS c JOIN tb_instrumento AS s on s.cd_instrumento = c.cd_instrumento JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
+            foreach($mysqli->query("SELECT s.cd_instrumento, s.nm_instrumento, s.vl_instrumento, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_instrumento = s.cd_instrumento) as feedback FROM tb_carrinho AS c JOIN tb_instrumento AS s on s.cd_instrumento = c.cd_instrumento JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE c.cd_carrinho = '$cod_car' AND s.nm_inativo = 0") as $interp){
                 echo '<div class="box">
                         <div class="icons">
                         <a class="fas fa-share"></a>
@@ -219,23 +399,113 @@ include("foto.php");
                         <?php echo '
                     <img src="'; echo $interp['path']; echo '" alt="">
                     <h3>'; 
-                    if(strlen($interp['nm_instrumento']) > 14){
+                    if(strlen($interp['nm_instrumento']) > 14)
                         echo str_replace(substr($interp['nm_instrumento'], 11), '...', $interp['nm_instrumento']);
-                    }
-                    else{
+                    else
                         echo $interp['nm_instrumento'];
-                    } 
-                    echo '</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <div class="price"> R$'; echo $interp['vl_instrumento'];  echo '</div>
-                    <form method="get" action="produto.php" style="display: inline-block;">
-                        <input type="text" name="p" style="display: none;" value="'; echo $interp['nm_instrumento']; echo '">
+                    echo '</h3>';
+                    if($interp['feedback'] == NULL)
+                        echo '
+                        <div class="stars">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) < 1 && floatval($interp['feedback']) != NULL)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 1)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 1 && floatval($interp['feedback']) < 2)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 2)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 2 && floatval($interp['feedback']) < 3)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 3)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 3 && floatval($interp['feedback']) < 4)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 4)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i> 
+                        </div>';
+                    elseif(floatval($interp['feedback']) > 4 && floatval($interp['feedback']) < 5)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>';
+                    elseif(floatval($interp['feedback']) == 5)
+                        echo '
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i> 
+                        </div>';
+                    echo '<div class="price"> R$'; echo $interp['vl_instrumento'];  echo '</div>
+                    <form method="get" action="prodinst.php" style="display: inline-block;">
+                        <input type="text" name="i" style="display: none;" value="'; echo $interp['nm_instrumento']; echo '">
                         <input type="submit" class="btn" value="Comprar">
                     </form>
                 </div>';
