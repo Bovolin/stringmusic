@@ -28,8 +28,9 @@ if(isset($_SESSION['usuario'])){
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="js/swal.js"></script>
     <script src="js/clipboard.min.js"></script>
+    <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
 </head>
-<body>
+<body onload="openTab(event, 'default')">
 <header>
     <a href="index.php" class="logo"><img src="logo/padrão.png" class="nav-logo" alt="Logo"></a>
 
@@ -65,63 +66,220 @@ if(isset($_SESSION['usuario'])){
             ?>
     </nav>
 </header>
+
+<!-- SweetAlert -->
+<?php
+
+if(isset($_SESSION['atualizado'])):
     
-<div class="container">
-
-    <table class="sell-table">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Data de Compra</th>
-                <th>Visualizar</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-        
-        $confere_int = $mysqli->query("SELECT count(i.cd_interpretacao) from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'");
-        $result = $confere_int->fetch_assoc();
-
-        if($result != 0){
-            $sql = "SELECT i.cd_interpretacao, i.nm_interpretacao, co.dt_compra, co.dt_entrega, co.cd_carrinho from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' order by co.dt_compra desc";
-            $query = $mysqli->query($sql);
-
-            while($dados = $query->fetch_array()){
-                echo '
-                <tr>
-                    <td>'. $dados['nm_interpretacao'] . '</td>
-                    <td>'. $dados['dt_compra'] .'</td>';
-                    if($dados['dt_entrega'] == NULL){
-                        echo '<td><a class="btnpart" href="#popup'; echo $dados['cd_interpretacao'] . $dados['dt_compra']; echo '"><i class="bx bx-search-alt-2"></i></a></td></tr>';
-                    } 
-                    else echo '<td>Data já inserida!</td></tr>';
-            
-                echo '<div id="popup'; echo $dados['cd_interpretacao'] . $dados['dt_compra']; echo '" class="overlay">
-                    <div class="popup" style="background-color: var(--bg-panel)">
-                        <h1>Indique a data de entrega!</h1>
-                        <br>
-                        <a class="close" href="#">&times;</a>
-                        <div class="content">
-                            <form action="enviar_data.php" method="post">
-                                <input type="date" name="data_envio" class="field">
-                                <input type="text" name="codigo" style="display: none" value="'; echo $dados['cd_carrinho'] .'">
-                                <input type="text" name="data_compra" style="display: none" value="'; echo $dados['dt_compra'] .'">
-                                <input type="submit" class="btnpart" value="Enviar">
-                            </form>
-                        </div>
-                    </div>
-                </div>';
-            }
+    echo '
+    <script>
+        window.onload = function(){
+            Swal.fire({
+                icon: "success",
+                title: "Data de envio inserida com sucesso!"
+            })
         }
-        else echo '<h3 class="heading">Você não <span>possui compras de interpretações</span></h3>';
+    </script>';
 
-        ?>
-        </tbody>
-    </table>
+    unset($_SESSION['atualizado']);
+
+endif;
+
+?>
+
+    
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Part')">Partituras</button>
+    <button class="tablinks" onclick="openTab(event, 'Inst')">Instrumentos</button>
+    <button class="tablinks" onclick="openTab(event, 'Serv')">Serviços</button>
+</div>
+
+<!-- Tabs -->
+<script>
+    function openTab(evt, jobName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(jobName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+</script>
+
+<div id="default" class="tabcontent">
+    <h3 class="heading">Selecione uma <span>aba</span></h3>
+</div> 
+
+<div class="container">
+    <div id="Part" class="tabcontent">
+        <table class="sell-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Data de Compra</th>
+                    <th>Visualizar</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            
+            $confere_int = $mysqli->query("SELECT count(i.cd_interpretacao) from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'");
+            $result = $confere_int->fetch_assoc();
+
+            if($result != 0){
+                $sql = "SELECT i.cd_interpretacao, i.nm_interpretacao, co.dt_compra, co.dt_entrega, co.cd_carrinho from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' order by co.dt_compra desc";
+                $query = $mysqli->query($sql);
+
+                while($dados = $query->fetch_array()){
+                    echo '
+                    <tr>
+                        <td>'. $dados['nm_interpretacao'] . '</td>
+                        <td>'. $dados['dt_compra'] .'</td>';
+                        if($dados['dt_entrega'] == NULL){
+                            echo '<td><a class="btnpart" href="#popup'; echo $dados['cd_interpretacao'] . $dados['dt_compra']; echo '"><i class="bx bx-search-alt-2"></i></a></td></tr>';
+                        } 
+                        else echo '<td>Data já inserida!</td></tr>';
+                
+                    echo '<div id="popup'; echo $dados['cd_interpretacao'] . $dados['dt_compra']; echo '" class="overlay">
+                        <div class="popup" style="background-color: var(--bg-panel)">
+                            <h1>Indique a data de entrega!</h1>
+                            <br>
+                            <a class="close" href="#">&times;</a>
+                            <div class="content">
+                                <form action="enviar_data.php" method="post">
+                                    <input type="date" name="data_envio_int" class="field">
+                                    <input type="text" name="codigo_int" style="display: none" value="'; echo $dados['cd_carrinho'] .'">
+                                    <input type="text" name="data_compra_int" style="display: none" value="'; echo $dados['dt_compra'] .'">
+                                    <input type="submit" class="btnpart" value="Enviar">
+                                </form>
+                            </div>
+                        </div>
+                    </div>';
+                }
+            }
+            else echo '<h3 class="heading">Você não <span>possui compras de interpretações</span></h3>';
+
+            ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="Inst" class="tabcontent">
+        <table class="sell-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Data de Compra</th>
+                    <th>Visualizar</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            
+            $confere_int = $mysqli->query("SELECT count(i.cd_instrumento) from tb_instrumento as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_instrumento = c.cd_instrumento join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'");
+            $result = $confere_int->fetch_assoc();
+
+            if($result != 0){
+                $sql = "SELECT i.cd_instrumento, i.nm_instrumento, co.dt_compra, co.dt_entrega, co.cd_carrinho from tb_instrumento as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_instrumento = c.cd_instrumento join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' order by co.dt_compra desc";
+                $query = $mysqli->query($sql);
+
+                while($dados = $query->fetch_array()){
+                    echo '
+                    <tr>
+                        <td>'. $dados['nm_instrumento'] . '</td>
+                        <td>'. $dados['dt_compra'] .'</td>';
+                        if($dados['dt_entrega'] == NULL){
+                            echo '<td><a class="btnpart" href="#popup'; echo $dados['cd_instrumento'] . $dados['dt_compra']; echo '"><i class="bx bx-search-alt-2"></i></a></td></tr>';
+                        } 
+                        else echo '<td>Data já inserida!</td></tr>';
+                
+                    echo '<div id="popup'; echo $dados['cd_instrumento'] . $dados['dt_compra']; echo '" class="overlay">
+                        <div class="popup" style="background-color: var(--bg-panel)">
+                            <h1>Indique a data de entrega!</h1>
+                            <br>
+                            <a class="close" href="#">&times;</a>
+                            <div class="content">
+                                <form action="enviar_data.php" method="post">
+                                    <input type="date" name="data_envio_ins" class="field">
+                                    <input type="text" name="codigo_ins" style="display: none" value="'; echo $dados['cd_carrinho'] .'">
+                                    <input type="text" name="data_compra_ins" style="display: none" value="'; echo $dados['dt_compra'] .'">
+                                    <input type="submit" class="btnpart" value="Enviar">
+                                </form>
+                            </div>
+                        </div>
+                    </div>';
+                }
+            }
+            else echo '<h3 class="heading">Você não <span>possui compras de instrumentos</span></h3>';
+
+            ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="Serv" class="tabcontent">
+        <table class="sell-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Data de Compra</th>
+                    <th>Visualizar</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            
+            $confere_int = $mysqli->query("SELECT count(i.cd_servico) from tb_servico as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_servico = c.cd_servico join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'");
+            $result = $confere_int->fetch_assoc();
+
+            if($result != 0){
+                $sql = "SELECT i.cd_servico, i.nm_servico, co.dt_compra, co.dt_entrega, co.cd_carrinho from tb_servico as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_servico = c.cd_servico join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' order by co.dt_compra desc";
+                $query = $mysqli->query($sql);
+
+                while($dados = $query->fetch_array()){
+                    echo '
+                    <tr>
+                        <td>'. $dados['nm_servico'] . '</td>
+                        <td>'. $dados['dt_compra'] .'</td>';
+                        if($dados['dt_entrega'] == NULL){
+                            echo '<td><a class="btnpart" href="#popup'; echo $dados['cd_servico'] . $dados['dt_compra']; echo '"><i class="bx bx-search-alt-2"></i></a></td></tr>';
+                        } 
+                        else echo '<td>Data já inserida!</td></tr>';
+                
+                    echo '<div id="popup'; echo $dados['cd_servico'] . $dados['dt_compra']; echo '" class="overlay">
+                        <div class="popup" style="background-color: var(--bg-panel)">
+                            <h1>Indique a data de entrega!</h1>
+                            <br>
+                            <a class="close" href="#">&times;</a>
+                            <div class="content">
+                                <form action="enviar_data.php" method="post">
+                                    <input type="date" name="data_envio_ser" class="field">
+                                    <input type="text" name="codigo_ser" style="display: none" value="'; echo $dados['cd_carrinho'] .'">
+                                    <input type="text" name="data_compra_ser" style="display: none" value="'; echo $dados['dt_compra'] .'">
+                                    <input type="submit" class="btnpart" value="Enviar">
+                                </form>
+                            </div>
+                        </div>
+                    </div>';
+                }
+            }
+            else echo '<h3 class="heading">Você não <span>possui compras de interpretações</span></h3>';
+
+            ?>
+            </tbody>
+        </table>
+    </div>
+    
 
 </div> <!-- container -->
 
-<footer>
+<!--<footer>
     <div class="row">
         <div class="col">
             <img src="img/S_disco4.png" class="footer-logo">
@@ -154,7 +312,7 @@ if(isset($_SESSION['usuario'])){
             </div>
         </div>
 
-</footer>
+</footer>-->
 
 <script>
     function menuAlterna(){
