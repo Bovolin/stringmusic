@@ -258,10 +258,10 @@ if(isset($_SESSION['usuario'])){
 
   <!-- Menu navbar -> script interno -->
   <script>
-            function menuAlterna(){
-              const trocaMenu = document.querySelector('.menu');
-              trocaMenu.classList.toggle('active');
-            }
+    function menuAlterna(){
+      const trocaMenu = document.querySelector('.menu');
+      trocaMenu.classList.toggle('active');
+    }
   </script>      
 </body>
 </html>
