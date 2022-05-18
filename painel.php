@@ -12,79 +12,53 @@
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-          google.charts.load('current', {'packages':['bar']});
+          google.charts.load('current', {'packages':['line']});
           google.charts.setOnLoadCallback(drawChart);
 
           function drawChart(){
-            var data = google.visualization.arrayToDataTable([
-              ['Produtos', 'Interpretações', 'Serviços', 'Instrumentos', 'Total'],
+            var data = new google.visualization.DataTable();
+              data.addColumn('number', 'Mês');
+              data.addColumn('number', 'Interpretações');
+              data.addColumn('number', 'Serviços');
+              data.addColumn('number', 'Instrumentos');
 
-              <?php
-                //Vendas do usuário
-                $vendas = $mysqli->query(
-                  "SELECT count(i.cd_interpretacao) as 'Interpretações',
-                    (select count(s.cd_servico)
-                      from tb_servico as s
-                        join tb_usuario as u
-                                on u.cd_usuario = s.cd_usuario
-                                      join tb_carrinho as c
-                                        on s.cd_servico = c.cd_servico
-                                          join tb_compra as co
-                                          on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Serviços',
-                    (select count(ins.cd_instrumento) 
-                        from tb_instrumento as ins
-                            join tb_usuario as u
-                                on u.cd_usuario = ins.cd_usuario
-                                    join tb_carrinho as c
-                                        on ins.cd_instrumento = c.cd_instrumento
-                                          join tb_compra as co
-                                            on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Instrumentos',
-                    count(i.cd_interpretacao) + (select count(s.cd_servico)
-                      from tb_servico as s
-                        join tb_usuario as u
-                                on u.cd_usuario = s.cd_usuario
-                                      join tb_carrinho as c
-                                        on s.cd_servico = c.cd_servico
-                                          join tb_compra as co
-                                          on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') + (select count(ins.cd_instrumento) 
-                          from tb_instrumento as ins
-                              join tb_usuario as u
-                                  on u.cd_usuario = ins.cd_usuario
-                                      join tb_carrinho as c
-                                          on ins.cd_instrumento = c.cd_instrumento
-                                            join tb_compra as co
-                                              on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session') as 'Total'
-                      from tb_interpretacao as i
-                          join tb_usuario as u
-                              on u.cd_usuario = i.cd_usuario
-                                  join tb_carrinho as c
-                                      on i.cd_interpretacao = c.cd_interpretacao
-                                        join tb_compra as co
-                                              on c.cd_carrinho = co.cd_carrinho
-                                                where u.cd_usuario = '$session'");
-
-                while($dados = $vendas->fetch_array()){
-                  $interpretacoes = $dados['Interpretações'];
-                  $servicos = $dados['Serviços'];
-                  $instrumentos = $dados['Instrumentos'];
-                  $total = $dados['Total'];
-              ?>
-              ['Produtos Vendidos' , <?php echo $interpretacoes ?>, <?php echo $servicos ?>, <?php echo $instrumentos ?>, <?php echo $total ?>],
-
-              <?php } ?>
-            ]);
+              data.addRows([
+                <?php
+                  foreach($mysqli->query("SELECT min(month(co.dt_compra)) as minn, max(month(co.dt_compra)) as maxx, (max(month(co.dt_compra)) - min(month(co.dt_compra))) as mcount from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'") as $meses){
+                    $max = $meses['maxx'];
+                    $min = $meses['minn'];
+                    $count = $meses['mcount'];
+                  }
+                  if($count = 0){
+                    $sp = $mysqli->query("CALL sp_getCharts('$session', @mes, @inte, @serv, @inst, '$min')"); 
+                    $sp = $mysqli->query("SELECT @mes, @inte, @serv, @inst");
+                    while($dados = $sp->fetch_array()){
+                    ?>
+                    [<?= $dados['@mes'] ?>, <?= $dados['@inte'] ?>, <?= $dados['@serv'] ?>, <?= $dados['@inst'] ?>],
+                  <?php }
+                  }
+                  else{
+                    for($i = $min; $i <= $max; $i++){
+                      $sp = $mysqli->query("CALL sp_getCharts('$session', @mes, @inte, @serv, @inst, '$i')"); 
+                      $sp = $mysqli->query("SELECT @mes, @inte, @serv, @inst");
+                      while($dados = $sp->fetch_array()){
+                ?>
+                    [<?= $dados['@mes'] ?>, <?= $dados['@inte'] ?>, <?= $dados['@serv'] ?>, <?= $dados['@inst'] ?>],
+                  <?php } } } ?>
+              ]);
             
             var options = {
               backgroundColor: 'transparent',
               chartArea: {
                 backgroundColor: 'transparent',
               },
-              title: 'Vendas',
+              title: '',
               subtitle: 'Todos os produtos vendidos por você',
+              is3D: true,
             };
 
-            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-            chart.draw(data, google.charts.Bar.convertOptions(options));
+            var chart = new google.charts.Line(document.getElementById('linechart_material'));
+            chart.draw(data, google.charts.Line.convertOptions(options));
           }
         </script>
         <link rel="shortcut icon" href="favicon/ms-icon-310x310.png" />
@@ -204,7 +178,7 @@
               <ul class="dados">
                 <h3>Gráficos</h3>
                 <br>
-                <div id="columnchart_material" style="width: 650px; height: 500px"></div>
+                <div id="linechart_material" style="width: 650px; height: 500px"></div>
               </ul>
             </div>
             <div class="redes-sociais">
