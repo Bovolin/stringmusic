@@ -28,10 +28,6 @@ include ("foto.php");
   elseif(isset($_SESSION['size_stamp'])) $onload = "size_stamp";
   elseif(isset($_SESSION['error_stamp'])) $onload = "error_stamp";
   elseif(isset($_SESSOIN['servico_existente'])) $onload ="servico_existente";
-  elseif(isset($_SESSION['sem_pdf'])) $onload = "sem_pdf";
-  elseif(isset($_SESSION['error_stamp_pdf'])) $onload = "error_stamp_pdf";
-  elseif(isset($_SESSION['error_mover'])) $onload = "error_mover";
- 
   if(isset($_SESSION['servicoenviado'])):
   ?>
   <script>
@@ -292,10 +288,10 @@ include ("foto.php");
 
   <!-- Menu navbar -> script interno -->
   <script>
-            function menuAlterna(){
-              const trocaMenu = document.querySelector('.menu');
-              trocaMenu.classList.toggle('active');
-            }
+    function menuAlterna(){
+      const trocaMenu = document.querySelector('.menu');
+      trocaMenu.classList.toggle('active');
+    }
   </script>
 
 </body>

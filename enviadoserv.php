@@ -79,67 +79,15 @@
         die();
       }
       else{
-        if($vtipo == "v"){
-          if(!isset($_FILES['arquivo_pdf'])){
-            $_SESSION['sem_pdf'] = true;
-            header("Location: adicionarserv.php");
-            die();
-          }
-          else{
-            $arquivo_pdf = $_FILES['arquivo_pdf'];
-
-            if($arquivo_pdf['error']){
-              $_SESSION['error_stamp_pdf'] = true;
-              header('Location: adicionarserv.php');
-              exit;
-            }
-
-            $pasta_pdf = "arq_pdf/";
-            $nomeoriginal_pdf = $arquivo_pdf['name'];
-            $novonome_pdf = uniqid();
-            $extensao_pdf = strtolower(pathinfo($nomeoriginal_pdf, PATHINFO_EXTENSION));
-            $path_pdf = $pasta_pdf . $novonome_pdf . "." . $extensao_pdf;
-            $mover_pdf = move_uploaded_file($arquivo_pdf["tmp_name"], $path_pdf);
-
-            if($mover_pdf){
-
-              //contador de imagens
-              $sql_select_pdf = $mysqli->query("SELECT COUNT(cd_arquivo) as a FROM tb_arquivo");
-              $sql_select_pdf = $sql_select_pdf->fetch_assoc();
-              $result_pdf = $sql_select_pdf['a'] + 1;
-
-              $query_pdf = $mysqli->query("INSERT INTO tb_arquivo (cd_arquivo, nm_arquivo, nm_path, dt_arquivo) VALUES ('$result_pdf', '$nomeoriginal_pdf', '$path_pdf', NOW())"); 
-
-              //insere o serviço no banco
-              $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero, sg_tipo, cd_arquivo) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical', '$vtipo', '$result_pdf')";
-              $query = $mysqli->query($sql_prod);
-
-              //cria sessão só para confirmar se foi postado
-              $_SESSION['produtoenviado'] = true;
-              
-              //redireciona o cliente para a página de produtos
-              header("Location: adicionarserv.php");
-              die();
-            }
-            else{
-              $_SESSION['error_mover'] = true;
-              header("Location: adicionarserv.php");
-              die();
-            }
-          }
-        }
-        else{
-          //insere o serviço no banco
-          $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero, sg_tipo, cd_arquivo) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical', '$vtipo')";
-          $query = $mysqli->query($sql_prod);
-
-          //cria sessão só para confirmar se foi postado
-          $_SESSION['produtoenviado'] = true;
-          
-          //redireciona o cliente para a página de produtos
-          header("Location: adicionarserv.php");
-          die();
-        }
+        //insere o serviço no banco
+        $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
+        $query = $mysqli->query($sql_prod);
+        //cria sessão só para confirmar se foi postado
+        $_SESSION['produtoenviado'] = true;
+        
+        //redireciona o cliente para a página de produtos
+        header("Location: adicionarserv.php");
+        die();
       }
     }
     else{

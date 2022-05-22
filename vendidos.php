@@ -133,7 +133,7 @@ endif;
             $result = $confere_int->fetch_assoc();
 
             if($result != 0){
-                $sql = "SELECT i.cd_interpretacao, i.nm_interpretacao, co.dt_compra, co.dt_entrega, co.cd_carrinho from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' order by co.dt_compra desc";
+                $sql = "SELECT i.sg_tipo, i.cd_interpretacao, i.nm_interpretacao, co.dt_compra, co.dt_entrega, co.cd_carrinho from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' order by co.dt_compra desc";
                 $query = $mysqli->query($sql);
 
                 while($dados = $query->fetch_array()){
@@ -141,10 +141,12 @@ endif;
                     <tr>
                         <td>'. $dados['nm_interpretacao'] . '</td>
                         <td>'. $dados['dt_compra'] .'</td>';
-                        if($dados['dt_entrega'] == NULL){
+                        if($dados['sg_tipo'] == "v") echo '<td>Produto Virtual</td></tr>';
+                        elseif($dados['dt_entrega'] == NULL){
                             echo '<td><a class="btnpart" href="#popup'; echo $dados['cd_interpretacao'] . $dados['dt_compra']; echo '"><i class="bx bx-search-alt-2"></i></a></td></tr>';
-                        } 
-                        else echo '<td>Data já inserida!</td></tr>';
+                        }
+                        elseif($dados['dt_entrega'] != NULL) echo '<td>Data já inserida!</td></tr>';
+                        
                 
                     echo '<div id="popup'; echo $dados['cd_interpretacao'] . $dados['dt_compra']; echo '" class="overlay">
                         <div class="popup" style="background-color: var(--bg-panel)">

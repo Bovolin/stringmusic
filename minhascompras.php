@@ -93,7 +93,7 @@ if(isset($_SESSION['usuario'])){
             else{?>
             <div class="box-container">
                 <?php
-                    foreach($mysqli->query("SELECT s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_interpretacao = s.cd_interpretacao) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem where co.cd_usuario = '$codigousuario' order by co.dt_compra asc") as $dados){
+                    foreach($mysqli->query("SELECT s.sg_tipo, s.cd_interpretacao, co.dt_entrega, s.nm_interpretacao, s.vl_interpretacao, i.path, co.nm_token, a.nm_path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_interpretacao = s.cd_interpretacao) as feedback from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho join tb_interpretacao as s on s.cd_interpretacao = c.cd_interpretacao join tb_imagem as i on i.cd_imagem = s.cd_imagem left join tb_arquivo as a on a.cd_arquivo = s.cd_arquivo where co.cd_usuario = '$codigousuario' order by co.dt_compra desc") as $dados){
                         echo '<div class="box">
                         <div class="icons">
                             <a href="#" class="fas fa-share"></a>
@@ -216,12 +216,12 @@ if(isset($_SESSION['usuario'])){
                     </div>';
                     ?>
                     <script>
-                        function viewprod<?php echo $dados['cd_interpretacao']?>(){
+                        function viewprod<?= $dados['cd_interpretacao']?>(){
                             Swal.fire({
-                                imageUrl: '<?php echo $dados['path'] ?>',
+                                imageUrl: '<?= $dados['path'] ?>',
                                 imageHeight: 300,
-                                title: '<?php echo $dados['nm_interpretacao'] ?>',
-                                html: 'Ticket de compra: <?php echo $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?>'
+                                title: '<?= $dados['nm_interpretacao'] ?>',
+                                html: 'Ticket de compra: <?= $dados['nm_token'] ?> <br> Data de entrega: <?php if($dados['dt_entrega'] == null) echo 'O vendedor tem até 15 dias postar seu produto'; else echo $dados['dt_entrega']; ?> <br> Produto <b><?php if($dados['sg_tipo'] == "f") echo 'Físico'; else echo 'Virtual'; ?></b> <br> <?php if($dados['sg_tipo'] == "v") echo '<a href="'. $dados['nm_path'] . '" download="' . $dados['nm_interpretacao'].'">Baixar!</a>'; ?>'
                             })
                         }
                     </script>
