@@ -14,7 +14,6 @@ include ("foto.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styleadicionars.css">
     <script src="js/script.js" defer></script>
-    <script src="js/tent.js"></script>
     <script src="https://kit.fontawesome.com/036a924fd6.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Boxicons -->
@@ -30,6 +29,9 @@ include ("foto.php");
   elseif(isset($_SESSION['size_stamp'])) $onload = "size_stamp";
   elseif(isset($_SESSION['error_stamp'])) $onload = "error_stamp";
   elseif(isset($_SESSION['produto_existente'])) $onload = "produto_existente";
+  elseif(isset($_SESSION['sem_pdf'])) $onload = "sem_pdf";
+  elseif(isset($_SESSION['error_stamp_pdf'])) $onload = "error_stamp_pdf";
+  elseif(isset($_SESSION['error_mover'])) $onload = "error_mover";
 
   if(isset($_SESSION['produtoenviado'])):
   ?>
@@ -92,6 +94,48 @@ include ("foto.php");
   <?php
   endif;
   unset($_SESSION['produto_existente']);
+
+  if(isset($_SESSION['error_stamp_pdf'])):
+  ?>
+  <script>
+    function error_stamp_pdf(){
+      Swal.fire({
+        icon: 'error',
+        text: 'Erro ao colocar seu arquivo pdf. Tente novamente!'
+      })
+    }
+  </script>
+  <?php
+  endif;
+  unset($_SESSION['error_stamp_pdf']);
+
+  if(isset($_SESSION['sem_pdf'])):
+  ?>
+  <script>
+    function sem_pdf(){
+      Swal.fire({
+        icon: 'error',
+        text: 'Ao selecionar interpretações virtuais, é necessário inserir um arquivo pdf!'
+      })
+    }
+  </script>
+  <?php
+  endif;
+  unset($_SESSION['sem_pdf']);
+
+  if(isset($_SESSION['error_mover'])):
+  ?>
+  <script>
+    function error_mover(){
+      Swal.fire({
+        icon: 'error',
+        text: 'Ocorreu um erro inesperado ao enviar seu produto, tente novamente!'
+      })
+    }
+  </script>
+  <?php
+  endif;
+  unset($_SESSION['error_mover']);
   ?>
 <body onload="<?php echo $onload ?>()">
   <header>
@@ -201,6 +245,15 @@ include ("foto.php");
                         <option value="coun">Country</option>
                       </select>
                     </div>
+                    <div class="wrapper" id="wrapper_id">
+                      <input class="btn" type="radio" name="select" id="option-1" onclick="virtual()" value="v">
+                      <input class="btn" type="radio" name="select" id="option-2" onclick="virtual()" value="f">
+                      <label for="option-1" class="option option-1">Virtual</label>
+                      <label for="option-2" class="option option-2">Física</label>
+                    </div> 
+                    <div class="content hidden" id="file-div">
+                      <input type="file" name="arquivo_pdf" accept="application/pdf" class="field">
+                    </div>
                     <br>
                     <input type="submit" value="Enviar" class="btnpart">
                     <a href="servico.php"><input type="button" class="btnpart2" value="Cancelar"></a>
@@ -225,6 +278,21 @@ include ("foto.php");
     });
   </script>
 
+  <script>
+    function virtual(){
+      var btn1 = document.getElementById("option-1")
+      var btn2 = document.getElementById("option-2")
+      var file_div = document.getElementById("file-div") 
+      var wrapper_div = document.getElementById("wrapper_id")
+
+      if(btn1.checked){
+        file_div.classList.remove("hidden");
+      }
+      else if(btn2.checked){
+        file_div.classList.add("hidden");
+      }
+    }
+  </script> 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>

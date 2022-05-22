@@ -28,6 +28,9 @@ include ("foto.php");
   elseif(isset($_SESSION['size_stamp'])) $onload = "size_stamp";
   elseif(isset($_SESSION['error_stamp'])) $onload = "error_stamp";
   elseif(isset($_SESSOIN['servico_existente'])) $onload ="servico_existente";
+  elseif(isset($_SESSION['sem_pdf'])) $onload = "sem_pdf";
+  elseif(isset($_SESSION['error_stamp_pdf'])) $onload = "error_stamp_pdf";
+  elseif(isset($_SESSION['error_mover'])) $onload = "error_mover";
  
   if(isset($_SESSION['servicoenviado'])):
   ?>
@@ -90,7 +93,49 @@ include ("foto.php");
   <?php
   endif;
   unset($_SESSION['servico_existente']);
-  ?>
+
+  if(isset($_SESSION['error_stamp_pdf'])):
+    ?>
+    <script>
+      function error_stamp_pdf(){
+        Swal.fire({
+          icon: 'error',
+          text: 'Erro ao colocar seu arquivo pdf. Tente novamente!'
+        })
+      }
+    </script>
+    <?php
+    endif;
+    unset($_SESSION['error_stamp_pdf']);
+  
+    if(isset($_SESSION['sem_pdf'])):
+    ?>
+    <script>
+      function sem_pdf(){
+        Swal.fire({
+          icon: 'error',
+          text: 'Ao selecionar interpretações virtuais, é necessário inserir um arquivo pdf!'
+        })
+      }
+    </script>
+    <?php
+    endif;
+    unset($_SESSION['sem_pdf']);
+  
+    if(isset($_SESSION['error_mover'])):
+    ?>
+    <script>
+      function error_mover(){
+        Swal.fire({
+          icon: 'error',
+          text: 'Ocorreu um erro inesperado ao enviar seu produto, tente novamente!'
+        })
+      }
+    </script>
+    <?php
+    endif;
+    unset($_SESSION['error_mover']);
+    ?>
 <body onload="<?php echo $onload ?>()">
 
 <header>

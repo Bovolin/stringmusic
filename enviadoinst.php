@@ -17,8 +17,8 @@
     $arquivo = $_FILES['arquivo'];
 
     if($arquivo['error']){
-      $_SESSOION['error_stamp'] = true;
-      header('Location: adicionar.prod');
+      $_SESSION['error_stamp'] = true;
+      header('Location: adicionarinst.php');
       exit;
     }
  

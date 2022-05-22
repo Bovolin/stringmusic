@@ -17,8 +17,8 @@
     $arquivo = $_FILES['arquivo'];
 
     if($arquivo['error']){
-      $_SESSOION['error_stamp'] = true;
-      header('Location: adicionar.prod');
+      $_SESSION['error_stamp'] = true;
+      header('Location: adicionarprod.php');
       exit;
     }
  
@@ -52,8 +52,9 @@
       $query = $mysqli->query($sql_img); 
     
       //pega os atributos do produto pelo método post
-      $vnome = $_POST["nome"];
-      $vdesc = $_POST["desc"];
+      $vnome = mysqli_real_escape_string($_POST["nome"]);
+      $vdesc = mysqli_real_escape_string($_POST["desc"]);
+      $vtipo = mysqli_real_escape_string($_POST["select"]);
       $vprc = str_replace(",", ".", $_POST['prc']);
       $genero_musical = $_POST['genero_musical'];
       if($genero_musical == ""){
@@ -69,25 +70,75 @@
       $result_prod = $sql_select_prod['i'] + 1;
 
       //Verificar se há produtos com esse nome
-      $sql_confere_nome = "SELECT COUNT(nm_interpretacao) as nome FROM tb_interpretacao WHERE nm_interpretacao = '$vnome'";
-      $sql_confere_nome = $mysqli->query($sql_confere_nome);
+      $sql_confere_nome = $mysqli->query("SELECT COUNT(nm_interpretacao) as nome FROM tb_interpretacao WHERE nm_interpretacao = '$vnome'");
       $sql_confere_nome = $sql_confere_nome->fetch_assoc();
-      if($sql_confere_nome == 1){
+      if($sql_confere_nome['nome'] == 1){
         $_SESSION['produto_existente'] = true;
         header("Location: adicionarprod.php");
         die();
       }
       else{
-        //insere o produto no banco
-        $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
-        $query_prod = $mysqli->query($sql_prod);
+        if($vtipo == "v"){
+          if(!isset($_FILES['arquivo_pdf'])){
+            $_SESSION['sem_pdf'] = true;
+            header("Location: adicionarprod.php");
+            die();
+          }
+          else{
+            $arquivo_pdf = $_FILES['arquivo_pdf'];
 
-        //cria sessão só para confirmar se foi postado
-        $_SESSION['produtoenviado'] = true;
-        
-        //redireciona o cliente para a página de produtos
-        header("Location: adicionarprod.php");
-        die();
+            if($arquivo_pdf['error']){
+              $_SESSION['error_stamp_pdf'] = true;
+              header('Location: adicionarprod.php');
+              exit;
+            }
+
+            $pasta_pdf = "arq_pdf/";
+            $nomeoriginal_pdf = $arquivo_pdf['name'];
+            $novonome_pdf = uniqid();
+            $extensao_pdf = strtolower(pathinfo($nomeoriginal_pdf, PATHINFO_EXTENSION));
+            $path_pdf = $pasta_pdf . $novonome_pdf . "." . $extensao_pdf;
+            $mover_pdf = move_uploaded_file($arquivo_pdf["tmp_name"], $path_pdf);
+
+            if($mover_pdf){
+
+              //contador de imagens
+              $sql_select_pdf = $mysqli->query("SELECT COUNT(cd_arquivo) as a FROM tb_arquivo");
+              $sql_select_pdf = $sql_select_pdf->fetch_assoc();
+              $result_pdf = $sql_select_pdf['a'] + 1;
+
+              $query_pdf = $mysqli->query("INSERT INTO tb_arquivo (cd_arquivo, nm_arquivo, nm_path, dt_arquivo) VALUES ('$result_pdf', '$nomeoriginal_pdf', '$path_pdf', NOW())"); 
+
+              //insere o produto no banco
+              $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero, sg_tipo, cd_arquivo) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical', '$vtipo', '$result_pdf')";
+              $query_prod = $mysqli->query($sql_prod);
+
+              //cria sessão só para confirmar se foi postado
+              $_SESSION['produtoenviado'] = true;
+              
+              //redireciona o cliente para a página de produtos
+              header("Location: adicionarprod.php");
+              die();
+            }
+            else{
+              $_SESSION['error_mover'] = true;
+              header("Location: adicionarprod.php");
+              die();
+            }
+          }
+        }
+        else{
+          //insere o produto no banco
+          $sql_prod = "INSERT INTO tb_interpretacao (cd_interpretacao, nm_interpretacao, ds_interpretacao, dt_interpretacao, vl_interpretacao, cd_imagem, cd_usuario, nm_inativo, nm_genero, sg_tipo) VALUES ('$result_prod', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical', '$vtipo')";
+          $query_prod = $mysqli->query($sql_prod);
+
+          //cria sessão só para confirmar se foi postado
+          $_SESSION['produtoenviado'] = true;
+          
+          //redireciona o cliente para a página de produtos
+          header("Location: adicionarprod.php");
+          die();
+        }
       }
     }
     else{
