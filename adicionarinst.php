@@ -174,7 +174,21 @@ include ("foto.php");
                     <input type="text" name="desc" class="field" placeholder="Digite o que seu instrumento é" id="descricao" required>
                     <br>
                     <label>Preço:</label>
-                    <input type="text" name="prc" onkeypress="return Only(event)" maxlength="12" placeholder="Digite o preço do instrumento" class="field" id="valor" onkeyup="formatarMoeda()" required> 
+                    <input type="text" name="prc" onkeypress="return Only(event)" maxlength="12" placeholder="Digite o preço do instrumento" class="field" id="valor" onkeyup="formatarMoeda()" required>
+                    <div class="wrapper" id="wrapper_id">
+                      <input class="btn" type="radio" name="select" id="option-1" onclick="virtual()">
+                      <input class="btn" type="radio" name="select" id="option-2" onclick="virtual()">
+                      <label for="option-1" class="option option-1">
+                        <span>Virtual</span>
+                        </label>
+                      <label for="option-2" class="option option-2">
+                        <span>Física</span>
+                      </label>
+                      
+                    </div> 
+                    <div class="content hidden" id="file-div">
+                      <input type="file" accept="application/pdf" class="field">
+                    </div>
                     <br>
                     <input type="submit" value="Enviar" class="btnpart">
                     <a href="instrumentos.php"><input type="button" class="btnpart2" value="Cancelar"></a>
@@ -199,7 +213,22 @@ include ("foto.php");
     });
   </script>
 
+  <script>
+    function virtual(){
+      var btn1 = document.getElementById("option-1")
+      var btn2 = document.getElementById("option-2")
+      var file_div = document.getElementById("file-div") 
+      var wrapper_div = document.getElementById("wrapper_id")
 
+      if(btn1.checked){
+        file_div.classList.remove("hidden");
+      }
+      else if(btn2.checked){
+        file_div.classList.add("hidden");
+      }
+    }
+  </script> 
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
     function previewImagem(){
