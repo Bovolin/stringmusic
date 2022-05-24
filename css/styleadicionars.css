@@ -952,3 +952,12 @@ input[type="radio"]{
 .hidden {
   display: none;
 }
+
+.dotAlert{
+  background: #5995FD;
+  padding: 2px 5px;
+  margin-left: 5px;
+  font-weight: 800;
+  border-radius: 100%;
+  color: #fff;
+}

@@ -1029,3 +1029,12 @@ ul li a{
   font-size: 1.1rem;
   transition: 0.3s;
 }
+
+.dotAlert{
+  background: #5995FD;
+  padding: 2px 5px;
+  margin-left: 5px;
+  font-weight: 800;
+  border-radius: 100%;
+  color: #fff;
+}
