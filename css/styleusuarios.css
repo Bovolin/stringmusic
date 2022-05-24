@@ -245,7 +245,6 @@ display: inline-flex;
 .section-perfil-usuario .perfil-usuario-descricao,
 .section-perfil-usuario .sair {
     display: flex;
-    flex-wrap: wrap;
     padding: 1.5rem 2rem;
     box-shadow: 0 0 12px rgba(0, 0, 0, .2);
     background-color: var(--bg-panel);
@@ -695,4 +694,17 @@ label:active:after {
     font-weight: 800;
     border-radius: 100%;
     color: #fff;
+  }
+
+  #alerta_venda h2{
+    color: var(--color-text);
+  }
+
+  .button_alerta_venda{
+    position: relative;
+    display: flex;
+    color: #ca3232;
+    cursor: pointer;
+    border: none;
+    background: none;
   }

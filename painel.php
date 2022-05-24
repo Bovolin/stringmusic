@@ -141,9 +141,6 @@
                       <li class="info"><i class="bx bx-notepad"></i><a href="minhascompras.php">Minhas Compras</a></li>
                       <li class="info"><i class="bx bx-package"></i><a href="vendidos.php">Minhas Vendas</a><span class="dotAlert">'; echo $vendas; echo '</span></li>
                       <li class="sair"><i class="bx bx-log-out"></i><a href="logout.php">Sair</a></li>
-                      <li class="info_button"><input type="checkbox" name="switch-theme" id="switch">
-                      <label for="switch" class="toggle">Toggle</label>
-                      <script src="js/script_dark.js"></script></li>
                     </ul>
                 </div>
               </div>';
@@ -180,6 +177,16 @@
               <h3 class="titulo"><?php echo $nomeusuario?></h3>
               <p class="texto"><?php echo $descricaousuario?></p> 
             </div>
+            <?php
+              if($vendas != 0):
+            ?>
+            <div class="perfil-usuario-descricao" id="alerta_venda">
+              <h2>Você possui <?= $vendas ?> produtos para inserir a data de entrega!</h2>
+              <button class="button_alerta_venda" onclick="invisible()" id="button_alerta_venda"><span><i class="far fa-eye-slash"></i></span></button>
+            </div>
+            <?php
+              endif;
+            ?>
             <div class="perfil-usuario-footer">
               <ul class="dados">
                 <h3>Gráficos</h3>
@@ -191,6 +198,13 @@
               <a href="editarperfil.php" class="boton-redes instagram fas fa-user-edit" style="background: linear-gradient(45deg, #336BB8, #37B82A);"><i class="icon-facebook"></i></a>
               <a href="" class="boton-redes facebook fab fa-facebook-f"><i class="icon-facebook"></i></a>
               <a href="" class="boton-redes instagram fab fa-instagram"><i class="icon-instagram"></i></a>
+              <?php
+                if($vendas != 0):
+              ?>
+              <button class="boton-redes instagram fas fa-bell" style="background: linear-gradient(45deg, #811111, #ca3232);"><i class="icon-instagram"></i></button>
+              <?php
+                endif;
+              ?>
               <input type="checkbox" name="switch-theme" id="switch">
               <label for="switch">Toggle</label>
             </div>
@@ -200,21 +214,25 @@
         <script src="js/script_dark.js"></script>
 
     <script>
-          document.getElementById("file").onchange = function() {
-            document.getElementById("form").submit();
-          };
+      document.getElementById("file").onchange = function() {
+        document.getElementById("form").submit();
+      };
 
-          document.getElementById("fundo").onchange = function() {
-            document.getElementById("form2").submit();
-          };
-    </script>
-        
-    <!-- Menu navbar -> script interno -->
-    <script>
-          function menuAlterna(){
-            const trocaMenu = document.querySelector('.menu');
-            trocaMenu.classList.toggle('active');
-          }
+      document.getElementById("fundo").onchange = function() {
+        document.getElementById("form2").submit();
+      };
+
+      function menuAlterna(){
+        const trocaMenu = document.querySelector('.menu');
+        trocaMenu.classList.toggle('active');
+      }
+
+      function invisible(){
+        var alerta_venda = document.getElementById("alerta_venda");
+        var button_alerta_venda = document.getElementById("button_alerta_venda");
+        if(button_alerta_venda.click)
+          alerta_venda.style.display = "none";
+      }
     </script>
         
     
