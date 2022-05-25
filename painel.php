@@ -118,14 +118,14 @@
 
     <input type="checkbox" id="menu-bar">
     <label for="menu-bar" class="fas fa-bars"></label>
-
     <nav class="navbar">
         <a href="index.php">Início</a>
         <a href="loja.php">Loja</a>
         <?php
             if(isset($_SESSION['usuario'])){
-              foreach($mysqli->query("SELECT count(i.cd_interpretacao) + (SELECT count(i.cd_instrumento) from tb_instrumento as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_instrumento = c.cd_instrumento join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' and co.dt_entrega is NULL) + (SELECT count(i.cd_servico) from tb_servico as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_servico = c.cd_servico join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' and co.dt_entrega is NULL) as 'vendas' from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session' and co.dt_entrega is NULL") as $quantidade){
-                  $vendas = $quantidade['vendas'];
+              $mysqli->query("CALL sp_getVendas('$session', @vendas)");
+              foreach($mysqli->query("SELECT @vendas") as $quantidade){
+                  $vendas = $quantidade['@vendas'];
               }
             echo
             '<div class="action">
@@ -201,7 +201,7 @@
               <?php
                 if($vendas != 0):
               ?>
-              <button class="boton-redes instagram fas fa-bell" style="background: linear-gradient(45deg, #811111, #ca3232);"><i class="icon-instagram"></i></button>
+              <button class="boton-redes instagram fas fa-bell" style="background: linear-gradient(45deg, #811111, #ca3232); cursor: pointer;" onclick="alerta_vendas()"><i class="icon-instagram"></i></button>
               <?php
                 endif;
               ?>
@@ -230,8 +230,14 @@
       function invisible(){
         var alerta_venda = document.getElementById("alerta_venda");
         var button_alerta_venda = document.getElementById("button_alerta_venda");
-        if(button_alerta_venda.click)
-          alerta_venda.style.display = "none";
+        if(button_alerta_venda.click) alerta_venda.style.display = "none";
+      }
+
+      function alerta_vendas(){
+        Swal.fire({
+          icon: "info",
+          title: "Você possui <?= $vendas ?> produtos para inserir a data de entrega!"
+        })
       }
     </script>
         
