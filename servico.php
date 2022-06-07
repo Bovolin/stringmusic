@@ -12,6 +12,14 @@ if(isset($_SESSION['usuario'])){
       elseif($usuarios['especialidade'] == "c") $especialidadeusuario = "Compositor";
       elseif($usuarios['especialidade'] == "v") $especialidadeusuario = "Visitante";      
     }
+
+    $comp_serv_verf = $mysqli->query("SELECT count(co.cd_compra) as comp_serv from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho where co.cd_usuario = '$session' and c.cd_servico != 0");
+    $comp_serv_verf = $comp_serv_verf->fetch_assoc();
+    if($comp_serv_verf['comp_serv'] != 0){
+      $comp_serv = $mysqli->query("SELECT max(s.nm_genero) as max_serv from tb_servico as s join tb_carrinho as c on s.cd_servico = c.cd_servico join tb_compra as co on c.cd_carrinho = co.cd_carrinho where co.cd_usuario = '$session'");
+      $comp_serv = $comp_serv->fetch_assoc();
+      $result_serv = $comp_serv['max_serv'];
+    }
 }
 
 ?>
@@ -114,6 +122,144 @@ unset($_SESSION['servicorecusado']);
     <br><br><br>
     <div class="box-container">
     <?php 
+
+    if(isset($_SESSION['usuario'])){
+      $session = $_SESSION['usuario'];
+      $comp_serv_verf2 = $mysqli->query("SELECT count(co.cd_compra) as comp_serv from tb_compra as co join tb_carrinho as c on c.cd_carrinho = co.cd_carrinho where co.cd_usuario = '$session' and c.cd_servico != 0");
+      $comp_serv_verf2 = $comp_serv_verf2->fetch_assoc();
+
+      if($comp_serv_verf2['comp_serv'] != 0){
+        $query_alg = $mysqli->query("SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path, s.nm_genero, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_servico = s.cd_servico) as feedback FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0 having s.nm_genero = '$result_serv'");
+
+        while($dados_alg = $query_alg->fetch_array()){
+          echo '<div class="box">
+              <div class="icons">
+                  <a href="#" class="fas fa-share"></a>
+                  <button class="btn'; echo $dados_alg['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $dados_alg['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+              </div>';?>
+              <script>
+                  var button = document.getElementsByClassName("btn<?php echo $dados_alg['nm_servico']?>");
+                  new ClipboardJS(button);
+              </script>
+              <?php echo'
+            <img src="'; echo $dados_alg['path']; echo '" alt="">
+            <h3>'; 
+              if(strlen($dados_alg['nm_servico']) > 14)
+                echo str_replace(substr($dados_alg['nm_servico'], 11), '...', $dados_alg['nm_servico']);
+              else
+                echo $dados_alg['nm_servico'];
+              echo '</h3>';
+              if($dados_alg['feedback'] == NULL)
+                  echo '
+                  <div class="stars">
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) < 1 && floatval($dados_alg['feedback']) != NULL)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star-half-alt"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) == 1)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) > 1 && floatval($dados_alg['feedback']) < 2)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) == 2)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) > 2 && floatval($dados_alg['feedback']) < 3)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) == 3)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) > 3 && floatval($dados_alg['feedback']) < 4)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) == 4)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i> 
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) > 4 && floatval($dados_alg['feedback']) < 5)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                  </div>';
+              elseif(floatval($dados_alg['feedback']) == 5)
+                  echo '
+                  <div class="stars">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i> 
+                  </div>';
+              echo '<div class="price"> R$'; echo $dados_alg['vl_servico'];  echo '</div>
+            <form method="get" action="prodserv.php">
+              <input type="text" name="s" style="display: none;" value="'; echo $dados_alg['nm_servico']; echo '">
+              <input type="submit" class="btnpart" value="Comprar">
+            </form>
+          </div>';
+
+        }
+      }
+    }
+    
+
     $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_servico = s.cd_servico) as feedback FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_inativo = 0";
     $query = $mysqli->query($sql);
       
