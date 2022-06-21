@@ -9,7 +9,7 @@ if(isset($_POST['c'])){
 elseif(isset($_POST['v'])){
     unset($_SESSION['token']);
     unset($_SESSION['payment']);
-    header('Location: #.php'); //quando estiver pronto a página
+    header('Location: minhascompras.php'); //quando estiver pronto a página
     die();
 }
 

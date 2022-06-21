@@ -24,7 +24,7 @@
 
               data.addRows([
                 <?php
-                  foreach($mysqli->query("SELECT min(month(co.dt_compra)) as minn, max(month(co.dt_compra)) as maxx, (max(month(co.dt_compra)) - min(month(co.dt_compra))) as mcount from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'") as $meses){
+                  foreach($mysqli->query("SELECT min(month(co.dt_compra)) as minn, max(month(co.dt_compra)) as maxx, (max(month(co.dt_compra)) - min(month(co.dt_compra)) + 1) as mcount from tb_interpretacao as i join tb_usuario as u on u.cd_usuario = i.cd_usuario join tb_carrinho as c on i.cd_interpretacao = c.cd_interpretacao join tb_compra as co on c.cd_carrinho = co.cd_carrinho where u.cd_usuario = '$session'") as $meses){
                     $max = $meses['maxx'];
                     $min = $meses['minn'];
                     $count = $meses['mcount'];
@@ -38,7 +38,7 @@
                   <?php }
                   }
                   else{
-                    for($i = $min; $i <= $max; $i++){
+                    for($i = $min; $i <= $max +1; $i++){
                       $sp = $mysqli->query("CALL sp_getCharts('$session', @mes, @inte, @serv, @inst, '$i')"); 
                       $sp = $mysqli->query("SELECT @mes, @inte, @serv, @inst");
                       while($dados = $sp->fetch_array()){
