@@ -7,10 +7,11 @@ include("verifica_login.php");
 $codigo = $_POST['codigo'];
 
 if(isset($_POST['alterar'])){
+    $nome = $_POST['nm'];
     $valor = $_POST['prc'];
     $descricao = $_POST['desc'];
 
-    $upd = $mysqli->query("UPDATE tb_instrumento SET vl_instrumento = '$valor', ds_instrumento = '$descricao' WHERE cd_instrumento = '$codigo'");
+    $upd = $mysqli->query("UPDATE tb_instrumento SET nm_instrumento = '$nome', vl_instrumento = '$valor', ds_instrumento = '$descricao' WHERE cd_instrumento = '$codigo'");
 
     $_SESSION['alterado'] = true;
     header("Location: meusprodutos.php");

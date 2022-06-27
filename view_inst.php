@@ -111,7 +111,7 @@
                 <div class="right">
                     <div class="info-produto">
                     <div class="espec-produto">
-                        <h1 style="color: var(--color-headings)"><?php echo $nome_servico?></h1>
+                        <input type="text" value="<?php echo $nome_servico ?>" placeholder="Digite o nome do produto" name="nm" class="field" required> 
                         <input type="text" value="<?php echo $valor_servico ?>" name="prc" onkeypress="return Only(event)" placeholder="Digite o preço do produto" class="field" id="valor" onkeyup="formatarMoeda()" required>
                         <h4>
                         <a href="#popup1" style="color: var(--color-headings)" style="color: black;">
