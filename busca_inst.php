@@ -71,9 +71,9 @@ unset($_SESSION['servicorecusado']);
         <a href="index.php">Início</a>
         <select name="dropdown" id="dropdown" onchange="javascript: abreJanela(this.value)">
             <option value="loja.php">Loja</option>
-            <option value="instrumentos.php">Instrumentos</option>
+            <option value="instrumentos.php" selected>Instrumentos</option>
             <option value="interpretacoes.php">Partituras</option>
-            <option value="servico.php" selected>Serviços</option>
+            <option value="servico.php">Serviços</option>
         </select>
         <?php
             if(isset($_SESSION['usuario'])){
@@ -111,7 +111,7 @@ unset($_SESSION['servicorecusado']);
 
 <section class="product" id="product">
   <br>
-  <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Serviços</h2>
+  <h2 style="font-size: 25px;display: inline; color: var(--color-headings);">Instrumentos</h2>
   <?php
   if(isset($_SESSION['usuario']))
     echo '<a href="adicionarserv.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Serviço <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
@@ -128,28 +128,28 @@ unset($_SESSION['servicorecusado']);
 
     <?php 
 
-    $sql = "SELECT s.cd_servico, s.nm_servico, s.ds_servico, s.vl_servico, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_servico = s.cd_servico) as feedback FROM tb_servico AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_servico LIKE '%$nome_pesquisa%' AND s.nm_inativo = 0";
+    $sql = "SELECT s.cd_instrumento, s.nm_instrumento, s.ds_instrumento, s.vl_instrumento, i.path, (SELECT format(avg(f.qt_feedback), 1) from tb_feedback as f where f.cd_instrumento = s.cd_instrumento) as feedback FROM tb_instrumento AS s JOIN tb_imagem AS i ON i.cd_imagem = s.cd_imagem WHERE s.nm_instrumento LIKE '%$nome_pesquisa%' AND s.nm_inativo = 0";
     $query = $mysqli->query($sql);
 
-    if(empty($query)) echo '<h3>Não há serviços relacionados à sua pesquisa.</h3>';
+    if(empty($query)) echo '<h3>Não há instrumentos relacionados à sua pesquisa.</h3>';
     else{
         while ($dados = $query->fetch_array()){  
           echo '<div class="box">
           <div class="icons">
               <a href="#" class="fas fa-share"></a>
-              <button class="btn'; echo $dados['nm_servico']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $dados['nm_servico']; echo '"><a class="fas fa-copy"></a></button>
+              <button class="btn'; echo $dados['nm_instrumento']; echo'" data-clipboard-text="https://localhost/stringmusic/prodserv.php?s='; echo $dados['nm_instrumento']; echo '"><a class="fas fa-copy"></a></button>
           </div>';?>
           <script>
-              var button = document.getElementsByClassName("btn<?php echo $dados['nm_servico']?>");
+              var button = document.getElementsByClassName("btn<?php echo $dados['nm_instrumento']?>");
               new ClipboardJS(button);
           </script>
           <?php echo'
         <img src="'; echo $dados['path']; echo '" alt="">
         <h3>'; 
-          if(strlen($dados['nm_servico']) > 14)
-            echo str_replace(substr($dados['nm_servico'], 11), '...', $dados['nm_servico']);
+          if(strlen($dados['nm_instrumento']) > 14)
+            echo str_replace(substr($dados['nm_instrumento'], 11), '...', $dados['nm_instrumento']);
           else
-            echo $dados['nm_servico'];
+            echo $dados['nm_instrumento'];
           echo '</h3>';
           if($dados['feedback'] == NULL)
               echo '
@@ -250,9 +250,9 @@ unset($_SESSION['servicorecusado']);
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i> 
               </div>';
-          echo '<div class="price"> R$'; echo $dados['vl_servico'];  echo '</div>
-        <form method="get" action="prodserv.php">
-          <input type="text" name="s" style="display: none;" value="'; echo $dados['nm_servico']; echo '">
+          echo '<div class="price"> R$'; echo $dados['vl_instrumento'];  echo '</div>
+        <form method="get" action="prodinst.php">
+          <input type="text" name="i" style="display: none;" value="'; echo $dados['nm_instrumento']; echo '">
           <input type="submit" class="btnpart" value="Comprar">
         </form>
       </div>';

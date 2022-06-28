@@ -161,7 +161,7 @@
 
 <!-- CONTATO FIM --> 
 
-<!-- FOOTER -->
+<!-- FOOTER 
 
 <footer>
     <ul class="social-icon">
@@ -174,7 +174,7 @@
         <li><a href="loja.php">Loja</a></li>
     </ul>
     <p>Copyright</p>
-</footer>
+</footer>-->
 
 <!-- FOOTER FIM-->
 </body>

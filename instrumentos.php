@@ -103,7 +103,7 @@ if(isset($_SESSION['usuario'])){
       <?php
         if(isset($_SESSION['usuario'])) echo '<a href="adicionarinst.php" style="text-decoration: none;"><h5 style="font-size: 15px;display: inline; margin-left: 30px;">Adicionar Instrumento <i class="fa fa-plus" aria-hidden="true"></h5></i></a>';
         echo 
-        '<form action="buscainst.php" method="get" style="display:inline; float: right; margin-top: -15px;">
+        '<form action="busca_inst.php" method="get" style="display:inline; float: right; margin-top: -15px;">
           <input type="text" name="n" style="width: 300px;" class="field" placeholder="Insira o nome do instrumento">
           <button class="btnpart_loja" style="width: 50px; align-items: center"><i class="fas fa-search"></i></button>
         </form>';

@@ -27,4 +27,6 @@ $headers .= "Content-type: text/html; charset=iso-8859-1\n";
 $headers .= "From: $nome_email <$gmail_email>";
 
 mail($destino, $assunto, $arquivo, $headers);
+
+header("Location: index.php")
 ?>
