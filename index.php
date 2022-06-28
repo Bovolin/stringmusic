@@ -130,7 +130,7 @@
 
 <section class="contact" id="contact">
     <div class="image">
-        <img src="logo/padrão.png" alt="">
+        <img src="imgs/contato.png" alt="">
     </div>
     <form action="enviar_email.php" method="post">
         <h1 class="heading">Contato</h1>
