@@ -51,10 +51,10 @@
       $sql_img = "INSERT INTO tb_imagem (cd_imagem, nm_imagem, path, dt_imagem) VALUES ('$result', '$nomeoriginal', '$path', NOW())"; 
       $query = $mysqli->query($sql_img); 
     
-      //pega os atributos do serviço pelo método post
-      $vnome = mysqli_real_escape_string($_POST["nome"]);
-      $vdesc = mysqli_real_escape_string($_POST["desc"]);
-      $vtipo = mysqli_real_escape_string($_POST["select"]);
+      //pega os atributos do serviço pelo método post e faz verificação
+      $vnome = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["nome"]));
+      $vdesc = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["desc"]));
+      $vtipo = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["select"]));
       $vprc = str_replace(",", ".", $_POST['prc']);
       $genero_musical = $_POST['genero_musical'];
       if($genero_musical == ""){
@@ -70,7 +70,7 @@
       $result_serv = $sql_select_serv['s'] + 1;
 
       //Verificar se há produtos com esse nome
-      $sql_confere_nome = "SELECT COUNT(nm_servico) as nome FROM tb_servico WHERE nm_servico = '$vnome'";
+      $sql_confere_nome = "SELECT COUNT(nm_servico) as nome FROM tb_servico WHERE nm_servico = '$vnome' AND nm_inativo = 0";
       $sql_confere_nome = $mysqli->query($sql_confere_nome);
       $sql_confere_nome = $sql_confere_nome->fetch_assoc();
       if($sql_confere_nome == 1){
@@ -83,7 +83,7 @@
         $sql_prod = "INSERT INTO tb_servico (cd_servico, nm_servico, ds_servico, dt_servico, vl_servico, cd_imagem, cd_usuario, nm_inativo, nm_genero) VALUES ('$result_serv', '$vnome', '$vdesc', NOW(), '$vprc', '$result', '$codigousuario', 0, '$genero_musical')";
         $query = $mysqli->query($sql_prod);
         //cria sessão só para confirmar se foi postado
-        $_SESSION['produtoenviado'] = true;
+        $_SESSION['servicoenviado'] = true;
         
         //redireciona o cliente para a página de produtos
         header("Location: adicionarserv.php");

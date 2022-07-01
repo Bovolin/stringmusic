@@ -52,9 +52,9 @@
       $query = $mysqli->query($sql_img); 
     
       //pega os atributos do produto pelo método post
-      $vnome = mysqli_real_escape_string($_POST["nome"]);
-      $vdesc = mysqli_real_escape_string($_POST["desc"]);
-      $vtipo = mysqli_real_escape_string($_POST["select"]);
+      $vnome = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["nome"]));
+      $vdesc = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["desc"]));
+      $vtipo = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["select"]));
       $vprc = str_replace(",", ".", $_POST['prc']);
       $genero_musical = $_POST['genero_musical'];
       if($genero_musical == ""){

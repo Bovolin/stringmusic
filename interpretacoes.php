@@ -247,11 +247,19 @@ if(isset($_SESSION['usuario'])){
                         <i class="fas fa-star"></i> 
                     </div>';
                 echo '<div class="price"> R$'; echo $dados_alg['vl_interpretacao'];  echo '</div>
-              <form method="get" action="prodserv.php">
-                <input type="text" name="s" style="display: none;" value="'; echo $dados_alg['nm_interpretacao']; echo '">
+              <form method="get" action="produto.php">
+                <input type="text" name="p" style="display: none;" value="'; echo $dados_alg['nm_interpretacao']; echo '">
                 <input type="submit" class="btnpart" value="Comprar">
               </form>
             </div>';
+
+
+            /*
+              pe = APRO
+              n° = 35581050600
+              ca = 4235647728025682
+              val = 11/2025
+            */
 
           }
         }

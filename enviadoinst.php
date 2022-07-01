@@ -52,8 +52,8 @@
       $query = $mysqli->query($sql_img); 
     
       //pega os atributos do produto pelo método post
-      $vnome = $_POST["nome"];
-      $vdesc = $_POST["desc"];
+      $vnome = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["nome"]));
+      $vdesc = mysqli_real_escape_string($mysqli, htmlspecialchars($_POST["desc"]));
       $vprc = str_replace(",", ".", $_POST['prc']);
 
       //contator de produtos
@@ -77,7 +77,7 @@
         $query_prod = $mysqli->query($sql_prod);
 
         //cria sessão só para confirmar se foi postado
-        $_SESSION['produtoenviado'] = true;
+        $_SESSION['instrumentoenviado'] = true;
         
         //redireciona o cliente para a página de produtos
         header("Location: adicionarinst.php");

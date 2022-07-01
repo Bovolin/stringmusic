@@ -26,15 +26,15 @@ include ("foto.php");
 </head>
 
 <?php
-  if(isset($_SESSION['produtoenviado'])) $onload = "produtoenviado";
+  if(isset($_SESSION['instrumentoenviado'])) $onload = "instrumentoenviado";
   elseif(isset($_SESSION['size_stamp'])) $onload = "size_stamp";
   elseif(isset($_SESSION['error_stamp'])) $onload = "error_stamp";
   elseif(isset($_SESSION['produto_existente'])) $onload = "produto_existente";
 
-  if(isset($_SESSION['produtoenviado'])):
+  if(isset($_SESSION['instrumentoenviado'])):
   ?>
   <script>
-    function produtoenviado(){
+    function instrumentoenviado(){
       Swal.fire({
         icon: 'success',
         text: 'Instrumento enviado com sucesso!',
@@ -49,7 +49,7 @@ include ("foto.php");
   </script>
   <?php
   endif;
-  unset($_SESSION['produtoenviado']);
+  unset($_SESSION['instrumentoenviado']);
 
   if(isset($_SESSION['size_stamp'])):
   ?>
