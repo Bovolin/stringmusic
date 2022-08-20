@@ -1,5 +1,5 @@
 <?php
-
+/* Página para notificação de compra realizada (vem junto na documentação) */
 include("../config/config.php");
 MercadoPago\SDK::setAccessToken(SAND_TOKEN);
 $payment = MercadoPago\Payment::find_by_id($_GET['data_id']);

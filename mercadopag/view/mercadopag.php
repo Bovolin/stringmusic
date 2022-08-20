@@ -1,10 +1,18 @@
 <?php
+/* Página visual onde fica o carrinho de compras */
+//Ignora os erros caso apareça
 ini_set('display_errors', 0);
 error_reporting(0);
+//Chama o autoload do composer
 require("../../lib/vendor/autoload.php");
+//Inclusão da Classe carrinho
 include("../../class/ClassCarrinho.php");
+//Instancia um novo carrinho
 $carrinho = new ClassCarrinho();
+//Autenticação de usuário logado
 include("../../verifica_login.php");
+//Sessão usada para mostrar notificação logo ao abrir a página (SweetAlert)
+$_SESSION['init'] = true;
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,6 +28,8 @@ include("../../verifica_login.php");
     <script src="../../js/swal.js"></script>
 </head>
 <?php
+//Verificação das sessões para mostrar SweetALert
+  if(isset($_SESSION['init'])) $onload = 'init()';
   if(isset($_SESSION['transaction_error'])) $onload = 'onload()';
 
   if(isset($_SESSION['transaction_error'])):
@@ -34,8 +44,25 @@ include("../../verifica_login.php");
 </script>
 <?php
   endif;
+  //Encerrando sessão
   unset($_SESSION['transaction_error']);
+
+  if(isset($_SESSION['init'])):
 ?>
+<script>
+  function init(){
+    Swal.fire({
+      icon: 'info',
+      html: '<h1>Essa é um página de teste da API do Mercado Livre, insira as credencias de teste:</h1><br>Nome Completo: APRO <br> Email: test_user_19653727@testuser.com <br> Número de Documento: 35581050600 <br> Número de Cartão: 4235647728025682 <br> Validade: 11/2025'
+    })
+  }
+</script>
+<?php
+  endif;  
+  //Encerrando sessão
+  unset($_SESSION['init']);
+?>
+<!-- HTML -->
 <body onload="<?php echo $onload ?>">
     <div class='container'>
         <div class='window'>
@@ -43,7 +70,9 @@ include("../../verifica_login.php");
             <div class='order-info-content'>
               <a href="../../loja.php" style="color: black;"><i class='bx bx-arrow-back' style="width: 250px; margin-top: 10px;"></i></a>
               <h2>Carrinho</h2>
+              <!-- Se não houver produtos no carrinho -> exibe mensagem de aviso -->
               <?php if($carrinho->getQuantity() != 0) echo "<div class='line'></div>"; ?>
+              <!-- Exibe os produtos do carrinho -->
               <table class='order-table'>
                 <tbody>
                   <?php
@@ -56,6 +85,7 @@ include("../../verifica_login.php");
                 <span style='float:left;'>
                   TOTAL
                 </span>
+                <!-- Exibe o total do carrinho e a quantidade de produtos -->
                 <span style='float:right; text-align:right;'>
                   R$<?php echo $carrinho->getAmount(); ?>
                   <p>Você possui <?php echo $carrinho->getQuantity(); ?> produto(s) no carrinho</p>
@@ -73,6 +103,7 @@ include("../../verifica_login.php");
                   </select>
                   <div id="pai">
                     <div id="payment-cartao" class="selecionado">
+                      <!-- formulário via cartão de crédito -->
                       <form action="../controllers/PaymentController.php" method="post" id="pay" name="pay">
                         <div class="brand" style="display: none;"></div>
                         <label for="cardholderName">Nome Completo</label>
@@ -121,12 +152,17 @@ include("../../verifica_login.php");
                           </tr>
                         </table>
 
+                        <!-- input escondido para pegar o total do valor do carrinho -->
                         <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
+                        <!-- input escondido para colocar descrição da compra (coloquei um value aleatório) -->
                         <input type="hidden" name="description" value="Instrumento Bom">
+                        <!-- input escondido e essencial para definir o ID do método de pagamento -->
                         <input type="hidden" name="paymentMethodId">
+                        <!-- input para enviar o formulário -->
                         <input type="submit" class='pay-btn' value="Comprar">
                       </form>
                     </div>
+                    <!-- formulário via boleto -->
                     <div id="payment-boleto">
                       <form action="../controllers/PaymentController2.php" method="post">
                         Nome
@@ -170,11 +206,15 @@ include("../../verifica_login.php");
                           </tr>
                         </table>
                         <button class="pay-btn">Comprar</button>
+                        <!-- input escondido para pegar o total do valor do carrinho -->
                         <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
+                        <!-- input escondido para colocar descrição da compra (coloquei um value aleatório) -->
                         <input type="hidden" name="description" value="Instrumento Bom">
+                        <!-- input escondido e essencial para definir o ID do método de pagamento -->
                         <input type="hidden" name="paymentMethodId">
                       </form>
                     </div>
+                    <!-- formulário via PIX -->
                     <div id="payment-pix">
                       <form action="../controllers/PaymentController3.php" method="post">
                         Nome
@@ -218,8 +258,11 @@ include("../../verifica_login.php");
                           </tr>
                         </table>
                         <button class="pay-btn">Comprar</button>
+                        <!-- input escondido para pegar o total do valor do carrinho -->
                         <input type="hidden" name="amount" id="amount" value="<?php echo $carrinho->getAmount(); ?>">
+                        <!-- input escondido para colocar descrição da compra (coloquei um value aleatório) -->
                         <input type="hidden" name="description" value="Instrumento Bom">
+                        <!-- input escondido e essencial para definir o ID do método de pagamento -->
                         <input type="hidden" name="paymentMethodId">
                       </form>
                     </div>
@@ -229,6 +272,7 @@ include("../../verifica_login.php");
             </div>
           </div> <!-- container -->
 
+<!-- JavaScript da API do MP (para pegar bandeiras de cartão e etc.) -->
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>
 </body>

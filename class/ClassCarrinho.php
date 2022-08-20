@@ -1,28 +1,33 @@
 <?php
 
+/* Classe Carrinho */
+
+//Inclusão da Classe de Conexão do Banco
 include("ClassConexao.php");
 
 class ClassCarrinho extends Conexao{
-
+    //Define o mysqli para conexão com o banco
     public $mysqli;
     
+    //Método construtor para iniciar sessões
     public function __construct(){
         session_start();
     }
 
-    //Add produtos
+    //Função para adicionar um produto ao carrinho (exige um produto vindo da Classe de Produtos)
     public function addProducts(ClassProdutos $product){
+        //Instancia a conexão
         $this->mysqli = Conexao::getConection();
 
-        //Pegar codigo do usuario
+        //Pega codigo do usuario vindo da sessão de usuários
         $code_user = $_SESSION['usuario'];
             
-        //Armazena produto em variáveis
+        //Armazena as propriedades do produto através das funções da classe de Produtos
         $code_prod = $product->getCode();
         $desc_prod = $product->getDescription();
         $pric_prod = $product->getPrice();
 
-        //Verificar se o produto existe no carrinho
+        //Verificar se o produto existe no carrinho através de consulta no banco por contagem
         foreach($this->mysqli->query("SELECT COUNT(c.cd_carrinho) AS count_car 
         FROM tb_carrinho AS c 
             left join tb_interpretacao as i
@@ -37,6 +42,7 @@ class ClassCarrinho extends Conexao{
             $count_car = $verifica_car['count_car'];
         }
 
+        //Verificar se o produto existe no carrinho através de consulta no banco
         foreach($this->mysqli->query("SELECT c.cd_carrinho AS cd_car 
         FROM tb_carrinho AS c
             LEFT JOIN tb_interpretacao AS i
@@ -51,6 +57,7 @@ class ClassCarrinho extends Conexao{
             $cd_car = $verifica_car['cd_car'];
         }
 
+        //Se a primeira consulta for diferente de 0 -> coloca quantidade + 1
         if($count_car != 0){
             //Pegar quantidade do carrinho
             foreach($this->mysqli->query("SELECT qt_carrinho AS qt_car FROM tb_carrinho WHERE cd_carrinho = '$cd_car'") as $quantidade_car){
@@ -96,7 +103,7 @@ class ClassCarrinho extends Conexao{
         //Pegar codigo do usuario
         $code_user = $_SESSION['usuario'];
         
-        //Mudar todos os produtos para nm_inativo para 1
+        //Ao invés de simplesmente dar DELETE na tabela de carrinhos, muda para inativo (1 = inativo, 0 = ativo) -> porém não é o mais recomendado, o certo é mover para uma tabela de "apagados"
         $count_car = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS cd_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
         $i = 0;
         do{
@@ -105,18 +112,20 @@ class ClassCarrinho extends Conexao{
         while($i >= $count_car);
     }
 
-    //Contar produtos
+    //Função para pegar a quantidade de produtos do carrinho
     public function getQuantity(){
         $this->mysqli = Conexao::getConection();
 
         //Pegar codigo do usuario
         $code_user = $_SESSION['usuario'];
 
+        //Instancia a quantidade como 0
         $quantity = 0;
 
         //Verificar se há produtos no carrinho
         $verifica_prod = $this->mysqli->query("SELECT COUNT(cd_carrinho) FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = $code_user");
 
+        //Se houver produtos no carrinho -> adicionar +1 no carrinho
         if($verifica_prod != 0){
             //Partituras
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $pega_quant){
@@ -137,7 +146,7 @@ class ClassCarrinho extends Conexao{
         return $quantity;
     }
 
-    //Listar produtos
+    //Listar produtos em forma de tabela
     public function listProducts(){
         $this->mysqli = Conexao::getConection();
 
@@ -148,6 +157,7 @@ class ClassCarrinho extends Conexao{
 
         //Mostrar Interpretações
         $confere_interp = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS cd_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user' AND cd_interpretacao != 0");
+        //Se houver produtos no carrinho -> cria uma linha da tabela
         if($confere_interp != 0){
             foreach($this->mysqli->query("SELECT im.path AS pathh, i.nm_interpretacao AS nm_interp, c.qt_carrinho AS qt_car, i.vl_interpretacao AS vl_interp FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao JOIN tb_imagem AS im ON im.cd_imagem = i.cd_imagem WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user' AND c.nm_tipo = 1") as $product){
                 $html.="<tr>";
@@ -169,6 +179,7 @@ class ClassCarrinho extends Conexao{
         
         //Mostrar Serviços
         $confere_serv = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS cd_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user' AND cd_servico != 0");
+        //Se houver produtos no carrinho -> cria uma linha da tabela
         if($confere_serv != 0){
             foreach($this->mysqli->query("SELECT s.nm_servico AS nm_serv, c.qt_carrinho AS qt_car, s.vl_servico AS vl_serv, im.path AS pathh 
             FROM tb_carrinho AS c 
@@ -196,6 +207,7 @@ class ClassCarrinho extends Conexao{
 
         //Mostrar Instrumentos
         $confere_inst = $this->mysqli->query("SELECT COUNT(cd_carrinho) AS cd_car FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = '$code_user' AND cd_instrumento != 0");
+        //Se houver produtos no carrinho -> cria uma linha da tabela
         if($confere_inst != 0){
             foreach($this->mysqli->query("SELECT ins.nm_instrumento AS nm_inst, c.qt_carrinho AS qt_car, ins.vl_instrumento AS vl_inst, im.path AS pathh 
             FROM tb_carrinho AS c 
@@ -224,33 +236,38 @@ class ClassCarrinho extends Conexao{
         return $html;
     }
 
-    //Amount produtos
+    //Método para pegar o valor do carrinho inteiro
     public function getAmount(){
         $this->mysqli = Conexao::getConection();
 
         //Pegar codigo do usuario
         $code_user = $_SESSION['usuario'];
 
+        //Instancia o total (amount) como 0
         $amount = 0;
 
         //Verificar se há produtos no carrinho
         $verifica_prod = $this->mysqli->query("SELECT COUNT(cd_carrinho) FROM tb_carrinho WHERE nm_inativo = 0 AND cd_usuario = $code_user");
 
+        //Se houver -> pega quantidade e valor de produtos
         if($verifica_prod != 0){
             //Pegar quantidade e valor
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, i.vl_interpretacao AS vl_interp FROM tb_carrinho AS c JOIN tb_interpretacao AS i ON i.cd_interpretacao = c.cd_interpretacao WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_prod){
                 $qt_car = $quant_prod['qt_car'];
                 $vl_interp = $quant_prod['vl_interp'];
+                //Faz a conta para totalizar o amount
                 $amount += floor(($qt_car * $vl_interp) * 100) /100;
             }
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, s.vl_servico AS vl_serv FROM tb_carrinho AS c JOIN tb_servico AS s ON s.cd_servico = c.cd_servico WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_serv){
                 $qt_car = $quant_serv['qt_car'];
                 $vl_serv = $quant_serv['vl_serv'];
+                //Faz a conta para totalizar o amount
                 $amount += floor(($qt_car * $vl_serv) * 100) / 100;
             }
             foreach($this->mysqli->query("SELECT c.qt_carrinho AS qt_car, replace(ins.vl_instrumento, ',', '') AS vl_inst FROM tb_carrinho AS c JOIN tb_instrumento AS ins ON ins.cd_instrumento = c.cd_instrumento WHERE c.nm_inativo = 0 AND c.cd_usuario = '$code_user'") as $quant_inst){
                 $qt_car = $quant_inst['qt_car'];
                 $vl_inst = $quant_inst['vl_inst'];
+                //Faz a conta para totalizar o amount
                 $amount += floor(($qt_car * $vl_inst) * 100) / 100;
             }
         }

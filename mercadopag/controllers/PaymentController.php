@@ -1,13 +1,23 @@
 <?php
+
+/* Controller de Pagamentos via Cartão de Crédito */
+
+/* Nota: é aqui onde definitivamente é feito o pagamento, nesse controller falta a conexão com o MP. */
+
+//Inicia sessão
 session_start();
+//Inclui a conexão com o banco
 include("../../conexao.php");
 
+//Requerimento das configurações (Access Token e Key)
 require('../config/config.php');
+
 // Carregar Autoload do composer
 require('../../lib/vendor/autoload.php');
+//Classe do MercadoPago via SDK
 MercadoPago\SDK::setAccessToken( access_token: SAND_TOKEN);
 
-//Variaveis
+//Variaveis vindas do mercadopag.php
 $email = filter_input(INPUT_POST, 'email',FILTER_VALIDATE_EMAIL);
 $nome = filter_input(INPUT_POST,'nome_completo',FILTER_DEFAULT);
 $cardNumber = filter_input(INPUT_POST, 'cardNumber', FILTER_DEFAULT);
@@ -22,29 +32,47 @@ $description = filter_input(INPUT_POST,'description', FILTER_DEFAULT);
 $paymentMethodId = filter_input(INPUT_POST,'paymentMethodId', FILTER_DEFAULT);
 $token = filter_input(INPUT_POST,'token', FILTER_DEFAULT);
 
-//Metódo
+//Metódo para fazer pagamento
 $payment = new MercadoPago\Payment();
+//Define o total da compra
 $payment->transaction_amount = $amount;
+//Define o token de exclusividade
 $payment->token = $token;
+//Define a descrição do produto
 $payment->description = $description;
+//Define as parcelas
 $payment->installments = $installments;
+//Define o método de pagamento
 $payment->payment_method_id = $paymentMethodId;
+//Define o email de quem paga
 $payment->payer = array(
     "email" => $email
 );
+//Salva o pagamento (aqui é onde ocorre o pagamento da API)
 $save = $payment->save();
+//Verificação para caso dê erro na hora de salvar
 if($save == FALSE){
     $_SESSION['transaction_error'] = true;
     header("Location: ../view/mercadopag.php");
     die();
 }
 else{
-    //Variáveis - compra
+    //Inserção da compra no banco
+
     //Selecionar codigo comprador
     $code_user = $_SESSION['usuario'];
+    //Forma de pagamento "c" de Cartão de Crédito
     $forma_payment = "c";
 
     //Criptografar token
+
+    /* 
+        Nota de Criptografia: 
+        Na época em que fiz essa criptografia foi para testar a fatoração dos Números de Gödel;
+        Até hoje não consegui uma forma de descriptografar isso que eu fiz, ou seja, é uma criptografia de mão única, por isso recomendo
+        usar um hash comum. 
+    */
+    
     $frase_array = str_split(str_replace(' ', '',$token));
     $frase_count = strlen(str_replace(' ', '',$token));
     $j = 2;
@@ -72,8 +100,10 @@ else{
     //Desativar carrinho
     $upd = $mysqli->query("UPDATE tb_carrinho SET nm_inativo = 1 WHERE nm_inativo = 0 AND cd_usuario = '$code_user'");
 
+    //Cria sessões de pagamento e token para mostrar para o usuário na página de resultados
     $_SESSION['payment'] = $payment;
     $_SESSION['token'] = $token;
+    //Redireciona para a página de resultado (compra aprovada ou não)
     header("Location: ../view/result.php");
     die();
 }

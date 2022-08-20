@@ -1,10 +1,16 @@
 <?php
+/* Controller de Pagamentos via PIX */
 
+/* Nota: é aqui onde definitivamente é feito o pagamento via PIX, nesse controller falta a conexão com o MP; 
+    Na época eu não trabalhei muito na forma de pagamento por PIX também, por estar focado no cartão de crédito. */
+
+//Requerimento das configurações (Access Token e Key)
 require('../config/config.php');
 // Carregar Autoload do composer
 require('../../lib/vendor/autoload.php');
 MercadoPago\SDK::setAccessToken( access_token: SAND_TOKEN);
 
+//Variáveis para o pix
 $amount = filter_input(INPUT_POST,'paymentMethodId',FILTER_DEFAULT);
 $description = filter_input(INPUT_POST,'description',FILTER_DEFAULT);
 $email;
@@ -18,6 +24,7 @@ $bairro;
 $cidade;
 $uf;
 
+//Cria o QRCode do PIX
 $payment = new MercadoPago\Payment();
 $payment->transaction_amount = $amount;
 $payment->description = $description;
@@ -39,10 +46,11 @@ $payment->payer = array(
         "federal_unit" => $uf
     )
 );
-
+//Salva o código pix
 $payment->save();
 
 #https://codepen.io/hannahtsou/pen/pRBvaN
 
+//Aqui é feito o html da página para exibir o QRCode do PIX, como não trabalhei nessa função apenas exibi a imagem do QRCode
 echo "<img style='width: 300px; height: 300px' src='data:image/png;base64, " . $payment->point_of_interaction->transaction_data->qr_code_base64 . "' alt='Pix'>"
 ?>

@@ -1,7 +1,11 @@
 <?php
+//Requerimento do composer
 require("../../lib/vendor/autoload.php");
+//Conexão com o banco
 include("../../conexao.php");
+//Instancia um no exception da classe Exceptions
 $exception = new \Classes\ClassException();
+//Inicia sessão
 session_start();
 ?>
 
@@ -15,6 +19,7 @@ session_start();
     <title>StringMusic</title>
 </head>
 <?php
+//Exibe os erros
 $exception->setPayment($_SESSION['payment']);
 
 if($exception->verifyTransaction()['class'] == 'error') $icone = 'error';
@@ -34,6 +39,7 @@ for($i = 0; $i < $frase_count; $i++){
     $token_livre += $conta;
 }
 
+//Pega a data da compra
 foreach($mysqli->query("SELECT dt_compra as data_compra from tb_compra where nm_token = '$token_livre' limit 1") as $infos_compra){
     $data = $infos_compra['data_compra'];
 }
@@ -42,6 +48,7 @@ foreach($mysqli->query("SELECT dt_compra as data_compra from tb_compra where nm_
 <body>
     <div class="payment-group">
         <?php
+        //Exibe as mensagens de exception
         if($icone == 'error') echo '<img class="payment-ticket-img" src="../../imgs/ticket-error.png" alt="imagem com um X">';
         elseif($icone == 'success') echo '<img class="payment-ticket-img" src="../../imgs/ticket.png" alt="imagem com um correto">';
         elseif($icone == 'info') echo '<img class="payment-ticket-img" src="../../imgs/ticket-error.png" alt="imagem com um X">';
@@ -60,7 +67,8 @@ foreach($mysqli->query("SELECT dt_compra as data_compra from tb_compra where nm_
             </form>
         </div>
     </div>
-        
+
+<!-- Script do MP -->    
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <script src="../mercadopag.js"></script>
 </body>

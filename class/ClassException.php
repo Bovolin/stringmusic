@@ -1,17 +1,24 @@
 <?php
 namespace Classes;
 
+/* Classe Exception (Erros) */
+
+/* Nota: essa classe serve para caso dê algum erro nas compras */
+
 class ClassException{
     
     private $payment;
 
+    //Função para "setar" o pagamento
     public function setPayment($payment){ $this->payment = $payment; }
+    //Função para "getar" o pagamento
     public function getPayment(){ return $this->payment; }
 
-    //Verificar transações
+    //Verificar se as transações possuem erro
     public function verifyTransaction(){
         if($this->getPayment()->error == ""){
             if($this->getPayment()->status_detail == 'accredited'){
+                //Cria um HTML com classe e a mensagem
                 $html = [
                     'class'=>'success',
                     'message'=>$this->getStatus()
@@ -33,7 +40,7 @@ class ClassException{
         return $html;
     }
 
-    //Pegar status
+    //Pegar status da compra (está na documentação do MP)
     public function getStatus(){
         $status = [
             'accredited'=>'Pronto, seu pagamento foi aprovado! Você verá o nome '.$this->getPayment()->statement_descriptor.' na sua fatura de cartão de crédito. Entraremos em contato com você!',
@@ -54,14 +61,16 @@ class ClassException{
             'cc_rejected_other_reason'=>'O cartão não processou seu pagamento'
         ];
 
+        //Se existir algum status -> coloca status do pagamento no próprio pagamento
         if(array_key_exists($this->getPayment()->status_detail,$status)){
             return $status[$this->getPayment()->status_detail];
         }
+        //Se não houver -> ocorreu algum erro com a compra
         else{
             return "Houve um erro na sua requisição, tente novamente!";
         }
     }
-    //Pegar erros
+    //Lista de erros (está na documentação do MP)
     public function getErrors(){
         $error = [
             '205'=>'Digite o número do seu cartão.',
@@ -82,10 +91,12 @@ class ClassException{
             '325'=>'Confira a data.',
             '326'=>'Confira a data.'
         ];
-
+        
+        //Se houver erros -> insere o erro no pagamento
         if(array_key_exists($this->getPayment()->error->causes[0]->code,$error)){
             return $error[$this->getPayment()->error->causes[0]->code];
         }
+        //Se não -> retorna erro de requisição
         else{
             return "Houve um erro na sua requisição, tente novamente!";
         }
